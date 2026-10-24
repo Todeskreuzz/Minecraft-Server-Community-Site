@@ -6,4 +6,7 @@
 - [mcstatus.io API](https://mcstatus.io/docs) – optionaler Java-Serverstatus, nach Einrichtung einer Server-IP.
 - [CurseForge App](https://www.curseforge.com/download/app) – Import von CurseForge-Profilen.
 
-Die visuellen Vektoren, Logos, Layouts, Animationen, CSS- und JavaScript-Quellen dieses Projekts wurden eigens für diese Seite erstellt. Keine von Dritten eingebundenen Bilder, Fonts oder Design-Abhängigkeiten.
+Die Layouts, CSS- und JavaScript-Quellen dieses Projekts wurden eigens für diese Seite erstellt. Schriften und Icons liegen lokal bei, ohne CDN:
+
+- [Inter](https://github.com/rsms/inter) von The Inter Project Authors, SIL Open Font License 1.1 (`assets/fonts/OFL.txt`).
+- [Lucide](https://github.com/lucide-icons/lucide) Icons, ISC-Lizenz. Es sind einzelne SVG-Pfade eingebunden, kein Icon-Font und kein externes Stylesheet.

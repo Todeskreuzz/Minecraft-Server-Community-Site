@@ -24,9 +24,14 @@ export function authReturn(href){
  const access=value('access_token'),refresh=value('refresh_token'),type=value('type')||'';
  const confirmation=confirmTypes.has(type)||has('code');
  const hashAuth=['access_token','refresh_token','error','error_code','error_description','code','sb','type','expires_in','expires_at','token_type','provider_token','provider_refresh_token'].some(key=>hash.has(key));
+ const errorCode=value('error_code')||'',errorName=value('error')||'';
  for(const key of authKeys)url.searchParams.delete(key);
  if(hashAuth)url.hash='';
- return {href:url.origin+url.pathname+url.search+url.hash,type,error,confirmation,session:!error&&access&&refresh?{access_token:access,refresh_token:refresh,expires_in:Number(value('expires_in'))||3600,token_type:value('token_type')||'bearer'}:null};
+ return {href:url.origin+url.pathname+url.search+url.hash,type,error,errorCode,errorName,confirmation,session:!error&&access&&refresh?{access_token:access,refresh_token:refresh,expires_in:Number(value('expires_in'))||3600,token_type:value('token_type')||'bearer'}:null};
+}
+export function repeatedSignup(data){
+ const identities=data?.identities??data?.user?.identities;
+ return Array.isArray(identities)&&identities.length===0;
 }
 export function validateTopic(title,body,category){
  title=String(title).trim(); if(title.length<3||title.length>120)throw Error('Titel / title: 3–120 Zeichen / characters.');

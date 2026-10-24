@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {createApi, validateTopic, validateReply, validateConfig, authRedirect, authReturn} from '../assets/js/forum-api.mjs';
+import {createApi, validateTopic, validateReply, validateConfig, authRedirect, authReturn, repeatedSignup} from '../assets/js/forum-api.mjs';
 test('accepts publishable config only',()=>{
  assert.throws(()=>validateConfig({url:'http://evil.test',key:'sb_secret_bad'}));
  assert.throws(()=>validateConfig({url:'https://example.supabase.co',key:'sb_secret_bad'}));
@@ -43,13 +43,31 @@ test('auth return strips token and error params without dropping the site path',
  assert.equal(ok.confirmation,true); assert.equal(ok.error,false);
  const bad=authReturn('https://todeskreuzz.github.io/Minecraft-Server-Community-Site/?next=1&error=access_denied&error_code=otp_expired&error_description=Email+link+is+invalid#forum');
  assert.equal(bad.href,'https://todeskreuzz.github.io/Minecraft-Server-Community-Site/?next=1#forum');
- assert.equal(bad.session,null); assert.equal(bad.error,true);
+ assert.equal(bad.session,null); assert.equal(bad.error,true); assert.equal(bad.errorCode,'otp_expired'); assert.equal(bad.errorName,'access_denied');
+ const hashExpired=authReturn('https://todeskreuzz.github.io/Minecraft-Server-Community-Site/#error=access_denied&error_code=otp_expired&error_description=Email+link+is+invalid+or+has+expired');
+ assert.equal(hashExpired.href,'https://todeskreuzz.github.io/Minecraft-Server-Community-Site/');
+ assert.equal(hashExpired.error,true); assert.equal(hashExpired.errorCode,'otp_expired'); assert.equal(hashExpired.errorName,'access_denied'); assert.equal(hashExpired.session,null);
+ const queryExpired=authReturn('http://127.0.0.1:8018/?error=access_denied&error_code=otp_expired');
+ assert.equal(queryExpired.href,'http://127.0.0.1:8018/'); assert.equal(queryExpired.errorCode,'otp_expired'); assert.equal(queryExpired.error,true);
  const both=authReturn('https://todeskreuzz.github.io/Minecraft-Server-Community-Site/#access_token=aaa&refresh_token=bbb&error=access_denied&type=signup');
  assert.equal(both.session,null); assert.equal(both.error,true); assert.equal(both.href.includes('access_token'),false);
  const code=authReturn('http://127.0.0.1:8018/?code=abc123');
  assert.equal(code.href,'http://127.0.0.1:8018/'); assert.equal(code.confirmation,true); assert.equal(code.session,null);
  assert.equal(authReturn('http://127.0.0.1:8018/#forum'),null);
  assert.equal(authReturn('http://127.0.0.1:8018/#topic/11111111-1111-1111-1111-111111111111'),null);
+});
+test('repeated signup is an empty identities list and is not stored as a session',async()=>{
+ assert.equal(repeatedSignup({id:'user-1',email:'ada@example.com',identities:[]}),true);
+ assert.equal(repeatedSignup({user:{identities:[]}}),true);
+ assert.equal(repeatedSignup({id:'user-1',identities:[{identity_id:'id-1',provider:'email'}]}),false);
+ assert.equal(repeatedSignup({access_token:'token',user:{identities:[{provider:'email'}]}}),false);
+ assert.equal(repeatedSignup({}),false);
+ const calls=[];
+ const api=createApi({url:'https://example.supabase.co',key:'sb_publishable_test'},()=>null,()=>{throw Error('session must stay empty')},async(url,options)=>{calls.push({url,body:options.body});return {ok:true,json:async()=>({id:'user-1',email:'ada@example.com',identities:[]})}});
+ const result=await api.signup('ada@example.com','longpassword','Ada','http://127.0.0.1:8018/');
+ assert.equal(repeatedSignup(result),true);
+ assert.equal(result.access_token,undefined);
+ assert.equal(JSON.parse(calls[0].body).email,'ada@example.com');
 });
 test('confirmation tokens load the user and become the session',async()=>{
  let session=null; const calls=[];

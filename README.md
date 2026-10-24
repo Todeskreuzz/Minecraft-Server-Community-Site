@@ -1,4 +1,14 @@
-# Friends and Foes Co. KG — Minecraft-Community-Webseite
+# Friends & Foes — Community-Forum
+
+Die aktuelle Startseite ist ein DE/EN-Forum mit Supabase-Anmeldung, Themen, Antworten und einem durch Datenbankregeln geschützten Adminbereich. Einrichtung: **[supabase/README.md](supabase/README.md)**. Zuerst `supabase/setup.sql`, dann `supabase/permission-tests.sql` im Supabase SQL Editor ausführen. Datenbank und echte Konten sind ohne diesen Schritt noch nicht einsatzbereit.
+
+Frontend lokal: `python -m http.server 8018 --bind 127.0.0.1`. Tests: `node --test tests/forum.test.mjs tests/uid-manager.test.mjs`; Syntax: `node --check assets/js/forum.mjs`. Statische Strukturprüfung: `node scripts/check.mjs`.
+
+Falix, reale Serveradresse und Modpack-Download sind noch nicht eingerichtet. Die alte Landingpage ist als `landing-archive.html` erhalten. Keine privilegierten Schlüssel gehören ins Repository. Die lokale Original-ZIP wird nicht mit veröffentlicht.
+
+---
+
+## Ursprüngliche Projektunterlagen (Landingpage und Offline-UID-Tool)
 
 Eine eigenständige, responsive, **zweisprachige (DE/EN)** Minecraft-Webseite für **Minecraft Java 1.20.1 / Forge 47.4.10**. Sie ist für **GitHub Pages** gebaut und lässt sich anschließend ohne Framework auf **Cloudflare Pages** umziehen.
 

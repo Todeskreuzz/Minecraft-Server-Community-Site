@@ -6,6 +6,7 @@ import {fileURLToPath} from 'node:url';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const required=['index.html','assets/css/style.css','assets/js/app.js','assets/data/config.json','assets/data/team.json','assets/data/members.json','assets/data/news.json','assets/data/rules.json','assets/img/mark.svg','assets/img/favicon.svg','.nojekyll','README.md','CODEX-ANLEITUNG.md'];
 let errors=[];
+for(const file of ['assets/css/forum.css','assets/js/forum.mjs','assets/js/forum-api.mjs','assets/data/supabase.json','supabase/setup.sql','supabase/permission-tests.sql'])if(!fs.existsSync(path.join(root,file)))errors.push('Missing forum file: '+file);
 for(const file of required)if(!fs.existsSync(path.join(root,file)))errors.push('Missing file: '+file);
 function read(file){try{return JSON.parse(fs.readFileSync(path.join(root,'assets/data',file),'utf8'))}catch(error){errors.push('Invalid JSON in '+file+': '+error.message);return {}}}
 const config=read('config.json'),team=read('team.json'),members=read('members.json'),news=read('news.json'),rules=read('rules.json');

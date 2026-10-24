@@ -11,3 +11,7 @@ node_modules/
 .env
 .env.*
 !.env.example
+
+# Lokale Originaldatei und Vorschau bleiben auf diesem PC.
+Friends-and-Foes-Minecraft-Website.zip
+forum-preview.png

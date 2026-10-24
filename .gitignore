@@ -1,0 +1,13 @@
+# Niemals interne UUID-Zuordnungen / private Daten hochladen
+private/*
+!private/.gitkeep
+
+# Temporäre Dateien / Plattformartefakte
+.DS_Store
+Thumbs.db
+node_modules/
+*.log
+*.tmp
+.env
+.env.*
+!.env.example

@@ -33,7 +33,8 @@ jobs:
           node --test tests/*.test.mjs
       - uses: supabase/setup-cli@v1
         with:
-          version: latest
+          version: 2.122.0
+          github-token: ${{ github.token }}
       - name: Create disposable local Supabase environment
         run: |
           supabase init
@@ -89,7 +90,8 @@ jobs:
           done
       - uses: supabase/setup-cli@v1
         with:
-          version: latest
+          version: 2.122.0
+          github-token: ${{ github.token }}
       - uses: actions/setup-node@v4
         with:
           node-version: '24'

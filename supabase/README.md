@@ -26,8 +26,9 @@ Authentication → Providers: Email aktivieren, E-Mail-Bestätigung eingeschalte
 
 Authentication → URL Configuration:
 - Site URL: `https://todeskreuzz.github.io/Minecraft-Server-Community-Site/`
+- Redirect URLs: `https://todeskreuzz.github.io/Minecraft-Server-Community-Site/**` eintragen, falls der Eintrag noch fehlt. Registrierung sendet `redirect_to` mit Origin und Pfad der aktuellen Seite; ohne diesen Allow-List-Eintrag kann die Bestätigungsmail nicht auf den Repository-Unterpfad zurückführen.
 - Für lokale Tests zusätzlich erlaubte Redirect URL: `http://127.0.0.1:8018/`
-- Beim späteren Cloudflare-Umzug die tatsächliche neue Website-URL ergänzen und als Site URL setzen.
+- Beim späteren Cloudflare-Umzug die tatsächliche neue Website-URL ergänzen und als Site URL setzen. Die Redirect-URL kommt aus der jeweils geöffneten Seite, nicht aus einer fest eingebauten Adresse.
 
 Unter Authentication den für dein Projekt geltenden E-Mail-Versand prüfen. Supabases eingebauter Test-Maildienst kann Empfänger beschränken; eine öffentliche Registrierung mit Bestätigung benötigt gegebenenfalls einen eigenen SMTP-Anbieter. Nicht als funktionierend betrachten, bevor eine Registrierung mit einem zweiten freigegebenen Testkonto bestätigt wurde. Kein kostenpflichtiger SMTP-Dienst wird automatisch aktiviert.
 

@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#0c0f0d">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self' https://iewltgawdodbmwcdgzxy.supabase.co https://api.mcstatus.io; object-src 'none'; base-uri 'self'; form-action 'self'; frame-src 'none'">
+<meta name="theme-color" content="#09090b">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://iewltgawdodbmwcdgzxy.supabase.co https://api.mcstatus.io; object-src 'none'; base-uri 'self'; form-action 'self'; frame-src 'none'">
 <title>Friends & Foes — Community Forum</title>
 <link rel="icon" href="assets/img/favicon.svg">
 <link rel="stylesheet" href="assets/css/forum.css">
@@ -14,195 +14,147 @@
 <a class="skip" href="#main">Zum Inhalt / Skip to content</a>
 <header>
 <div class="header-bar">
-<a class="brand" href="#forum"><img src="assets/img/mark.svg" width="36" height="36" alt=""><span>Friends <b>&</b> Foes<small>Minecraft Community</small></span></a>
+<a class="brand" href="#forum"><img src="assets/img/mark.svg" width="28" height="28" alt="">Friends & Foes</a>
 <nav aria-label="Navigation">
-<a href="#forum">Forum</a>
-<a href="#play" data-i18n="play">Mitspielen</a>
-<a href="#mods">Modpack</a>
+<a href="#forum" data-i18n="forum">Forum</a>
+<a href="#server" data-i18n="server">Server</a>
 <a href="#admin" id="adminNav" hidden>Admin</a>
 </nav>
+<div class="lang" role="group" aria-label="Sprache / Language">
+<button type="button" id="langDe" aria-pressed="true">DE</button>
+<span aria-hidden="true">·</span>
+<button type="button" id="langEn" aria-pressed="false">EN</button>
+</div>
 <div class="account">
-<label class="language-choice"><span class="sr-only">Sprache / Language</span><select id="language" aria-label="Sprache / Language"><option value="auto">Auto</option><option value="de">Deutsch</option><option value="en">English</option></select></label>
 <span id="identityStatus" class="identity-status" hidden></span>
-<button id="accountButton" class="outline" type="button" data-i18n="login">Anmelden</button>
+<button id="registerButton" class="quiet" type="button" data-i18n="register">Registrieren</button>
+<button id="accountButton" class="quiet" type="button" data-i18n="login">Anmelden</button>
 </div>
 </div>
 </header>
-<div class="shell">
-<aside class="sidebar">
-<p class="eyebrow">Community</p>
-<a class="side-home" href="#forum"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7.5h14M5 12h14M5 16.5h9"/></svg><span data-i18n="allTopics">Alle Themen</span></a>
-<p class="eyebrow" data-i18n="categories">KATEGORIEN</p>
-<div id="categoryNav"></div>
-<div class="sidebar-bottom">
-<p data-i18n="sidebarNote">Deine Ideen. Eure Bauwerke. Unsere Geschichten.</p>
-<a class="with-icon" href="#play"><span data-i18n="join">So spielst du mit</span><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
-</div>
-</aside>
-<main id="main" tabindex="-1">
+<main id="main" class="page" tabindex="-1">
 <div id="notice" class="notice" role="status" hidden></div>
-<section class="welcome">
-<div>
-<p class="eyebrow">Friends & Foes</p>
-<h1 data-i18n="welcome">Hier beginnt eure nächste Geschichte.</h1>
-<p data-i18n="intro">Tauscht Ideen aus, zeigt eure Bauwerke und findet euer nächstes Abenteuer.</p>
-<a href="#play" class="lime button with-icon"><span data-i18n="joinServer">Auf den Server</span><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
-</div>
-<div class="hero-mark" aria-hidden="true"><img src="assets/img/mark.svg" width="64" height="64" alt=""><span>Build · Share · Play</span></div>
-</section>
-<div class="content-grid">
-<div>
 <section id="forumView" class="view">
-<div class="section-title">
+<div class="page-head">
 <div>
-<p class="eyebrow">Forum</p>
-<h2 data-i18n="discussions">Gespräche am Lagerfeuer</h2>
+<h1 data-i18n="forum">Forum</h1>
+<p class="lede" data-i18n="intro">Tauscht Ideen aus, zeigt eure Bauwerke und findet euer nächstes Abenteuer.</p>
 </div>
-<button id="newTopic" class="lime" type="button"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 6v12M6 12h12"/></svg><span data-i18n="newTopic">Neues Thema</span></button>
+<button id="newTopic" class="primary" type="button"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="M12 5v14"/></svg><span data-i18n="newTopic">Neues Thema</span></button>
 </div>
-<div class="toolbar">
+<div class="filters"><a class="side-home" href="#forum" data-i18n="allTopics">Alle Themen</a><div id="categoryNav"></div></div>
 <label class="search-field">
-<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6"/><path d="m16 16 4 4"/></svg>
+<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg>
 <input id="search" type="search" maxlength="120" placeholder="Themen durchsuchen …" aria-label="Themen durchsuchen">
 </label>
-<span class="sort" data-i18n="latest">Neueste zuerst</span>
-</div>
-<label class="category-filter"><span data-i18n="category">Kategorie</span><select id="categoryFilter"></select></label>
+<select id="categoryFilter" hidden></select>
 <div id="topicList" class="topic-list" aria-live="polite"></div>
-<button id="loadMore" class="outline wide" type="button" hidden data-i18n="more">Weitere Themen laden</button>
-<p class="community-note" data-i18n="respect">Freunde oder Rivalen – respektvoll bleiben wir alle.</p>
+<button id="loadMore" class="outline" type="button" hidden data-i18n="more">Weitere Beiträge laden</button>
 </section>
 <section id="topicView" class="view" hidden>
-<a href="#forum" class="back with-icon"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6 9 12l6 6"/></svg><span data-i18n="back">Zur Themenübersicht</span></a>
+<a href="#forum" class="back"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg><span data-i18n="back">Zur Themenübersicht</span></a>
 <div id="topicDetail"></div>
 <div id="replies"></div>
-<button id="moreReplies" class="outline wide" type="button" hidden data-i18n="more">Weitere Beiträge laden</button>
-<form id="replyForm" class="panel form">
+<button id="moreReplies" class="outline" type="button" hidden data-i18n="more">Weitere Beiträge laden</button>
+<form id="replyForm" class="form" hidden>
 <h3 data-i18n="replyTitle">Deine Antwort</h3>
-<label><span data-i18n="message">Nachricht</span><textarea name="body" required maxlength="10000" rows="4"></textarea></label>
-<button class="lime" data-i18n="reply">Antwort veröffentlichen</button>
+<label><span data-i18n="message">Nachricht</span><textarea name="body" required maxlength="10000" rows="5"></textarea></label>
+<button class="primary" data-i18n="reply">Antwort veröffentlichen</button>
 </form>
 </section>
-<section id="playView" class="view" hidden>
-<p class="eyebrow">Server</p>
-<h2 data-i18n="playTitle">Dein Platz auf dem Server.</h2>
-<article class="panel">
-<h3 data-i18n="address">Serveradresse</h3>
-<p id="playAddress" class="mono"></p>
-<button id="copyAddress" disabled class="lime" type="button" data-i18n="copy">Adresse kopieren</button>
-<p class="muted" data-i18n="javaNote">Minecraft Java → Mehrspieler → Server hinzufügen. Modpack vorher installieren.</p>
-</article>
-<div class="steps">
-<article class="panel"><span class="step-index">01</span><h3 data-i18n="installPack">Modpack installieren</h3><p data-i18n="installNote">Importiere das gemeinsame CurseForge-Profil, damit Version und Mods zusammenpassen.</p><a class="with-icon" href="#mods"><span data-i18n="toMods">Zum Modpack</span><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a></article>
-<article class="panel"><span class="step-index">02</span><h3 data-i18n="connect">Verbinden & losbauen</h3><p data-i18n="connectNote">Starte das Profil und trage die Serveradresse ein.</p></article>
+<section id="serverView" class="view" hidden>
+<div class="page-head">
+<div>
+<h1 data-i18n="server">Server</h1>
+<p class="lede" data-i18n="serverIntro">Minecraft Java, ein gemeinsames Modpack, eine Adresse.</p>
 </div>
-<p class="muted host-note" data-i18n="hostNote">Geplant: Falix Free. Der Minecraft-Server ist noch nicht eingerichtet.</p>
-</section>
-<section id="modsView" class="view" hidden>
-<p class="eyebrow">Modpack</p>
-<h2>Friends & Foes Modpack</h2>
-<article class="panel pack">
-<span class="pack-icon" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24"><path d="m12 4 8 4-8 4-8-4 8-4Z"/><path d="m4 12 8 4 8-4M4 16l8 4 8-4"/></svg></span>
-<h3 data-i18n="everything">Alles für euren gemeinsamen Start.</h3>
-<p data-i18n="packNote">Das CurseForge-Profil installiert die passenden Mods und Konfigurationen. Der Export wird hier ergänzt, sobald er bereitsteht.</p>
-<div id="packVersions" class="chips"></div>
-<a id="download" class="lime button" aria-disabled="true" data-i18n="downloadPending">Modpack noch nicht verfügbar</a>
-<p id="packVersion" class="muted"></p>
-</article>
-<article class="panel">
-<h3 data-i18n="installPack">Modpack installieren</h3>
-<ol>
+</div>
+<p id="comingSoon" class="note" data-i18n="comingSoon">Der Server und das Modpack folgen.</p>
+<div id="serverAddress" hidden>
+<p data-i18n="address">Serveradresse</p>
+<p id="playAddress" class="address"></p>
+<button id="copyAddress" class="primary" type="button" data-i18n="copy">Adresse kopieren</button>
+</div>
+<p id="addressLater" class="note" hidden data-i18n="addressLater">Die Serveradresse folgt.</p>
+<p id="packLater" class="note" hidden data-i18n="packLater">Das Modpack folgt.</p>
+<p><a id="download" hidden data-i18n="download">Modpack herunterladen</a></p>
+<p id="packVersion" class="muted" hidden></p>
+<ul class="facts">
+<li>Minecraft <strong id="mcVersion">1.20.1</strong></li>
+<li>Forge <strong id="forgeVersion">47.4.10</strong></li>
+<li><strong id="modCount">39</strong> Mods</li>
+<li data-i18n="hostFalix">Host: Falix</li>
+</ul>
+<p id="serverLive" hidden><span id="statusDot" hidden></span><span id="serverState"></span> · <span id="onlineCount"></span></p>
+<p><a id="discordLink" hidden data-i18n="discord">Discord</a></p>
+<ol class="steps">
 <li><a href="https://www.curseforge.com/download/app" target="_blank" rel="noopener noreferrer">CurseForge</a> <span data-i18n="install">installieren.</span></li>
 <li data-i18n="downloadStep">Sobald verfügbar: Profil-ZIP herunterladen.</li>
 <li data-i18n="importStep">In CurseForge „Import Profile“ wählen, ZIP importieren und Profil starten.</li>
+<li data-i18n="connectNote">Starte das Profil und trage die Serveradresse ein.</li>
 </ol>
-</article>
 </section>
 <section id="adminView" class="view" hidden>
-<p class="eyebrow">Admin</p>
-<h2 data-i18n="adminTitle">Deine Serverzentrale.</h2>
-<p id="adminGate" class="panel" data-i18n="adminOnly">Nur für das freigeschaltete Administratorkonto zugänglich.</p>
+<div class="page-head"><h1>Admin</h1></div>
+<p id="adminGate" data-i18n="adminOnly">Nur für das freigeschaltete Administratorkonto zugänglich.</p>
 <div id="adminContent" hidden>
-<div class="steps">
-<article class="panel"><h3>Falix</h3><p data-i18n="notConnected">Noch nicht verbunden. Keine internen Live-Daten verfügbar.</p><a class="with-icon" href="https://client.falixnodes.net/" target="_blank" rel="noopener noreferrer"><span data-i18n="openPanel">Falix-Verwaltung öffnen</span><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M10 6H6.8A1.8 1.8 0 0 0 5 7.8v9.4A1.8 1.8 0 0 0 6.8 19h9.4a1.8 1.8 0 0 0 1.8-1.8V14"/><path d="M13 5h6v6M19 5l-8 8"/></svg></a></article>
-<article class="panel"><h3>Forum</h3><p id="ownerIdentity"></p><p data-i18n="modTools">Themen schließen und Beiträge entfernen: direkt im jeweiligen Thema.</p></article>
-</div>
-<form id="privateNameForm" class="panel form">
-<h3 data-i18n="privateName">Dein privater Anzeigename</h3>
+<p id="ownerIdentity" class="muted"></p>
+<p class="muted" data-i18n="modTools">Themen schließen und Beiträge entfernen: direkt im jeweiligen Thema.</p>
+<p><a href="https://client.falixnodes.net/" target="_blank" rel="noopener noreferrer" data-i18n="openPanel">Falix-Verwaltung öffnen</a></p>
+<form id="privateNameForm" class="form">
+<h2 data-i18n="privateName">Dein privater Anzeigename</h2>
+<p class="muted" data-i18n="friendNote">Nur von dir hinzugefügte Freunde sehen deinen privaten Namen. Alle anderen sehen deine Inhaber-Bezeichnung.</p>
 <label><span data-i18n="displayName">Anzeigename</span><input name="name" required minlength="2" maxlength="32" autocomplete="nickname"></label>
-<button class="lime" data-i18n="save">Speichern</button>
+<button class="outline" data-i18n="save">Speichern</button>
 </form>
-<form id="friendForm" class="panel form">
-<h3 data-i18n="friendTitle">Freunde verwalten</h3>
-<p class="muted" data-i18n="friendNote">Nur von dir hinzugefügte Freunde sehen deinen privaten Namen.</p>
+<form id="friendForm" class="form">
+<h2 data-i18n="friendTitle">Freunde verwalten</h2>
 <label><span data-i18n="selectMember">Mitglied auswählen</span><select id="friendSelect" required></select></label>
-<button class="lime" data-i18n="addFriend">Als Freund hinzufügen</button>
+<button class="outline" data-i18n="addFriend">Als Freund hinzufügen</button>
 <div id="friendList"></div>
 </form>
-<form id="ownerForm" class="panel form">
-<h3 data-i18n="privateNotes">Private Servernotizen</h3>
+<form id="ownerForm" class="form">
+<h2 data-i18n="privateNotes">Private Servernotizen</h2>
 <p class="muted" data-i18n="notesHint">Nur für Administratoren lesbar. Keine Passwörter oder Schlüssel eintragen.</p>
 <label><span data-i18n="notes">Notizen</span><textarea name="notes" maxlength="10000" rows="8"></textarea></label>
-<button class="lime" data-i18n="save">Speichern</button>
+<button class="outline" data-i18n="save">Speichern</button>
 </form>
 </div>
 </section>
-</div>
-<aside class="rightbar">
-<article class="panel server-card">
-<div class="panel-heading"><span class="eyebrow" data-i18n="ourServer">UNSER MINECRAFT-SERVER</span><span id="statusDot" class="status-dot"></span></div>
-<div class="server-art" aria-hidden="true"><img src="assets/img/mark.svg" width="36" height="36" alt=""><strong>Friends<br>& Foes</strong></div>
-<h3 data-i18n="survival">Survival. Gemeinsam.</h3>
-<p id="serverState" class="muted">Noch nicht eingerichtet</p>
-<div class="server-stats"><span>Minecraft<strong id="mcVersion">—</strong></span><span>Online<strong id="onlineCount">—</strong></span></div>
-<a href="#play" class="lime button wide with-icon"><span data-i18n="joinServer">Auf den Server</span><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
-<p class="small" data-i18n="falixSleep">Falix Free pausiert ohne Spieler.</p>
-</article>
-<article class="panel quiet-card">
-<p class="eyebrow">Community</p>
-<h3 data-i18n="startSomething">Mach den Anfang.</h3>
-<p class="muted" data-i18n="startNote">Eine Bauidee, eine Frage oder einfach Hallo – hier ist Platz dafür.</p>
-<a class="with-icon" href="#forum"><span data-i18n="toForum">Zum Forum</span><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
-</article>
-<p class="rail-footer">Friends & Foes · 2026<br><span data-i18n="fanProject">Unabhängiges Minecraft-Fanprojekt.</span><br><a href="#privacy" id="privacyLink" data-i18n="privacy">Datenschutz</a></p>
-</aside>
-</div>
 <footer>
 <p class="slogan">Love your Friends like you hate your Enemies</p>
+<p><a href="#privacy" id="privacyLink" data-i18n="privacy">Datenschutz</a></p>
 </footer>
 </main>
-</div>
 <dialog id="authDialog" aria-labelledby="authTitle">
 <form id="authForm" class="form">
-<div class="dialog-top"><span class="eyebrow">Community</span><button type="button" class="close" data-close="authDialog" aria-label="Schließen / Close"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7l10 10M17 7 7 17"/></svg></button></div>
-<h2 id="authTitle" data-i18n="authTitle">Dein Platz in der Community.</h2>
+<div class="dialog-top"><h2 id="authTitle" data-i18n="authTitle">Dein Platz in der Community.</h2><button type="button" class="close" data-close="authDialog" aria-label="Schließen / Close"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button></div>
 <div class="auth-tabs"><button type="button" id="loginMode" class="active" data-i18n="login">Anmelden</button><button type="button" id="signupMode" data-i18n="register">Registrieren</button></div>
 <label id="nameField" hidden><span data-i18n="displayName">Anzeigename</span><input name="name" minlength="2" maxlength="32" autocomplete="nickname"></label>
 <label>E-Mail<input name="email" type="email" required autocomplete="email"></label>
 <label><span data-i18n="password">Passwort</span><input name="password" type="password" required minlength="8" maxlength="128" autocomplete="current-password"></label>
-<p class="small" data-i18n="authNote">Deine E-Mail bleibt privat. Anzeigename und Beiträge sind öffentlich.</p>
-<button type="button" id="anonymousButton" class="outline" data-i18n="continueAnonymous">Anonym fortfahren</button>
-<p class="small" data-i18n="anonymousNote">Nur lesen, ohne Konto und ohne UID. Die Auswahl gilt nur für diesen Browser-Tab.</p>
+<p class="muted" data-i18n="authNote">Deine E-Mail bleibt privat. Anzeigename und Beiträge sind öffentlich.</p>
 <p id="authMessage" role="status"></p>
-<button class="lime wide" id="authSubmit" data-i18n="login">Anmelden</button>
+<button class="primary wide" id="authSubmit" data-i18n="login">Anmelden</button>
+<button type="button" id="anonymousButton" class="outline" data-i18n="continueAnonymous">Anonym fortfahren</button>
+<p class="muted" data-i18n="anonymousNote">Nur lesen, ohne Konto. Die Auswahl gilt nur für diesen Browser-Tab.</p>
 </form>
 </dialog>
 <dialog id="topicDialog" aria-labelledby="topicHeading">
 <form id="topicForm" class="form">
-<div class="dialog-top"><span class="eyebrow">Forum</span><button type="button" class="close" data-close="topicDialog" aria-label="Schließen / Close"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7l10 10M17 7 7 17"/></svg></button></div>
-<h2 id="topicHeading" data-i18n="newTopic">Neues Thema</h2>
+<div class="dialog-top"><h2 id="topicHeading" data-i18n="newTopic">Neues Thema</h2><button type="button" class="close" data-close="topicDialog" aria-label="Schließen / Close"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button></div>
 <label><span data-i18n="category">Kategorie</span><select name="category" id="topicCategory"></select></label>
 <label><span data-i18n="title">Titel</span><input name="title" required minlength="3" maxlength="120"></label>
 <label><span data-i18n="message">Nachricht</span><textarea name="body" required maxlength="10000" rows="6"></textarea></label>
-<p class="small" data-i18n="publicNote">Dein Beitrag und Anzeigename sind öffentlich sichtbar.</p>
+<p class="muted" data-i18n="publicNote">Dein Beitrag und Anzeigename sind öffentlich sichtbar.</p>
 <p id="topicMessage" role="status"></p>
-<button class="lime" data-i18n="publish">Thema veröffentlichen</button>
+<button class="primary" data-i18n="publish">Thema veröffentlichen</button>
 </form>
 </dialog>
 <dialog id="privacyDialog" aria-labelledby="privacyHeading">
 <div class="form">
-<div class="dialog-top"><h2 id="privacyHeading" data-i18n="privacy">Datenschutz</h2><button type="button" class="close" data-close="privacyDialog" aria-label="Schließen / Close"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7l10 10M17 7 7 17"/></svg></button></div>
-<p data-i18n="privacyBody">Anmeldung und Beiträge werden bei Supabase verarbeitet. Deine E-Mail wird nicht öffentlich angezeigt. Anzeigename und Beiträge sind öffentlich. Die Sitzung bleibt für diesen Browser-Tab gespeichert, die Spracheinstellung lokal im Browser. Bei eingetragener Serveradresse wird mcstatus.io abgefragt. Kontolöschung über den Betreiber. Betreiber- und Kontaktdaten müssen vor öffentlichem Betrieb ergänzt werden.</p>
+<div class="dialog-top"><h2 id="privacyHeading" data-i18n="privacy">Datenschutz</h2><button type="button" class="close" data-close="privacyDialog" aria-label="Schließen / Close"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button></div>
+<p data-i18n="privacyBody">Anmeldung und Beiträge werden bei Supabase verarbeitet. Deine E-Mail wird nicht öffentlich angezeigt. Anzeigename und Beiträge sind öffentlich. Die Sitzung bleibt für diesen Browser-Tab gespeichert, die Spracheinstellung lokal im Browser. Bei eingetragener Serveradresse wird mcstatus.io abgefragt. Kontolöschung über den Betreiber.</p>
 </div>
 </dialog>
 </body>

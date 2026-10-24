@@ -11,12 +11,11 @@ Anmeldung, Beiträge, Antworten, Notizen und Freundesfreigaben laufen regulär �
 Im Repository Todeskreuzz/Minecraft-Server-Community-Site:
 
 1. Settings → Secrets and variables → Actions → New repository secret:
-   - SUPABASE_ACCESS_TOKEN: Supabase Personal Access Token, möglichst auf dieses Projekt beschränkt. Für supabase link benötigt er Project Settings, API Keys und API Key Secrets jeweils Read.
    - SUPABASE_DB_PASSWORD: Datenbankpasswort dieses Projekts.
 2. Settings → Pages → Source: **GitHub Actions**. Noch aktive Veröffentlichung direkt aus dem Branch auf Actions umstellen, damit sie die Datenbankprüfungen nicht umgeht.
 3. Actions → **Test, migrate and publish** → Run workflow → main.
 
-Zugangsdaten direkt in die geschützten GitHub-Secret-Felder eingeben, niemals in Chat, Dateien oder Commits. Der öffentliche Publishable Key reicht nicht. Ohne diese Einrichtung bleibt der Produktionsschritt gesperrt. Keine kostenpflichtigen Zusatzprodukte aktivieren.
+Zugangsdaten direkt in die geschützten GitHub-Secret-Felder eingeben, niemals in Chat, Dateien oder Commits. Der öffentliche Publishable Key reicht nicht. Der Workflow verbindet sich direkt mit dem verifizierten Session-Pooler über das Datenbankpasswort. Es wird kein Personal Access Token erzeugt, gespeichert oder zum Lesen von API-Key-Secrets berechtigt. Ohne dieses Datenbank-Secret bleibt der Produktionsschritt gesperrt. Keine kostenpflichtigen Zusatzprodukte aktivieren.
 
 Freigabe für diesen dauerhaften Produktionszugriff wurde vom Nutzer am 24.10.2026 ausdrücklich erteilt. Umfang: dieses Repository, das Supabase-Projekt iewltgawdodbmwcdgzxy und dessen Website. Wer main ändern kann, kann über den Workflow Datenbankänderungen ausführen; Repository-Zugriff entsprechend begrenzen.
 
@@ -40,6 +39,6 @@ Der Pages-Ordner enthält nur index.html, .nojekyll und assets/. Lokale ZIPs, pr
 
 Free-Tarife behalten ihre Limits; Supabase kann bei geringer Aktivität pausieren. Kein Ablauf garantiert unbegrenzte oder dauerhafte Verfügbarkeit. Falix ist ein separater Minecraft-Hoster und wird von diesem Deployment nicht als 24/7-Server eingerichtet.
 
-Ein erfolgreicher Produktionslauf ist erst nach Einrichtung der Secrets/Pages-Verbindung nachgewiesen. Auf diesem PC ist kein Docker vorhanden; echte PostgreSQL-Integrationstests laufen auf dem GitHub-Runner.
+Der erste GitHub-Verify-Lauf war erfolgreich, einschließlich realer PostgreSQL-Rechteprüfungen und beider bisherigen Einrichtungswege. Ein erfolgreicher Produktionslauf ist erst nach der Datenbankverbindung nachgewiesen. Auf diesem PC ist kein Docker vorhanden; echte PostgreSQL-Integrationstests laufen auf dem GitHub-Runner.
 
 Grundlagen: [Supabase CI/CD](https://supabase.com/docs/guides/deployment/managing-environments), [Supabase Migrationen](https://supabase.com/docs/guides/deployment/database-migrations), [GitHub Pages Workflows](https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages).

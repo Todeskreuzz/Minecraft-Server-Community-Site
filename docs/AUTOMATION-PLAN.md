@@ -1,6 +1,6 @@
 # Dauerhafter automatischer Deployment-Ablauf — zur Freigabe
 
-Status: Entwurf, noch nicht aktiviert. Es gibt keinen eingerichteten Workflow und keine gespeicherten administrativen Zugangsdaten.
+Status: Nutzer hat den dauerhaften Ablauf am 24.10.2026 ausdrücklich freigegeben. Workflow und Migrationen sind im Repository; der erste isolierte Testlauf ist erfolgreich. Produktionsverbindung wird eingerichtet.
 
 ## Ziel und Umfang
 
@@ -11,7 +11,7 @@ Das ist ein dauerhafter Deployment-Ablauf, kein KI-Agent, der unbeaufsichtigt Fu
 ## Erforderliche Freigabe
 
 - GitHub Actions darf dauerhaft bei Push auf main und bei manuellem Start laufen.
-- GitHub Actions darf den für dieses Supabase-Projekt hinterlegten Personal Access Token und das Datenbankpasswort aus GitHub Actions Secrets verwenden.
+- GitHub Actions darf das für dieses Supabase-Projekt hinterlegte Datenbankpasswort aus GitHub Actions Secrets verwenden.
 - Der Ablauf darf damit ausstehende Migrationen auf die Produktionsdatenbank anwenden und die öffentliche Website deployen.
 - Nur dieses Repository und das genannte Supabase-Projekt gehören zum Auftrag.
 
@@ -33,3 +33,7 @@ Nur ausstehende, versionierte Migrationen anwenden; Produktionsläufe nacheinand
 Free-Tarife behalten ihre Anbieterlimits. Der Ablauf garantiert keine unbegrenzte oder dauerhafte Verfügbarkeit.
 
 Grundlagen: https://supabase.com/docs/guides/deployment/managing-environments und https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages
+
+## Vereinfachte Verbindung
+
+Die endgültige Variante nutzt ausschließlich das bereits hinterlegte Datenbankpasswort und die im Supabase-Connect-Dialog bestätigte Session-Pooler-Adresse. Kein Personal Access Token und kein Zugriff auf API-Key-Secrets sind erforderlich.

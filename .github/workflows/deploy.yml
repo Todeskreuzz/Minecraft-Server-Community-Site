@@ -73,9 +73,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     env:
-      SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
       SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
-      SUPABASE_PROJECT_ID: iewltgawdodbmwcdgzxy
     steps:
       - uses: actions/checkout@v6
         with:
@@ -83,7 +81,7 @@ jobs:
       - name: Check protected connection is configured
         shell: bash
         run: |
-          for name in SUPABASE_ACCESS_TOKEN SUPABASE_DB_PASSWORD; do
+          for name in SUPABASE_DB_PASSWORD; do
             if [ -z "${!name}" ]; then
               echo "::error::Missing GitHub Actions secret: $name. See docs/AUTOMATION.md."
               exit 1
@@ -92,11 +90,13 @@ jobs:
       - uses: supabase/setup-cli@v1
         with:
           version: latest
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
       - name: Apply pending migrations to this community project
         run: |
           supabase init
-          supabase link --project-ref "$SUPABASE_PROJECT_ID"
-          supabase db push --linked --yes
+          node scripts/deploy-database.mjs
 
   publish:
     if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'

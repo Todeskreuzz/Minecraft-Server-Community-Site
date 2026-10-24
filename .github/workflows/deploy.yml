@@ -1,0 +1,127 @@
+name: Test, migrate and publish
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: community-${{ github.event_name == 'pull_request' && github.ref || 'production' }}
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Test browser code and UID tool
+        run: |
+          node --check assets/js/forum.mjs
+          node --check assets/js/forum-api.mjs
+          node --check assets/js/forum-identity.mjs
+          node scripts/check.mjs
+          node --test tests/*.test.mjs
+      - uses: supabase/setup-cli@v1
+        with:
+          version: latest
+      - name: Create disposable local Supabase environment
+        run: |
+          supabase init
+          supabase start
+          supabase db reset --local
+      - name: Test database roles and existing-data preservation
+        env:
+          PGURL: postgresql://postgres:postgres@127.0.0.1:54322/postgres
+        run: |
+          psql "$PGURL" -X -v ON_ERROR_STOP=1 -f supabase/permission-tests.sql
+          psql "$PGURL" -X -v ON_ERROR_STOP=1 -f supabase/002-identity-tests.sql
+          sed 's/\r$//; /^begin;$/d; /^commit;$/d' supabase/migrations/20261024000100_forum.sql > supabase/.adoption-forum.sql
+          sed 's/\r$//; /^begin;$/d; /^commit;$/d' supabase/migrations/20261024000200_identity.sql > supabase/.adoption-identity.sql
+          psql "$PGURL" -X -v ON_ERROR_STOP=1 -f supabase/adoption-test.sql
+      - name: Check both historical manual installation paths
+        env:
+          PGURL: postgresql://postgres:postgres@127.0.0.1:54322/postgres
+        run: |
+          mv supabase/migrations "$RUNNER_TEMP/community-migrations"
+          mkdir supabase/migrations
+          for legacy in setup-only setup-with-identity; do
+            supabase db reset --local --no-seed
+            psql "$PGURL" -X -v ON_ERROR_STOP=1 -f supabase/setup.sql
+            if [ "$legacy" = setup-with-identity ]; then
+              psql "$PGURL" -X -v ON_ERROR_STOP=1 -f supabase/002-identity.sql
+            fi
+            psql "$PGURL" -X -v ON_ERROR_STOP=1 -f supabase/adoption-test.sql
+          done
+          mv "$RUNNER_TEMP/community-migrations/"*.sql supabase/migrations/
+      - name: Stop disposable environment
+        if: always()
+        run: supabase stop --no-backup
+
+  migrate:
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    needs: verify
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+      SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
+      SUPABASE_PROJECT_ID: iewltgawdodbmwcdgzxy
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - name: Check protected connection is configured
+        shell: bash
+        run: |
+          for name in SUPABASE_ACCESS_TOKEN SUPABASE_DB_PASSWORD; do
+            if [ -z "${!name}" ]; then
+              echo "::error::Missing GitHub Actions secret: $name. See docs/AUTOMATION.md."
+              exit 1
+            fi
+          done
+      - uses: supabase/setup-cli@v1
+        with:
+          version: latest
+      - name: Apply pending migrations to this community project
+        run: |
+          supabase init
+          supabase link --project-ref "$SUPABASE_PROJECT_ID"
+          supabase db push --linked --yes
+
+  publish:
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    needs: migrate
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - uses: actions/configure-pages@v5
+      - name: Package public website only
+        run: |
+          mkdir -p _site
+          cp index.html .nojekyll _site/
+          cp -R assets _site/assets
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: _site
+      - uses: actions/deploy-pages@v4
+        id: deployment

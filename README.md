@@ -1,5 +1,7 @@
 # Friends & Foes — Community-Forum
 
+Automatische Tests, Datenbankmigrationen und GitHub-Pages-Veröffentlichung: [.github/workflows/deploy.yml](.github/workflows/deploy.yml). Einmalige geschützte Verbindung siehe [docs/AUTOMATION.md](docs/AUTOMATION.md). Der Ablauf benötigt keinen geöffneten Codex-Chat.
+
 Neu: lokaler **Anonym**-Lesemodus ohne Konto/UID, automatische Browser-Sprachwahl (DE/EN) und geschützter Inhabername mit eigener Freundesfreigabe. Bestehende Installationen benötigen `supabase/002-identity.sql`; Anleitung und Prüfdatei unter [supabase/README.md](supabase/README.md). Ohne diese Erweiterung ist der Namensschutz in der Datenbank noch nicht eingerichtet.
 
 Die aktuelle Startseite ist ein DE/EN-Forum mit Supabase-Anmeldung, Themen, Antworten und einem durch Datenbankregeln geschützten Adminbereich. Einrichtung: **[supabase/README.md](supabase/README.md)**. Zuerst `supabase/setup.sql`, dann `supabase/permission-tests.sql` im Supabase SQL Editor ausführen. Datenbank und echte Konten sind ohne diesen Schritt noch nicht einsatzbereit.

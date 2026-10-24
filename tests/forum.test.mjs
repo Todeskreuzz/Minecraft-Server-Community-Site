@@ -24,3 +24,9 @@ test('database errors are surfaced without exposing request credentials',async()
  const api=createApi({url:'https://example.supabase.co',key:'sb_publishable_test'},()=>null,()=>{},async()=>({ok:false,status:403,json:async()=>({message:'permission denied'})}));
  await assert.rejects(api.db('owner_settings'),/permission denied/);
 });
+test('failed remote logout still clears the local identity',async()=>{
+ let session={access_token:'token',refresh_token:'refresh',expires_at:Date.now()/1000+3600,user:{id:'owner'}};
+ const api=createApi({url:'https://example.supabase.co',key:'sb_publishable_test'},()=>session,value=>session=value,async()=>{throw Error('Network unavailable')});
+ await assert.rejects(api.logout(),/Network unavailable/);
+ assert.equal(session,null);
+});

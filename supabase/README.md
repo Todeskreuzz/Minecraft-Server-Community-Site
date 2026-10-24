@@ -1,5 +1,17 @@
 # Forum einrichten (Supabase Free + GitHub Pages)
 
+## Erweiterung: Anonym, Sprache und private Inhaber-Namen
+
+Nach bereits ausgeführter `setup.sql` zusätzlich **`002-identity.sql`** einmal im SQL Editor ausführen. Danach `002-identity-tests.sql` ausführen; erwartet: `Identity permission tests passed`. Beide Testskripte verwerfen ihre Testdaten per ROLLBACK. Die Migration wurde lokal statisch geprüft, aber nicht durch den Publishable Key im echten Projekt ausgeführt.
+
+- **Anonym** ist ein lokaler Lesemodus im sessionStorage, kein Supabase-Account. Keine Registrierung, Schreibrechte, UID oder aufzuräumende anonyme Auth-Datensätze. Supabase Anonymous Sign-ins dafür nicht einschalten. Öffentliche Lesezugriffe bleiben auch ohne diese Auswahl möglich; es ist keine Sperre gegen Scraping oder alle Botangriffe.
+- Oberflächensprache automatisch anhand der Browser-Sprachen: erste unterstützte Sprache DE/EN, sonst EN. Sprachmenü erlaubt eine bewusste Wahl oder Auto. Keine IP-Ortung und keine automatische Übersetzung von Beiträgen.
+- Bei Freischaltung zum Admin wird der bisherige öffentliche Anzeigename in die private Namenstabelle übernommen und der öffentliche Profilname auf `Owner` gesetzt. Danach im Adminbereich unter **Dein privater Anzeigename** den gewünschten Namen speichern. Nur der Inhaber selbst und von ihm freigegebene Freunde bekommen ihn über die Datenbankfunktion zurück. Nicht-Freunde sehen `Inhaber` / `Owner`.
+- Wer den Namen schon vor der Migration öffentlich lesen konnte, kann ihn weiterhin kennen. Bereits geladene Informationen auf fremden Geräten können durch das Entfernen einer Freundschaft nicht rückwirkend gelöscht werden; neue Datenbankabfragen geben den Namen dann nicht mehr heraus.
+- Für ein neues Inhaberkonto zunächst mit dem generischen Anzeigenamen `Owner` registrieren, dann Adminrechte wie unten zuweisen und den privaten Namen im Adminbereich einstellen. So landet der private Name nie vorher als öffentlicher Registrierungsname im Profil.
+- Freunde im Adminbereich aus registrierten Mitgliedern auswählen und hinzufügen oder entfernen. Freigabe gilt in Richtung Inhaber → Freund; Mitglieder können sich nicht selbst freischalten. Die erste Fassung zeigt maximal 1000 registrierte Mitglieder im Auswahlfeld.
+- UIDs bleiben weiterhin beim separaten Offline-Werkzeug; weder Anmeldung noch anonymer Modus vergeben automatisch eine UID.
+
 Der öffentliche Publishable Key ist in `assets/data/supabase.json` hinterlegt. Er ist kein Administratorschlüssel. Alle echten Zugriffsrechte liegen in PostgreSQL/RLS.
 
 ## 1. Datenbank

@@ -1,5 +1,7 @@
 # Friends & Foes — Community-Forum
 
+Neu: lokaler **Anonym**-Lesemodus ohne Konto/UID, automatische Browser-Sprachwahl (DE/EN) und geschützter Inhabername mit eigener Freundesfreigabe. Bestehende Installationen benötigen `supabase/002-identity.sql`; Anleitung und Prüfdatei unter [supabase/README.md](supabase/README.md). Ohne diese Erweiterung ist der Namensschutz in der Datenbank noch nicht eingerichtet.
+
 Die aktuelle Startseite ist ein DE/EN-Forum mit Supabase-Anmeldung, Themen, Antworten und einem durch Datenbankregeln geschützten Adminbereich. Einrichtung: **[supabase/README.md](supabase/README.md)**. Zuerst `supabase/setup.sql`, dann `supabase/permission-tests.sql` im Supabase SQL Editor ausführen. Datenbank und echte Konten sind ohne diesen Schritt noch nicht einsatzbereit.
 
 Frontend lokal: `python -m http.server 8018 --bind 127.0.0.1`. Tests: `node --test tests/forum.test.mjs tests/uid-manager.test.mjs`; Syntax: `node --check assets/js/forum.mjs`. Statische Strukturprüfung: `node scripts/check.mjs`.

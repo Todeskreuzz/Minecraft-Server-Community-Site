@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0c1010">
+  <meta name="color-scheme" content="dark">
+  <meta name="description" content="Friends and Foes Co. KG — Minecraft Forge Community, Modpack, Ränge und Serverinformationen.">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self' https://api.mcstatus.io; object-src 'none'; base-uri 'self'; form-action 'none'">
+  <title>Friends and Foes Co. KG — Minecraft Community</title>
+  <link rel="icon" type="image/svg+xml" href="./assets/img/favicon.svg">
+  <link rel="stylesheet" href="./assets/css/style.css">
+  <script src="./assets/js/app.js" type="module"></script>
+</head>
+<body>
+  <a class="skip-link" href="#content" data-i18n="skip">Zum Inhalt springen</a>
+  <div class="site-shell">
+    <header class="site-header" id="top">
+      <div class="navbar wrap">
+        <a class="brand" href="#top" aria-label="Friends and Foes Co. KG — Home">
+          <img src="./assets/img/mark.svg" alt="" width="42" height="42">
+          <span class="brand-copy"><strong>FRIENDS <span class="brand-amp">&</span> FOES</strong><small>CO. KG <span aria-hidden="true">/</span> MINECRAFT</small></span>
+        </a>
+        <button id="navToggle" class="nav-toggle" aria-expanded="false" aria-controls="mainNav" aria-label="Menü öffnen"><span></span><span></span></button>
+        <nav class="main-nav" id="mainNav" aria-label="Hauptnavigation">
+          <a href="#server" data-i18n="navServer">Server</a>
+          <a href="#modpack" data-i18n="navModpack">Modpack</a>
+          <a href="#identities" data-i18n="navRanks">Ränge & UIDs</a>
+          <a href="#community" data-i18n="navCommunity">Community</a>
+          <a href="#news" data-i18n="navNews">News</a>
+          <a href="#rules" data-i18n="navRules">Regeln</a>
+        </nav>
+        <div class="nav-actions">
+          <div class="lang-switch" role="group" aria-label="Language / Sprache">
+            <button id="langDe" type="button" class="lang-btn is-active" aria-pressed="true" lang="de">DE</button><span aria-hidden="true">/</span><button id="langEn" type="button" class="lang-btn" aria-pressed="false" lang="en">EN</button>
+          </div>
+          <a class="header-cta" href="#modpack" data-i18n="navJoin">Mitspielen <span aria-hidden="true">↗</span></a>
+        </div>
+      </div>
+    </header>
+
+    <main id="content">
+      <section class="hero wrap" aria-labelledby="hero-title">
+        <div class="hero-halo" aria-hidden="true"><div class="halo-ring halo-one"></div><div class="halo-ring halo-two"></div><div class="halo-ring halo-three"></div><div class="halo-core">F<span>/</span>F</div><span class="halo-spark spark-a"></span><span class="halo-spark spark-b"></span></div>
+        <div class="hero-copy">
+          <div class="eyebrow"><span class="small-diamond"></span><span data-i18n="heroEyebrow">EINE COMMUNITY. ZWEI SEITEN.</span><span class="eyebrow-tail">EST. <span data-i18n="heroEst">BALD</span></span></div>
+          <h1 id="hero-title"><span class="hero-line">FRIENDS</span><span class="hero-line hero-line-second"><span class="hero-italic">and</span> FOES<span class="hero-dot">.</span></span></h1>
+          <div class="hero-bottom"><div class="hero-description"><span class="section-index">01 / <span data-i18n="heroIntro">WILLKOMMEN</span></span><p class="hero-subtitle" id="heroSlogan">Love your Friends like you hate your Enemies</p><p class="hero-secondary" data-i18n="heroDesc">Ein Ort für Allianzen, Rivalitäten und Geschichten, die nur zusammen entstehen können.</p></div><div class="hero-buttons"><a class="btn btn-primary" href="#modpack"><span data-i18n="heroGetStarted">Modpack entdecken</span><span class="btn-arrow">↗</span></a><a class="btn btn-ghost" href="#server"><span data-i18n="heroCheckServer">Server ansehen</span><span class="btn-arrow">↘</span></a></div></div>
+        </div>
+        <div class="hero-edge" aria-hidden="true"><span>20</span><div></div><span>26</span></div>
+      </section>
+
+      <div class="ticker" aria-hidden="true"><div class="ticker-track"><span>FRIENDS & FOES <em>✳</em> ALLIANCE / RIVALRY <em>✳</em> MINECRAFT FORGE <em>✳</em> EVERY PLAYER HAS A STORY <em>✳</em> FRIENDS & FOES <em>✳</em> ALLIANCE / RIVALRY <em>✳</em> MINECRAFT FORGE <em>✳</em> EVERY PLAYER HAS A STORY <em>✳</em></span></div></div>
+
+      <section class="section wrap" id="server" aria-labelledby="server-heading">
+        <div class="section-heading reveal"><div class="eyebrow section-eyebrow"><span class="small-diamond"></span>02 / SERVER INFO</div><div class="heading-row"><h2 id="server-heading"><span data-i18n="serverTitleOne">Dein nächstes</span><br><i data-i18n="serverTitleTwo">Abenteuer.</i></h2><p class="heading-aside" data-i18n="serverIntro">Alles auf einen Blick. Kein Rätselraten bei Versionen, Mods oder Verfügbarkeit.</p></div></div>
+        <div class="server-grid">
+          <article class="panel server-primary reveal">
+            <div class="panel-top"><span class="panel-label" data-i18n="serverAddressLabel">VERBINDUNGSADRESSE</span><span class="panel-counter">MC / JAVA / 01</span></div>
+            <div class="server-address-box"><span id="serverAddress" class="server-address" data-i18n="serverAddressTbd">Wird bekanntgegeben</span><button id="copyAddress" class="copy-button" type="button" disabled><span data-i18n="copy">Kopieren</span><span aria-hidden="true">↗</span></button></div>
+            <p class="panel-note" data-i18n="serverAddressHint">Die Server-IP wird hier angezeigt, sobald sie feststeht.</p>
+            <div class="server-bottom"><div><small data-i18n="minecraftVersion">MINECRAFT</small><strong id="mcVersion">1.20.1</strong></div><div><small>FORGE</small><strong id="forgeVersion">47.4.10</strong></div><div><small data-i18n="packMods">MODS IM PROFIL</small><strong id="modsCount">39</strong></div></div>
+          </article>
+          <article class="panel status-panel reveal">
+            <div class="panel-top"><span class="panel-label" data-i18n="statusLabel">SERVERSTATUS</span><span class="live-label"><span class="pulse-dot" id="statusDot"></span><span id="statusCaption" data-i18n="statusPending">Nicht eingerichtet</span></span></div>
+            <div class="status-content"><div class="status-wave" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div><div class="status-value" id="statusText" role="status" aria-live="polite" data-i18n="statusAwait">Wartet auf Adresse</div></div>
+            <div class="status-footer"><div><small data-i18n="onlinePlayers">SPIELER ONLINE</small><strong id="onlineCount">— / —</strong></div><div><small data-i18n="statusLastChecked">LETZTE PRÜFUNG</small><strong id="lastChecked">—</strong></div></div>
+            <p class="status-explainer" id="statusExplanation" data-i18n="statusDisclaimer">Der Live-Status wird aktiviert, sobald die Serveradresse hinterlegt ist.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section section-soft" id="modpack" aria-labelledby="pack-heading"><div class="wrap">
+        <div class="section-heading reveal"><div class="eyebrow section-eyebrow"><span class="small-diamond"></span>03 / MODPACK</div><div class="heading-row"><h2 id="pack-heading"><span data-i18n="packTitleOne">Alles dabei.</span><br><i data-i18n="packTitleTwo">Einmal starten.</i></h2><p class="heading-aside" data-i18n="packIntro">Keine Suche nach einzelnen Mods. Das passende Forge-Profil erhältst du als gemeinsames Modpack.</p></div></div>
+        <div class="pack-showcase reveal"><div class="pack-visual" aria-hidden="true"><div class="pack-lattice"></div><div class="pack-disc"><span class="pack-disc-top">THE COLLECTION / VOL. 01</span><b>F<span>↗</span>F</b><span class="pack-disc-bottom">FORGE EDITION</span></div><span class="corner-label">F&F — 01</span></div>
+          <div class="pack-info"><span class="info-kicker" data-i18n="packEdition">DEINE EINHEITLICHE SPIELVERSION</span><h3>Friends & Foes<br><em>Mod Collection</em></h3><div class="pack-specs"><span><strong id="packMcVersion">1.20.1</strong>MINECRAFT</span><span><strong id="packForgeVersion">47.4.10</strong>FORGE</span><span><strong id="packModCount">39</strong>MODS</span></div><p data-i18n="packNote">Das CurseForge-Profil enthält die benötigten Mod-Referenzen und Konfigurationen. Die Mods werden beim Import über CurseForge bezogen.</p>
+            <a id="packDownload" class="btn btn-primary btn-block is-disabled" href="#modpack" aria-disabled="true"><span data-i18n="packDownloadTbd">Download folgt</span><span class="btn-arrow">↓</span></a><span class="micro-hint" id="packAvailability" data-i18n="packLinkTbd">Der Downloadlink wird ergänzt, sobald das Profil exportiert ist.</span>
+          </div>
+        </div>
+        <div class="steps-grid"><article class="step reveal"><span class="step-index">01</span><h3 data-i18n="step1Title">CurseForge installieren</h3><p data-i18n="step1Body">Installiere die CurseForge-App und wähle Minecraft als Spiel aus.</p><a href="https://www.curseforge.com/download/app" target="_blank" rel="noopener noreferrer"><span data-i18n="step1Link">Zur offiziellen App</span> ↗</a></article><article class="step reveal"><span class="step-index">02</span><h3 data-i18n="step2Title">Profil importieren</h3><p data-i18n="step2Body">Lade unser Profil als ZIP herunter und importiere es in CurseForge über „Import Profile“.</p></article><article class="step reveal"><span class="step-index">03</span><h3 data-i18n="step3Title">Starten & beitreten</h3><p data-i18n="step3Body">Lass CurseForge die passenden Mods installieren, starte das Profil und verbinde dich mit dem Server.</p></article></div>
+        <div class="notice"><span aria-hidden="true">i</span><p data-i18n="packLegal">Forge und das Modpack müssen zur Serverversion passen. Ein Serverhost installiert Mods nicht automatisch auf den PCs der Spieler.</p></div>
+      </div></section>
+
+      <section class="section wrap" id="identities" aria-labelledby="identity-heading">
+        <div class="section-heading reveal"><div class="eyebrow section-eyebrow"><span class="small-diamond"></span>04 / IDENTITIES</div><div class="heading-row"><h2 id="identity-heading"><span data-i18n="rankTitleOne">Dein Rang.</span><br><i data-i18n="rankTitleTwo">Deine Geschichte.</i></h2><p class="heading-aside" data-i18n="rankIntro">Eine klare Rangstruktur und unverwechselbare Spieler-IDs – die ersten Spieler bekommen die kleinsten Nummern.</p></div></div>
+        <div class="ranks-grid reveal">
+          <article class="rank-card rank-owner"><div class="rank-top"><span data-i18n="rankLead">LEITUNG</span><span>✦ 01</span></div><div class="rank-icon" aria-hidden="true">✧</div><div class="rank-title">OWNER</div><div class="rank-footer"><span data-i18n="rankOwnerDesc">Vision & Verantwortung</span><span class="rank-stripe"></span></div></article>
+          <article class="rank-card rank-admin"><div class="rank-top"><span data-i18n="rankOperation">VERWALTUNG</span><span>✦ 02</span></div><div class="rank-icon" aria-hidden="true">◇</div><div class="rank-title">ADMIN</div><div class="rank-footer"><span data-i18n="rankAdminDesc">Technik & Organisation</span><span class="rank-stripe"></span></div></article>
+          <article class="rank-card rank-mod"><div class="rank-top"><span data-i18n="rankSupport">COMMUNITY</span><span>✦ 03</span></div><div class="rank-icon" aria-hidden="true">✳</div><div class="rank-title">MODERATOR</div><div class="rank-footer"><span data-i18n="rankModDesc">Fairness & Support</span><span class="rank-stripe"></span></div></article>
+        </div>
+        <div class="identity-layout"><div class="uid-story reveal"><span class="info-kicker">UID / IDENTITY SYSTEM</span><h3><span data-i18n="uidTitleOne">Früh dabei.</span><br><i data-i18n="uidTitleTwo">Für immer sichtbar.</i></h3><p data-i18n="uidDesc">Jeder registrierte Spieler erhält eine dauerhaft reservierte Nummer. Kleinere UIDs kennzeichnen frühere Registrierungen; Nummern werden nicht recycelt.</p><div class="uid-progression"><span>#000001</span><span>→</span><span>#000002</span><span>→</span><span>…</span></div><p class="tiny-note" data-i18n="uidExample">Nur ein Beispiel für die Reihenfolge – keine tatsächlich vergebenen UIDs.</p></div>
+          <div class="uid-preview reveal"><div class="uid-card"><div class="uid-card-top"><span class="uid-kicker">FRIENDS & FOES / IDENTITY</span><span class="uid-mark">✳</span></div><div class="uid-card-center"><small data-i18n="uidCardLabel">DEINE PERSÖNLICHE UID</small><div>#<span class="uid-placeholder">••••••</span></div></div><div class="uid-card-bottom"><span>F&F CO. KG</span><span data-i18n="uidPreview">DESIGNVORSCHAU</span></div></div><span class="uid-ornament" aria-hidden="true">F/F</span></div></div>
+      </section>
+
+      <section class="section section-soft" id="community" aria-labelledby="community-heading"><div class="wrap">
+        <div class="section-heading reveal"><div class="eyebrow section-eyebrow"><span class="small-diamond"></span>05 / THE PEOPLE</div><div class="heading-row"><h2 id="community-heading"><span data-i18n="communityTitleOne">Menschen hinter</span><br><i data-i18n="communityTitleTwo">den Namen.</i></h2><p class="heading-aside" data-i18n="communityIntro">Unser Team und die freiwillig öffentlich sichtbaren Spielerprofile.</p></div></div>
+        <div class="subsection-title"><h3 data-i18n="teamLabel">TEAM & ADMINISTRATION</h3><span id="teamCount">00</span></div>
+        <div class="people-grid" id="teamGrid"><div class="empty-state" data-i18n="teamEmpty">Teamprofile werden ergänzt, sobald Namen und Freigaben vorliegen.</div></div>
+        <div class="subsection-title space-top"><h3 data-i18n="communityRoster">UID-REGISTER / ÖFFENTLICHE PROFILE</h3><span id="memberCount">00</span></div>
+        <div class="people-grid" id="memberGrid"><div class="empty-state" data-i18n="membersEmpty">Noch keine öffentlich freigegebenen Spielerprofile.</div></div>
+        <div class="subsection-title space-top"><h3 data-i18n="onlineRosterTitle">AKTUELL ONLINE / SPIELERLISTE</h3><span id="onlineRosterCount">—</span></div>
+        <div class="people-grid" id="onlinePlayerGrid"><div class="empty-state" data-i18n="onlineRosterEmpty">Wird verfügbar, sobald Serveradresse und Freigabe vorliegen.</div></div>
+        <div class="privacy-note"><span>◇</span><span data-i18n="rosterPrivacy">Die öffentliche UID-Liste enthält nur freigegebene Profile. Eine automatische UID-Vergabe beim Join erfordert später eine Serveranbindung.</span></div>
+      </div></section>
+
+      <section class="section wrap" id="news" aria-labelledby="news-heading"><div class="section-heading reveal"><div class="eyebrow section-eyebrow"><span class="small-diamond"></span>06 / BULLETIN</div><div class="heading-row"><h2 id="news-heading"><span data-i18n="newsTitleOne">Das Neueste</span><br><i data-i18n="newsTitleTwo">aus der Welt.</i></h2><p class="heading-aside" data-i18n="newsIntro">Updates, Modpack-Versionen und Neuigkeiten aus der Community – sobald es etwas zu berichten gibt.</p></div></div><div id="newsGrid" class="news-grid"><div class="empty-state" data-i18n="newsEmpty">Noch keine veröffentlichten News. Schau bald wieder vorbei.</div></div></section>
+
+      <section class="section section-rules" id="rules" aria-labelledby="rules-heading"><div class="wrap"><div class="section-heading reveal"><div class="eyebrow section-eyebrow"><span class="small-diamond"></span>07 / THE CODE</div><div class="heading-row"><h2 id="rules-heading"><span data-i18n="rulesTitleOne">Klare Regeln.</span><br><i data-i18n="rulesTitleTwo">Besseres Spiel.</i></h2><p class="heading-aside" data-i18n="rulesIntro">Faire Bedingungen für Freundschaften und Rivalitäten. Die folgenden Regeln sind ein Vorschlag und müssen noch freigegeben werden.</p></div></div><div class="draft-flag"><span aria-hidden="true">△</span><span data-i18n="rulesDraft">ENTWURF – NOCH NICHT OFFIZIELL BESTÄTIGT</span></div><div id="rulesList" class="rules-list"></div></div></section>
+
+      <section class="final-cta wrap reveal"><div class="final-cta-inner"><span class="info-kicker" data-i18n="finalKicker">DEIN NÄCHSTES KAPITEL</span><h2><span data-i18n="finalTitleOne">Freund oder Feind?</span><br><i data-i18n="finalTitleTwo">Du entscheidest.</i></h2><p data-i18n="finalBody">Das Abenteuer beginnt mit einem Klick. Lade das Modpack, finde deinen Platz und schreibe deine eigene Geschichte.</p><a class="btn btn-primary" href="#modpack"><span data-i18n="finalButton">Zur Modpack-Anleitung</span><span class="btn-arrow">↗</span></a></div><span class="final-giant" aria-hidden="true">F/F</span></section>
+    </main>
+    <footer class="footer"><div class="wrap"><div class="footer-top"><div class="footer-brand"><img src="./assets/img/mark.svg" alt="" width="50" height="50"><div><strong>FRIENDS & FOES</strong><span>CO. KG / MINECRAFT COMMUNITY</span></div></div><p>Love your Friends like you hate your Enemies</p><a href="#top" class="top-link"><span data-i18n="backTop">NACH OBEN</span> ↑</a></div><div class="footer-bottom"><span>© <span id="year">2026</span> FRIENDS AND FOES CO. KG</span><span data-i18n="footerUnofficial">Unabhängiges Community-Projekt. Nicht mit Mojang oder Microsoft verbunden.</span><span>DESIGNED FOR THE PLAYERS ✳</span></div></div></footer>
+  </div>
+</body>
+</html>

@@ -1,0 +1,20 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
+import {spawnSync} from 'node:child_process';
+import {fileURLToPath} from 'node:url';
+const script=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'../scripts/uid-manager.mjs');
+const A='00000000-0000-4000-8000-000000000001';
+const B='00000000-0000-4000-8000-000000000002';
+const C='00000000-0000-4000-8000-000000000003';
+function sandbox(t){const dir=fs.mkdtempSync(path.join(os.tmpdir(),'faf-uid-test-'));t.after(()=>fs.rmSync(dir,{recursive:true,force:true}));const privateDir=path.join(dir,'private'),publicFile=path.join(dir,'members.json');return {dir,privateDir,publicFile,call(...args){return spawnSync(process.execPath,[script,...args],{encoding:'utf8',env:{...process.env,UID_PRIVATE_DIR:privateDir,UID_PUBLIC_FILE:publicFile}})}}}
+test('assigns UIDs, no recycling, opt-in public export',t=>{const s=sandbox(t);let r=s.call('add','--uuid',A,'--name','Alpha_Test','--joined','2026-10-24T08:00:00Z');assert.equal(r.status,0,r.stderr);let published=JSON.parse(fs.readFileSync(s.publicFile));assert.equal(published.members.length,0);
+  r=s.call('add','--uuid',B,'--name','Beta_Test','--joined','2026-10-24T09:00:00Z','--role','mod','--public');assert.equal(r.status,0,r.stderr);
+  r=s.call('update','--uuid',A,'--public');assert.equal(r.status,0,r.stderr);published=JSON.parse(fs.readFileSync(s.publicFile));assert.deepEqual(published.members.map(p=>p.uid),[1,2]);assert.equal(published.members[1].role,'mod');assert.ok(!JSON.stringify(published).includes(A),'public JSON must not expose UUID');
+  r=s.call('update','--uuid',A,'--private');assert.equal(r.status,0,r.stderr);published=JSON.parse(fs.readFileSync(s.publicFile));assert.deepEqual(published.members.map(p=>p.uid),[2]);
+  const privateRegistry=JSON.parse(fs.readFileSync(path.join(s.privateDir,'uid-registry.json')));assert.equal(privateRegistry.nextUid,3);assert.equal(privateRegistry.members[0].uid,1);
+});
+test('rejects duplicate UUID and out-of-order joins',t=>{const s=sandbox(t);let r=s.call('add','--uuid',A,'--name','First','--joined','2026-10-24T10:00:00Z');assert.equal(r.status,0,r.stderr);r=s.call('add','--uuid',A,'--name','First','--joined','2026-10-24T11:00:00Z');assert.equal(r.status,1);r=s.call('add','--uuid',B,'--name','Early','--joined','2026-10-24T09:00:00Z');assert.equal(r.status,1);assert.equal(JSON.parse(fs.readFileSync(path.join(s.privateDir,'uid-registry.json'))).nextUid,2)});
+test('CSV import sorts by first join, including equal-date rows',t=>{const s=sandbox(t);const csv=path.join(s.dir,'players.csv');fs.writeFileSync(csv,`uuid,name,firstSeen,role,public\n${B},Second,2026-10-24T13:00:00Z,member,false\n${A},First,2026-10-24T08:00:00Z,owner,true\n${C},Third,2026-10-24T14:00:00Z,admin,true\n`);const r=s.call('import','--file',csv);assert.equal(r.status,0,r.stderr);const privateRegistry=JSON.parse(fs.readFileSync(path.join(s.privateDir,'uid-registry.json')));assert.deepEqual(privateRegistry.members.map(p=>p.name),['First','Second','Third']);assert.deepEqual(privateRegistry.members.map(p=>p.uid),[1,2,3])});

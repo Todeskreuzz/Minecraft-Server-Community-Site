@@ -1,0 +1,21 @@
+{
+  "name": "Friends and Foes Co. KG",
+  "slogan": "Love your Friends like you hate your Enemies",
+  "minecraftVersion": "1.20.1",
+  "forgeVersion": "47.4.10",
+  "modCount": 39,
+  "contentCountNote": "Vom Auftraggeber als 'Content von 50' angegeben; Bedeutung bitte vor einer Veröffentlichung klären.",
+  "server": {
+    "address": "",
+    "showOnlineNames": false,
+    "refreshSeconds": 120
+  },
+  "modpack": {
+    "downloadUrl": "",
+    "version": "",
+    "fileSize": ""
+  },
+  "community": {
+    "discordUrl": ""
+  }
+}

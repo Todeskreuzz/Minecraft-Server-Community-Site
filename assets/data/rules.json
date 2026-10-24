@@ -1,0 +1,10 @@
+{
+  "status": "draft",
+  "rules": [
+    {"id": "respect", "de": {"title": "Respekt ist Pflicht.", "body": "Keine Beleidigungen, Belästigung oder Diskriminierung – auch nicht bei Rivalitäten."}, "en": {"title": "Respect is non-negotiable.", "body": "No insults, harassment or discrimination – even between rivals."}},
+    {"id": "build", "de": {"title": "Bauten anderer achten.", "body": "Kein Griefing, Diebstahl oder mutwillige Zerstörung außerhalb ausdrücklich vereinbarter Spielregeln."}, "en": {"title": "Respect other players' builds.", "body": "No griefing, theft or deliberate destruction outside explicitly agreed game rules."}},
+    {"id": "fairplay", "de": {"title": "Fair spielen.", "body": "Keine Cheats, Exploits oder unzulässigen Client-Modifikationen."}, "en": {"title": "Play fair.", "body": "No cheating, exploits or disallowed client modifications."}},
+    {"id": "privacy", "de": {"title": "Privatsphäre schützen.", "body": "Veröffentliche keine persönlichen Informationen anderer Personen ohne Zustimmung."}, "en": {"title": "Protect privacy.", "body": "Never share others' personal information without consent."}},
+    {"id": "team", "de": {"title": "Team-Entscheidungen respektieren.", "body": "Melde Probleme sachlich. Das Team prüft Konflikte anhand der geltenden Regeln."}, "en": {"title": "Respect team decisions.", "body": "Report issues respectfully. The team reviews conflicts based on the current rules."}}
+  ]
+}

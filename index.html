@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#09090b">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://challenges.cloudflare.com; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://iewltgawdodbmwcdgzxy.supabase.co https://api.mcstatus.io https://challenges.cloudflare.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-src https://challenges.cloudflare.com">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://challenges.cloudflare.com; style-src 'self'; font-src 'self'; img-src 'self' data: blob: https://iewltgawdodbmwcdgzxy.supabase.co; connect-src 'self' https://iewltgawdodbmwcdgzxy.supabase.co https://api.mcstatus.io https://challenges.cloudflare.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-src https://challenges.cloudflare.com">
 <title>Friends & Foes — Community Forum</title>
 <link rel="icon" href="assets/img/favicon.svg">
 <link rel="stylesheet" href="assets/css/forum.css">
@@ -35,6 +35,10 @@
 <span id="identityStatus" class="identity-status" hidden></span>
 <button id="registerButton" class="quiet" type="button" data-i18n="register">Registrieren</button>
 <button id="accountButton" class="quiet" type="button" data-i18n="login">Anmelden</button>
+<div id="accountMenu" class="account-menu" hidden>
+<a id="accountProfile" href="#u/01"><span id="accountName"></span><span id="accountUid" class="uid-badge"></span></a>
+<button type="button" id="accountLogout" data-i18n="logout">Abmelden</button>
+</div>
 </div>
 <button type="button" id="menuButton" class="icon-button menu-button" aria-expanded="false" aria-controls="navSheet" aria-label="Menü"><svg class="icon menu-open" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h16"/></svg><svg class="icon menu-close" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
 </div>
@@ -114,6 +118,39 @@
 <label><span data-i18n="message">Nachricht</span><textarea name="body" required maxlength="10000" rows="5"></textarea></label>
 <button class="primary" data-i18n="reply">Antwort veröffentlichen</button>
 </form>
+</section>
+<section id="profileView" class="view" hidden>
+<nav id="profileCrumbs" class="crumbs" aria-label="Breadcrumb"></nav>
+<div id="profileScene" class="profile-scene" aria-hidden="true"></div>
+<article class="profile-card">
+<div id="profileBanner" class="profile-banner"></div>
+<div class="profile-id">
+<div id="profileAvatar" class="avatar xl"></div>
+<div>
+<h1 id="profileName"></h1>
+<p id="profileUid" class="uid-badge"></p>
+<p id="profileJoined" class="muted"></p>
+</div>
+</div>
+<p id="profileBio"></p>
+<div class="profile-stats"><span id="profileThreads"></span><span id="profileReplies"></span></div>
+<h2 data-i18n="recentThreads">Letzte Themen</h2>
+<div id="profileThreadList" class="profile-threads"></div>
+<form id="profileForm" class="form" hidden>
+<h2 data-i18n="editProfile">Profil bearbeiten</h2>
+<p id="ownerNameNote" class="muted" hidden data-i18n="ownerNameLocked">Dein öffentlicher Name bleibt Inhaber. Den privaten Namen änderst du in der Verwaltung.</p>
+<label><span data-i18n="displayName">Anzeigename</span><input name="display_name" required minlength="2" maxlength="32" autocomplete="nickname"></label>
+<label><span data-i18n="bio">Kurztext</span><textarea name="bio" maxlength="400" rows="3"></textarea></label>
+<label><span data-i18n="avatar">Avatar</span><select name="avatar_preset" id="profileAvatarPreset"></select><input name="avatar" type="file" accept="image/png,image/jpeg,image/webp"></label>
+<p id="profileAvatarPreview" class="muted"></p><button type="button" class="outline" data-clear-media="avatar" data-i18n="clearImage">Bild entfernen</button>
+<label><span data-i18n="banner">Banner</span><select name="banner_preset" id="profileBannerPreset"></select><input name="banner" type="file" accept="image/png,image/jpeg,image/webp"></label>
+<p id="profileBannerPreview" class="muted"></p><button type="button" class="outline" data-clear-media="banner" data-i18n="clearImage">Bild entfernen</button>
+<label><span data-i18n="background">Hintergrund</span><select name="background_preset" id="profileBackgroundPreset"></select><input name="background" type="file" accept="image/png,image/jpeg,image/webp"></label>
+<p id="profileBackgroundPreview" class="muted"></p><button type="button" class="outline" data-clear-media="background" data-i18n="clearImage">Bild entfernen</button>
+<p id="profileMessage" role="status"></p>
+<button id="profileSubmit" class="primary" data-i18n="save">Speichern</button>
+</form>
+</article>
 </section>
 <section id="serverView" class="view" hidden>
 <div class="page-head">

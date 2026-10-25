@@ -101,6 +101,16 @@ test('auth requests carry a Turnstile token and omit it when absent',async()=>{
  await plain.login('ada@example.com','longpassword');
  assert.equal(calls[4].body.gotrue_meta_security,undefined);
 });
+test('profile upload keeps the blob and asks storage to replace',async()=>{
+ const calls=[]; const blob=new Uint8Array([1,2,3]);
+ const api=createApi({url:'https://example.supabase.co',key:'sb_publishable_test'},()=>({access_token:'tok',expires_at:9e12}),()=>{},async(url,options)=>{calls.push({url,options});return {ok:true,status:200,json:async()=>({Key:'ok'})}});
+ await api.upload('profile-media/user/avatar.webp',blob,'image/webp');
+ assert.equal(calls[0].url,'https://example.supabase.co/storage/v1/object/profile-media/user/avatar.webp');
+ assert.equal(calls[0].options.headers['x-upsert'],'true');
+ assert.equal(calls[0].options.headers['Content-Type'],'image/webp');
+ assert.equal(calls[0].options.body,blob);
+ assert.equal(typeof calls[0].options.body,'object');
+});
 test('failed remote logout still clears the local identity',async()=>{
  let session={access_token:'token',refresh_token:'refresh',expires_at:Date.now()/1000+3600,user:{id:'owner'}};
  const api=createApi({url:'https://example.supabase.co',key:'sb_publishable_test'},()=>session,value=>session=value,async()=>{throw Error('Network unavailable')});

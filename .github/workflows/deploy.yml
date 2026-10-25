@@ -32,6 +32,7 @@ jobs:
           node --check assets/js/forum-structure.mjs
           node --check assets/js/forum-profile.mjs
           node --check assets/js/image-fit.mjs
+          node --check assets/js/forum-friends.mjs
           node scripts/check.mjs
           node --test tests/*.test.mjs
       - uses: supabase/setup-cli@v1
@@ -51,10 +52,12 @@ jobs:
           psql "$PGURL" -X -v ON_ERROR_STOP=1 -f supabase/002-identity-tests.sql
           psql "$PGURL" -X -v ON_ERROR_STOP=1 -f supabase/003-structure-tests.sql
           psql "$PGURL" -X -v ON_ERROR_STOP=1 -f supabase/004-profile-tests.sql
+          psql "$PGURL" -X -v ON_ERROR_STOP=1 -f supabase/005-friend-tests.sql
           sed 's/\r$//; /^begin;$/d; /^commit;$/d' supabase/migrations/20261024000100_forum.sql > supabase/.adoption-forum.sql
           sed 's/\r$//; /^begin;$/d; /^commit;$/d' supabase/migrations/20261024000200_identity.sql > supabase/.adoption-identity.sql
           sed 's/\r$//; /^begin;$/d; /^commit;$/d' supabase/migrations/20261025000300_forum_structure.sql > supabase/.adoption-structure.sql
           sed 's/\r$//; /^begin;$/d; /^commit;$/d' supabase/migrations/20261025000400_profiles.sql > supabase/.adoption-profiles.sql
+          sed 's/\r$//; /^begin;$/d; /^commit;$/d' supabase/migrations/20261025000500_friends.sql > supabase/.adoption-friends.sql
           psql "$PGURL" -X -v ON_ERROR_STOP=1 -f supabase/adoption-test.sql
       - name: Check both historical manual installation paths
         env:

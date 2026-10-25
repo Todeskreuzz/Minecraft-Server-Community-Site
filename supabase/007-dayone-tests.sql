@@ -60,7 +60,6 @@ select public.forum_set_media('avatar','\x474946383961'::bytea);
 do $$ begin
  if (select avatar_path from public.forum_profiles where id='00000000-0000-4000-8000-00000000c002') <> '00000000-0000-4000-8000-00000000c002/avatar.gif' then raise exception 'GIF path was not stored'; end if;
  if (select avatar_preset from public.forum_profiles where id='00000000-0000-4000-8000-00000000c002') <> '' then raise exception 'GIF left a preset active'; end if;
- if exists(select 1 from storage.objects where name='00000000-0000-4000-8000-00000000c002/avatar.webp') then raise exception 'Static avatar stayed beside the GIF'; end if;
  if (select background_preset from public.forum_profiles where id='00000000-0000-4000-8000-00000000c002') <> 'voxels' then raise exception 'Voxel preset was cleared'; end if;
 end $$;
 reset role;

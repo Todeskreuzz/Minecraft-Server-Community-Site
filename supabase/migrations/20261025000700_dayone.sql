@@ -152,9 +152,6 @@ begin
  select coalesce((metadata->>'size')::bigint, 0) into bytes from storage.objects where bucket_id = 'profile-media' and name = path;
  if suffix = '.webp' and bytes = 0 then bytes := 262144; end if;
  if bytes <= 0 or bytes > limit_bytes then raise exception 'Image is too large'; end if;
- delete from storage.objects
- where bucket_id = 'profile-media' and split_part(name, '/', 1) = auth.uid()::text and name <> path
-   and split_part(name, '/', 2) in (p_slot || '.webp', p_slot || '.gif', p_slot || '.anim.webp');
  if p_slot = 'avatar' then update public.forum_profiles set avatar_path = path, avatar_preset = '' where id = auth.uid();
  elsif p_slot = 'banner' then update public.forum_profiles set banner_path = path, banner_preset = '' where id = auth.uid();
  else update public.forum_profiles set background_path = path, background_preset = '' where id = auth.uid();

@@ -158,6 +158,9 @@ textarea{resize:vertical}
 .form.card,.address-card{margin-top:16px}
 .gate{color:var(--muted)}
 .friend-row{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:10px 0;border-top:1px solid var(--line)}
+.turnstile{margin:4px 0 8px}
+.turnstile:empty,.turnstile[hidden]{display:none}
+.turnstile iframe{max-width:100%}
 .auth-tabs{display:grid;grid-template-columns:1fr 1fr;gap:4px;margin:4px 0 18px;padding:4px;background:var(--bg);border:1px solid var(--line);border-radius:12px}
 .auth-tabs button{background:none;border:0;border-radius:8px;padding:8px;color:var(--muted);font-weight:500}
 .auth-tabs button.active{background:var(--surface);color:var(--text)}

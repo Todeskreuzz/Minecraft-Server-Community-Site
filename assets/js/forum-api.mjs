@@ -29,6 +29,10 @@ export function authReturn(href){
  if(hashAuth)url.hash='';
  return {href:url.origin+url.pathname+url.search+url.hash,type,error,errorCode,errorName,confirmation,session:!error&&access&&refresh?{access_token:access,refresh_token:refresh,expires_in:Number(value('expires_in'))||3600,token_type:value('token_type')||'bearer'}:null};
 }
+export function withCaptcha(body,captchaToken){
+ if(!captchaToken)return body;
+ return {...body,gotrue_meta_security:{captcha_token:captchaToken}};
+}
 export function repeatedSignup(data){
  const identities=data?.identities??data?.user?.identities;
  return Array.isArray(identities)&&identities.length===0;
@@ -58,8 +62,10 @@ export function createApi(config,getSession,setSession,fetcher=fetch){
  return {
   session,
   async db(path,options={}){const current=await session();return request('/rest/v1/'+path,{...options,token:current?.access_token})},
-  async login(email,password){return save(await request('/auth/v1/token?grant_type=password',{method:'POST',body:{email,password}}))},
-  async signup(email,password,name,href=globalThis.location?.href){return save(await request('/auth/v1/signup?redirect_to='+encodeURIComponent(authRedirect(href)),{method:'POST',body:{email,password,data:{display_name:name}}}))},
+  async login(email,password,captchaToken){return save(await request('/auth/v1/token?grant_type=password',{method:'POST',body:withCaptcha({email,password},captchaToken)}))},
+  async signup(email,password,name,href=globalThis.location?.href,captchaToken){return save(await request('/auth/v1/signup?redirect_to='+encodeURIComponent(authRedirect(href)),{method:'POST',body:withCaptcha({email,password,data:{display_name:name}},captchaToken)}))},
+  async recover(email,href=globalThis.location?.href,captchaToken){return request('/auth/v1/recover?redirect_to='+encodeURIComponent(authRedirect(href)),{method:'POST',body:withCaptcha({email},captchaToken)})},
+  async signInAnonymously(captchaToken){return save(await request('/auth/v1/signup',{method:'POST',body:withCaptcha({data:{}},captchaToken)}))},
   async useSession(tokens){const user=await request('/auth/v1/user',{token:tokens.access_token});if(!user?.id)throw Error('Bitte erneut anmelden / please sign in again.');return save({access_token:tokens.access_token,refresh_token:tokens.refresh_token,expires_in:Number(tokens.expires_in)||3600,token_type:tokens.token_type||'bearer',user})},
   async logout(){try{const current=await session();if(current)await request('/auth/v1/logout',{method:'POST',token:current.access_token})}finally{setSession(null)}}
  };

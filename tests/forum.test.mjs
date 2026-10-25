@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {createApi, validateTopic, validateReply, validateConfig, authRedirect, authReturn, repeatedSignup} from '../assets/js/forum-api.mjs';
+import fs from 'node:fs';
+import {createApi, validateTopic, validateReply, validateConfig, authRedirect, authReturn, repeatedSignup, withCaptcha} from '../assets/js/forum-api.mjs';
 test('accepts publishable config only',()=>{
  assert.throws(()=>validateConfig({url:'http://evil.test',key:'sb_secret_bad'}));
  assert.throws(()=>validateConfig({url:'https://example.supabase.co',key:'sb_secret_bad'}));
@@ -76,6 +77,29 @@ test('confirmation tokens load the user and become the session',async()=>{
  assert.equal(calls[0].url,'https://example.supabase.co/auth/v1/user');
  assert.equal(calls[0].authorization,'Bearer aaa');
  assert.equal(result.user.id,'user-1'); assert.equal(session.refresh_token,'bbb'); assert.equal(session.user.is_anonymous,false);
+});
+test('auth requests carry a Turnstile token and omit it when absent',async()=>{
+ const config=JSON.parse(fs.readFileSync(new URL('../assets/data/config.json',import.meta.url),'utf8'));
+ assert.equal(config.security.turnstileSiteKey,'0x4AAAAAAFktyAS3q220b4E7');
+ assert.deepEqual(withCaptcha({email:'a@b.c'},''),{email:'a@b.c'});
+ assert.deepEqual(withCaptcha({email:'a@b.c'},'tok'),{email:'a@b.c',gotrue_meta_security:{captcha_token:'tok'}});
+ const calls=[];
+ const api=createApi({url:'https://example.supabase.co',key:'sb_publishable_test'},()=>null,()=>{},async(url,options)=>{calls.push({url,body:JSON.parse(options.body)});return {ok:true,json:async()=>({access_token:'aaa',refresh_token:'bbb',expires_in:3600})}});
+ await api.login('ada@example.com','longpassword','tok-login');
+ await api.signup('ada@example.com','longpassword','Ada','https://todeskreuzz.github.io/Minecraft-Server-Community-Site/','tok-signup');
+ await api.recover('ada@example.com','https://todeskreuzz.github.io/Minecraft-Server-Community-Site/#forum','tok-reset');
+ await api.signInAnonymously('tok-anon');
+ assert.equal(calls[0].body.gotrue_meta_security.captcha_token,'tok-login');
+ assert.equal(calls[0].body.password,'longpassword');
+ assert.equal(calls[1].body.gotrue_meta_security.captcha_token,'tok-signup');
+ assert.equal(calls[1].body.data.display_name,'Ada');
+ assert.equal(new URL(calls[2].url).pathname.endsWith('/auth/v1/recover'),true);
+ assert.equal(calls[2].body.gotrue_meta_security.captcha_token,'tok-reset');
+ assert.equal(calls[2].body.email,'ada@example.com');
+ assert.deepEqual(calls[3].body,{data:{},gotrue_meta_security:{captcha_token:'tok-anon'}});
+ const plain=createApi({url:'https://example.supabase.co',key:'sb_publishable_test'},()=>null,()=>{},async(url,options)=>{calls.push({url,body:JSON.parse(options.body)});return {ok:true,json:async()=>({})}});
+ await plain.login('ada@example.com','longpassword');
+ assert.equal(calls[4].body.gotrue_meta_security,undefined);
 });
 test('failed remote logout still clears the local identity',async()=>{
  let session={access_token:'token',refresh_token:'refresh',expires_at:Date.now()/1000+3600,user:{id:'owner'}};

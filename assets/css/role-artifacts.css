@@ -48,3 +48,5 @@
 .rank-art .arc-b{animation-delay:calc(var(--phase) + .2s)}.rank-art .arc-c{animation-delay:calc(var(--phase) + .4s)}
 .rank-owner .rank-energy::before{animation-delay:var(--phase)}.rank-owner .rank-energy::after{animation-delay:calc(var(--phase) - 4s)}
 :root[data-theme="light"] .star{fill:#8055ad;stroke:#633c8e}:root[data-theme="light"] .orbit{fill:currentColor}:root[data-theme="light"] .constellation{stroke:currentColor}
+
+.rank-art .facet-b{animation-delay:calc(var(--phase) - 2s)}.rank-art .facet-c{animation-delay:calc(var(--phase) - 4s)}

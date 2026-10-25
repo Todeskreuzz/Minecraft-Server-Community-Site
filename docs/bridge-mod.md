@@ -39,7 +39,7 @@ publishableKey=HIER_DEN_OEFFENTLICHEN_SCHLUESSEL_AUS_assets/data/supabase.json
 bridgeSecret=HIER_DASSELBE_GEHEIMNIS_WIE_IN_SQL
 ```
 
-4. In der Falix-Oberfläche den automatischen Neustart einschalten. Die Brücke stoppt den Server nicht von selbst. Sie setzt nur Teams. Ein geplanter Modpack-Neustart später braucht denselben automatischen Neustart, sonst bleibt der Server nach einem Stopp aus.
+4. In der Falix-Oberfläche den automatischen Neustart einschalten. Ohne diesen Schalter bleibt der Server nach einem geplanten Stopp aus. Die Brücke hält den Prozess an, Falix startet ihn wieder.
 5. Server starten. In der Konsole erscheint alle 30 Sekunden höchstens ein kurzer Abruf. Ohne Schlüssel bleibt die Brücke still.
 
 ## 4. Spieler verknüpfen
@@ -62,3 +62,15 @@ Der Server bestätigt den Namen. Erst danach trägt die Brücke die Person in da
 | Gruppe löschen | `/team remove TAG` |
 
 Es gibt kein Teams- oder Claims-Mod. Die Präfixe laufen über die vorhandenen Vanilla-Teams, die TAB bereits anzeigt.
+
+## 6. Modpack-Updates
+
+Ein Admin veröffentlicht das Update auf der Website. Die öffentliche Modpack-Karte bleibt unverändert, bis du `config.json` selbst anpasst.
+
+| Auftrag | Wirkung |
+| --- | --- |
+| warn | Nachricht an alle Spieler, 15, 5 und 1 Minute vor einem geplanten Zeitpunkt |
+| download | JAR von Modrinth, CurseForge oder GitHub nach `mods/`, nur bei passender SHA-256 |
+| stop | Kurze Ansage, danach stoppt die Brücke den Server |
+
+„Jetzt erzwingen“ legt Download und Stopp sofort in die Warteschlange. „Verzögern bis der Server leer ist“ wartet, bis die Brücke null Spieler meldet. „Geplant“ nutzt den Zeitpunkt. Ein großes Update wird immer geplant, auch wenn „jetzt“ gewählt wurde. Der automatische Neustart in Falix muss eingeschaltet sein.

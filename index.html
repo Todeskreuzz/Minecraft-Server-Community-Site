@@ -20,6 +20,7 @@
 <nav aria-label="Navigation">
 <a href="#forum" data-i18n="forum">Forum</a>
 <a href="#groups" data-i18n="playerGroups">Gruppen</a>
+<a href="#news" data-i18n="news">Neuigkeiten</a>
 <a href="#server" data-i18n="server">Server</a>
 <a href="#admin" id="adminNav" hidden>Admin</a>
 </nav>
@@ -224,11 +225,52 @@
 <button class="primary" data-i18n="createGroup">Gruppe erstellen</button>
 </form>
 </section>
+<section id="newsView" class="view" hidden>
+<div class="page-head"><h1 data-i18n="news">Neuigkeiten</h1><p data-i18n="newsHint">Modpack-Updates und geplante Neustarts.</p></div>
+<div id="newsList" class="forum-index"></div>
+<form id="newsEdit" class="form card" hidden>
+<h2 data-i18n="editNews">Meldung bearbeiten</h2>
+<label><span data-i18n="nameDe">Name (Deutsch)</span><input name="title_de" required minlength="2" maxlength="120"></label>
+<label><span data-i18n="nameEn">Name (Englisch)</span><input name="title_en" required minlength="2" maxlength="120"></label>
+<label><span data-i18n="changelogDe">Text (Deutsch)</span><textarea name="body_de" maxlength="8000" rows="6"></textarea></label>
+<label><span data-i18n="changelogEn">Text (Englisch)</span><textarea name="body_en" maxlength="8000" rows="6"></textarea></label>
+<p id="newsEditMessage" role="status"></p>
+<button class="secondary" data-i18n="save">Speichern</button>
+</form>
+</section>
 <section id="adminView" class="view" hidden>
 <div class="page-head"><h1>Admin</h1></div>
 <p id="adminGate" class="card gate" data-i18n="adminOnly">Nur für das freigeschaltete Administratorkonto zugänglich.</p>
 <div id="adminContent" hidden>
 <p id="ownerIdentity" class="muted"></p>
+<div id="storageCard" class="card list-card">
+<h2 data-i18n="storageTitle">Speicher</h2>
+<p class="muted" data-i18n="storageHint">Datenbank und Dateien im kostenlosen Rahmen.</p>
+<p><span data-i18n="storageDbLabel">Datenbank</span> <strong id="storageDb"></strong></p>
+<meter id="storageDbMeter" min="0" max="100" value="0" aria-label="Datenbank"></meter>
+<p><span data-i18n="storageFilesLabel">Dateien</span> <strong id="storageFiles"></strong></p>
+<meter id="storageFilesMeter" min="0" max="100" value="0" aria-label="Dateien"></meter>
+<p class="muted" data-i18n="storageNotes">Rahmen: 500 MB Datenbank, 1 GB Dateien, 5 GB Auslieferung im Monat, 50 MB je Upload, 200 gleichzeitige Echtzeitverbindungen.</p>
+</div>
+<form id="updateForm" class="form card">
+<h2 data-i18n="updatesTitle">Modpack-Update</h2>
+<p class="muted" data-i18n="updatesHint">Die Website behält die angezeigten Modpack-Angaben, bis du sie selbst änderst. Ein großes Update bekommt immer einen geplanten Zeitpunkt.</p>
+<p id="updateAdvice" class="muted"></p>
+<div class="admin-split">
+<label><span data-i18n="updateVersion">Version</span><input name="version" required maxlength="32" autocomplete="off"></label>
+<label><span data-i18n="updateKind">Umfang</span><select name="kind"><option value="small" data-i18n="kindSmall">Klein</option><option value="large" data-i18n="kindLarge">Groß</option></select></label>
+</div>
+<label><span data-i18n="rollout">Ausrollen</span><select name="rollout"><option value="now" data-i18n="rolloutNow">Jetzt erzwingen</option><option value="delay" data-i18n="rolloutDelay">Verzögern bis der Server leer ist</option><option value="scheduled" data-i18n="rolloutScheduled">Geplant zu einem Zeitpunkt</option></select></label>
+<label><span data-i18n="startsAt">Zeitpunkt</span><input name="starts" type="datetime-local"></label>
+<label><span data-i18n="nameDe">Name (Deutsch)</span><input name="title_de" required minlength="2" maxlength="120"></label>
+<label><span data-i18n="nameEn">Name (Englisch)</span><input name="title_en" required minlength="2" maxlength="120"></label>
+<label><span data-i18n="changelogDe">Text (Deutsch)</span><textarea name="body_de" maxlength="8000" rows="4"></textarea></label>
+<label><span data-i18n="changelogEn">Text (Englisch)</span><textarea name="body_en" maxlength="8000" rows="4"></textarea></label>
+<label><span data-i18n="modsList">Mods, eine Zeile: added Name Version</span><textarea name="mods" maxlength="4000" rows="4" placeholder="added Example 1.2"></textarea></label>
+<label><span data-i18n="jarsList">JAR-Zeilen: https-Adresse sha256 dateiname.jar</span><textarea name="jars" maxlength="8000" rows="3" placeholder="https://cdn.modrinth.com/data/example/versions/example.jar"></textarea></label>
+<p id="updateMessage" role="status"></p>
+<button class="primary" data-i18n="publishUpdate">Update veröffentlichen</button>
+</form>
 <p class="muted" data-i18n="modTools">Themen schließen, anpinnen und Beiträge entfernen: direkt im jeweiligen Thema.</p>
 <div class="card list-card"><h2 data-i18n="rolesTitle">Rollen</h2><p class="muted" data-i18n="rolesHint">Der Inhaber bleibt fest. Admins vergeben die anderen Rollen.</p><div id="roleList"></div></div>
 <form id="groupForm" class="form card">
@@ -293,6 +335,7 @@
 <nav aria-label="Footer">
 <a href="#forum" data-i18n="forum">Forum</a>
 <a href="#groups" data-i18n="playerGroups">Gruppen</a>
+<a href="#news" data-i18n="news">Neuigkeiten</a>
 <a href="#server" data-i18n="server">Server</a>
 <a href="#privacy" id="privacyLink" data-i18n="privacy">Datenschutz</a>
 </nav>

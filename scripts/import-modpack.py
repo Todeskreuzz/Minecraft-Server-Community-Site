@@ -34,7 +34,7 @@ def import_pack(source):
                 minecraft=manifest['minecraft']['version'], loader=loader if kind=='mod' else '',
                 projectUrl=url, fileUrl=url+'/files/'+str(item['fileID']), environment='client' if kind!='mod' else 'unverified'))
             prior=reviewed.get((item['projectID'],item['fileID']),{})
-            for field in ('version','description_de','description_en','environment','metadataSource'):
+            for field in ('version','releaseName','sha256','description_de','description_en','environment','metadataSource'):
                 if field in prior: entries[-1][field]=prior[field]
         public = ROOT/'assets/downloads'
         public.mkdir(parents=True, exist_ok=True)

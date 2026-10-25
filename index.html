@@ -220,7 +220,7 @@
 <p id="packVersion" class="muted" hidden></p>
 <ul class="fact-grid">
 <li class="fact-card"><span>Minecraft</span><strong id="mcVersion">1.20.1</strong></li>
-<li class="fact-card"><span>Forge</span><strong id="forgeVersion">47.4.10</strong></li>
+<li class="fact-card"><span data-i18n="clientForge">Forge (Modpack)</span><strong id="forgeVersion">47.4.10</strong></li>
 <li class="fact-card"><span>Mods</span><strong id="modCount">39</strong></li>
 <li class="fact-card"><span data-i18n="hostLabel">Host</span><strong>Falix</strong></li>
 </ul>
@@ -233,7 +233,7 @@
 <div id="joinStep" class="join-step" aria-live="polite"></div>
 <div class="row-actions"><button type="button" id="joinBack" class="secondary" data-i18n="previous">Zurück</button><button type="button" id="joinNext" class="primary" data-i18n="next">Weiter</button></div>
 </section>
-<section class="card mods-section" aria-labelledby="modsTitle"><div class="section-heading"><div><p class="eyebrow" data-i18n="packContents">DEIN MODPACK</p><h2 id="modsTitle" data-i18n="modsTitle">Mods & Extras entdecken</h2></div><span id="packCount" class="uid-badge"></span></div><p id="packAudit" class="muted"></p><label class="search-field"><span data-i18n="modSearch">Inhalte suchen</span><input id="modSearch" type="search" maxlength="100"></label><div id="modList" class="mod-grid"></div></section>
+<section class="card mods-section" aria-labelledby="modsTitle"><div class="section-heading"><div><p class="eyebrow" data-i18n="packContents">DEIN MODPACK</p><h2 id="modsTitle" data-i18n="modsTitle">Mods & Extras entdecken</h2></div><span id="packCount" class="uid-badge"></span></div><details class="pack-audit"><summary data-i18n="packCompatibility">Hinweise zum Modpack</summary><p id="packAudit" class="muted"></p></details><label class="search-field"><span data-i18n="modSearch">Inhalte suchen</span><input id="modSearch" type="search" maxlength="100"></label><div id="modList" class="mod-grid"></div></section>
 </section>
 <section id="serversView" class="view" hidden>
 <div class="page-head"><h1 data-i18n="serverList">Serverliste</h1><p data-i18n="serverListHint">Öffentliche Minecraft-Server der Community. Der Status kommt von api.mcsrvstat.us und bleibt zwei Minuten im Browser.</p></div>

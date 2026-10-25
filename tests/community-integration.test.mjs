@@ -33,9 +33,9 @@ test('removing profile media is staged until save, so Cancel can discard it',()=
  assert.match(js,/\[\.\.\.pendingClears\]/);
 });
 test('launcher handler accepts a fixed URI and never uses shell evaluation or policy bypass',()=>{
- const launch=read('assets/launcher/Launch-FriendsAndFoes.ps1');
- assert.match(launch,/\^friendsandfoes:\/\/join\/\?\$/);
- assert.match(launch,/\$args\.Count -ne 0/);
- assert.match(launch,/& \$settings\.prism/);
- for(const file of ['Launch','Install','Uninstall'])assert.doesNotMatch(read('assets/launcher/'+file+'-FriendsAndFoes.ps1'),/Invoke-Expression|ExecutionPolicy|EncodedCommand/i);
+ const launch=read('assets/launcher/FriendsAndFoes.cs');
+ assert.match(launch,/value == "friendsandfoes:\/\/join"/);
+ assert.match(launch,/args\.Length != 1/);
+ assert.match(launch,/UseShellExecute = false/);
+ assert.doesNotMatch(launch,/FileName\s*=\s*"(?:cmd|powershell)\.exe"|EncodedCommand|ExecutionPolicy/);
 });

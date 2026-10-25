@@ -6,9 +6,10 @@
   "modCount": 39,
   "contentCountNote": "Vom Auftraggeber als 'Content von 50' angegeben; Bedeutung bitte vor einer Veröffentlichung klären.",
   "server": {
-    "address": "",
+    "address": "friends-foes.falixsrv.me",
     "showOnlineNames": false,
-    "refreshSeconds": 120
+    "refreshSeconds": 120,
+    "forgeVersion": "47.4.28"
   },
   "modpack": {
     "downloadUrl": "assets/downloads/friends-and-foes.zip",

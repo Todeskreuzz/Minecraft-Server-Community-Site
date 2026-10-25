@@ -13,13 +13,15 @@ do $$ declare code text; gid uuid; begin
  begin perform public.forum_create_group('Friends','bad tag','green',''); raise exception 'Bad tag stored'; exception when raise_exception then if sqlerrm <> 'Invalid tag' then raise; end if; end;
  gid := public.forum_create_group('Friends','FaF','green','Zusammen spielen');
  if (select tag from public.player_groups where id=gid) <> 'FAF' then raise exception 'Tag was not normalized'; end if;
- if (select count(*) from public.mc_sync_queue where kind='create_group' and payload->>'tag'='FAF') <> 1 then raise exception 'Create job missing'; end if;
  begin perform public.forum_create_group('Other','FAF','gold',''); raise exception 'Duplicate tag stored'; exception when raise_exception then if sqlerrm <> 'Tag already used' then raise; end if; end;
  code := public.forum_link_code();
  if char_length(code) <> 8 then raise exception 'Link code length'; end if;
  insert into group_fixture values(code, gid);
 end $$;
 reset role;
+do $$ begin
+ if (select count(*) from public.mc_sync_queue where kind='create_group' and payload->>'tag'='FAF') <> 1 then raise exception 'Create job missing'; end if;
+end $$;
 
 select public.bridge_link('test-bridge-secret-value-24', (select code from group_fixture), 'OwnerPlayer');
 do $$ begin

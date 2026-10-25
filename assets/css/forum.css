@@ -253,6 +253,11 @@ footer nav a:hover{color:var(--text)}
 }
 .account{position:relative}
 .account-menu{position:absolute;top:calc(100% + 8px);right:0;z-index:30;min-width:220px;padding:8px;background:var(--surface);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);display:grid;gap:4px}
+.friends-panel{width:min(320px,calc(100vw - 24px));max-height:70vh;overflow:auto}
+.friends-panel h3{margin:8px 8px 0;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.friends-panel .form{padding:0 4px}
+#friendsButton{position:relative}
+#friendsBadge{position:absolute;top:-4px;right:-6px;background:var(--surface)}
 .account-menu a,.account-menu button{display:flex;justify-content:space-between;gap:8px;align-items:center;padding:8px 10px;color:var(--text);border-radius:8px;background:none;border:0;text-align:left}
 .account-menu a:hover,.account-menu button:hover{background:var(--hover);text-decoration:none}
 .account-name{max-width:12ch;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}

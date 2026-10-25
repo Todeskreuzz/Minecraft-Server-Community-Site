@@ -34,7 +34,21 @@
 <div class="account">
 <span id="identityStatus" class="identity-status" hidden></span>
 <button id="registerButton" class="quiet" type="button" data-i18n="register">Registrieren</button>
+<button id="friendsButton" class="icon-button" type="button" hidden aria-label="Freunde"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg><span id="friendsBadge" class="uid-badge" hidden>0</span></button>
 <button id="accountButton" class="quiet" type="button" data-i18n="login">Anmelden</button>
+<div id="friendsPanel" class="account-menu friends-panel" hidden>
+<form id="friendSearch" class="form">
+<label><span data-i18n="friendUid">UID suchen</span><input id="friendUid" inputmode="numeric" maxlength="9" placeholder="#07"></label>
+<button class="secondary" data-i18n="sendRequest">Anfrage senden</button>
+<p id="friendSearchMessage" role="status"></p>
+</form>
+<h3 data-i18n="requests">Anfragen</h3>
+<div id="friendsRequests"></div>
+<h3 data-i18n="online">Online</h3>
+<div id="friendsOnline"></div>
+<h3 data-i18n="offline">Offline</h3>
+<div id="friendsOffline"></div>
+</div>
 <div id="accountMenu" class="account-menu" hidden>
 <a id="accountProfile" href="#u/01"><span id="accountName"></span><span id="accountUid" class="uid-badge"></span></a>
 <button type="button" id="accountLogout" data-i18n="logout">Abmelden</button>
@@ -133,7 +147,8 @@
 </div>
 </div>
 <p id="profileBio"></p>
-<div class="profile-stats"><span id="profileThreads"></span><span id="profileReplies"></span></div>
+<div class="profile-stats"><span id="profileThreads"></span><span id="profileReplies"></span><span id="profileFriends"></span></div>
+<div id="profileFriendActions" class="row-actions" hidden></div>
 <h2 data-i18n="recentThreads">Letzte Themen</h2>
 <div id="profileThreadList" class="profile-threads"></div>
 <form id="profileForm" class="form" hidden>

@@ -7,8 +7,9 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://challenges.cloudflare.com; style-src 'self'; font-src 'self'; img-src 'self' data: blob: https://iewltgawdodbmwcdgzxy.supabase.co; connect-src 'self' https://iewltgawdodbmwcdgzxy.supabase.co https://api.mcstatus.io https://api.mcsrvstat.us https://challenges.cloudflare.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-src https://challenges.cloudflare.com https://www.youtube-nocookie.com https://streamable.com https://medal.tv">
 <title>Friends & Foes — Community Forum</title>
 <link rel="icon" href="assets/img/favicon.svg">
-<link rel="stylesheet" href="assets/css/forum.css?v=20261025b">
-<script type="module" src="assets/js/forum.mjs"></script>
+<link rel="stylesheet" href="assets/css/forum.css?v=20261025roles">
+<link rel="stylesheet" href="assets/css/role-artifacts.css?v=20261025roles">
+<script type="module" src="assets/js/forum.mjs?v=20261025roles"></script>
 </head>
 <body>
 <a class="skip" href="#main">Zum Inhalt / Skip to content</a>
@@ -35,6 +36,7 @@
 </div>
 </nav>
 <div class="tools">
+<button type="button" id="roleEffectsToggle" class="icon-button" aria-pressed="true" aria-label="Rolleneffekte" title="Rolleneffekte">✦</button>
 <button type="button" id="themeToggle" class="icon-button" aria-pressed="false" aria-label="Helles Design verwenden"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg></button>
 <div class="lang" role="group" aria-label="Sprache / Language">
 <button type="button" id="langDe" data-lang="de" aria-pressed="true">DE</button>

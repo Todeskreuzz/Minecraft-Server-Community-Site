@@ -252,7 +252,7 @@ footer nav a:hover{color:var(--text)}
 .list-card{padding:8px 22px}
 .list-card:empty{display:none}
 .admin-split{display:grid;gap:0 12px}
-.form-actions,.row-actions{display:flex;gap:16px;align-items:center}
+.form-actions,.row-actions{display:flex;gap:16px;align-items:center}.row-actions{flex-wrap:wrap}.row-actions>a{max-width:100%;white-space:normal;text-align:center}
 @media(min-width:720px){.admin-split{grid-template-columns:1fr 140px}}
 @media(max-width:799px){
  .board-card{grid-template-columns:auto minmax(0,1fr);padding:16px}

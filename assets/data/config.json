@@ -17,5 +17,8 @@
   },
   "community": {
     "discordUrl": ""
+  },
+  "security": {
+    "turnstileSiteKey": "0x4AAAAAAFktyAS3q220b4E7"
   }
 }

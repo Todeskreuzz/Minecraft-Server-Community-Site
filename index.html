@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#09090b">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://iewltgawdodbmwcdgzxy.supabase.co https://api.mcstatus.io; object-src 'none'; base-uri 'self'; form-action 'self'; frame-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://challenges.cloudflare.com; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://iewltgawdodbmwcdgzxy.supabase.co https://api.mcstatus.io https://challenges.cloudflare.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-src https://challenges.cloudflare.com">
 <title>Friends & Foes — Community Forum</title>
 <link rel="icon" href="assets/img/favicon.svg">
 <link rel="stylesheet" href="assets/css/forum.css">
@@ -200,12 +200,14 @@
 <div class="auth-tabs"><button type="button" id="loginMode" class="active" data-i18n="login">Anmelden</button><button type="button" id="signupMode" data-i18n="register">Registrieren</button></div>
 <label id="nameField" hidden><span data-i18n="displayName">Anzeigename</span><input name="name" minlength="2" maxlength="32" autocomplete="nickname"></label>
 <label>E-Mail<input name="email" type="email" required autocomplete="email"></label>
-<label><span data-i18n="password">Passwort</span><input name="password" type="password" required minlength="8" maxlength="128" autocomplete="current-password"></label>
+<label id="passwordField"><span data-i18n="password">Passwort</span><input name="password" type="password" required minlength="8" maxlength="128" autocomplete="current-password"></label>
+<div id="turnstileSlot" class="turnstile" hidden></div>
 <p class="muted" data-i18n="authNote">Deine E-Mail bleibt privat. Anzeigename und Beiträge sind öffentlich.</p>
 <p id="authMessage" role="status"></p>
 <button class="primary wide" id="authSubmit" data-i18n="login">Anmelden</button>
+<button type="button" id="forgotPassword" class="outline" data-i18n="forgot">Passwort vergessen?</button>
 <button type="button" id="anonymousButton" class="secondary" data-i18n="continueAnonymous">Anonym fortfahren</button>
-<p class="muted" data-i18n="anonymousNote">Nur lesen, ohne Konto. Die Auswahl gilt nur für diesen Browser-Tab.</p>
+<p id="anonymousNote" class="muted" data-i18n="anonymousNote">Nur lesen, ohne Konto. Die Auswahl gilt nur für diesen Browser-Tab.</p>
 </form>
 </dialog>
 <dialog id="topicDialog" aria-labelledby="topicHeading">

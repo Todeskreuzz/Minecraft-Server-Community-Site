@@ -13,8 +13,10 @@
 <body>
 <a class="skip" href="#main">Zum Inhalt / Skip to content</a>
 <header>
+<button type="button" id="navScrim" class="nav-scrim" tabindex="-1" aria-label="Menü schließen"></button>
 <div class="header-bar">
-<a class="brand" href="#forum"><img src="assets/img/mark.svg" width="28" height="28" alt="">Friends & Foes</a>
+<a class="brand" href="#forum"><img src="assets/img/mark.svg" width="28" height="28" alt=""><span class="brand-name">Friends & Foes</span></a>
+<div id="navSheet" class="nav-sheet">
 <nav aria-label="Navigation">
 <a href="#forum" data-i18n="forum">Forum</a>
 <a href="#server" data-i18n="server">Server</a>
@@ -28,11 +30,13 @@
 <button type="button" id="langEn" data-lang="en" aria-pressed="false">EN</button>
 </div>
 </div>
+</div>
 <div class="account">
 <span id="identityStatus" class="identity-status" hidden></span>
 <button id="registerButton" class="quiet" type="button" data-i18n="register">Registrieren</button>
 <button id="accountButton" class="quiet" type="button" data-i18n="login">Anmelden</button>
 </div>
+<button type="button" id="menuButton" class="icon-button menu-button" aria-expanded="false" aria-controls="navSheet" aria-label="Menü"><svg class="icon menu-open" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h16"/></svg><svg class="icon menu-close" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
 </div>
 </header>
 <main id="main" tabindex="-1">

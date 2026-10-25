@@ -25,6 +25,8 @@ Die erste versionierte Migration übernimmt das bekannte, zuvor per setup.sql an
 
 Die zweite Migration enthält Namensschutz und Freundesregeln. Falls sie schon manuell ausgeführt wurde, darf sie erneut angewendet werden. Supabase protokolliert angewendete Migrationen und überspringt sie bei späteren Deployments.
 
+Die Funktion `supabase/functions/turnstile-post` prüft Beitrags-Captchas. Sie liest das Geheimnis nur über `private.get_turnstile_secret()`, das ausschließlich `service_role` ausführen darf. Der Name im Vault bleibt `turnstile_secret_key`. Actions hat dafür keinen Management-Token, deshalb wird die Funktion getrennt vom Seiten-Deploy bereitgestellt. Der Klartext kommt nicht ins Repository.
+
 Neue Änderungen nur als neue versionierte SQL-Datei in supabase/migrations/ hinzufügen. Bereits angewendete Migrationen nicht umschreiben. Die alten setup.sql/002-identity.sql bleiben historische Einrichtungsunterlagen; nach Aktivierung nicht mehr parallel im SQL Editor am Schema arbeiten.
 
 ## Fehler und Rückweg

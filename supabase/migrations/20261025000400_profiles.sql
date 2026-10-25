@@ -65,22 +65,6 @@ create policy profiles_update_own on public.forum_profiles for update to authent
  with check (id = (select auth.uid()));
 grant update (display_name, bio, avatar_preset, banner_preset, background_preset) on public.forum_profiles to authenticated;
 
-drop function if exists public.forum_author_names(uuid[]);
-create function public.forum_author_names(p_ids uuid[])
- returns table(id uuid, display_name text, is_owner boolean, uid bigint, avatar_path text, avatar_preset text)
- language sql stable security definer set search_path='' as $$
- select p.id,
- case when n.user_id is null then p.display_name
- when auth.uid() = n.user_id or exists(select 1 from private.forum_friends f where f.owner_id = n.user_id and f.friend_id = auth.uid())
- then n.real_name else null end,
- n.user_id is not null,
- p.uid, p.avatar_path, p.avatar_preset
- from public.forum_profiles p left join private.forum_owner_names n on n.user_id = p.id
- where p.id = any(p_ids) and coalesce(array_length(p_ids, 1), 0) <= 100;
-$$;
-revoke all on function public.forum_author_names(uuid[]) from public, anon, authenticated;
-grant execute on function public.forum_author_names(uuid[]) to anon, authenticated;
-
 insert into storage.buckets (id, name, "public", file_size_limit, allowed_mime_types)
  values ('profile-media', 'profile-media', true, 262144, array['image/webp'])
  on conflict (id) do update set "public" = true, file_size_limit = excluded.file_size_limit, allowed_mime_types = excluded.allowed_mime_types;

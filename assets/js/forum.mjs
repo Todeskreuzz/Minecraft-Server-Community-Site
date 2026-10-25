@@ -100,9 +100,11 @@ function mountCaptcha(){if(!siteKey()){$('turnstileSlot').hidden=true;return}if(
 function openAuth(register=false){authMode(register);$('authDialog').showModal();mountCaptcha()}
 async function adminCheck(){const userId=session?.user?.id,version=routeVersion;let allowed=false;if(userId){try{allowed=await api.db('rpc/forum_is_admin',{method:'POST',body:{}})===true}catch{}}if(session?.user?.id!==userId||routeVersion!==version)return;isAdmin=allowed;$('adminNav').hidden=!isAdmin;}
 async function attachNames(rows){
- const ids=[...new Set(rows.map(row=>row.author_id))];if(!ids.length)return rows;
- try{const names=await api.db('rpc/forum_author_names',{method:'POST',body:{p_ids:ids}});const lookup=new Map(names.map(name=>[name.id,name]));return rows.map(row=>({...row,author:lookup.get(row.author_id)}))}
- catch{return rows.map(row=>({...row,author:undefined}))}
+ const ids=[...new Set(rows.map(row=>row.author_id).filter(Boolean))];if(!ids.length)return rows;
+ let names=[];try{names=await api.db('rpc/forum_author_names',{method:'POST',body:{p_ids:ids}})}catch{names=[]}
+ let badges=[];try{badges=await api.db('forum_profiles?select=id,uid,display_name,avatar_path,avatar_preset&id=in.('+ids.join(',')+')')}catch{badges=[]}
+ const lookup=new Map(names.map(name=>[name.id,name]));const extra=new Map(badges.map(row=>[row.id,row]));
+ return rows.map(row=>({...row,author:{...extra.get(row.author_id),...lookup.get(row.author_id)}}));
 }
 async function loadFriends(){
  const userId=session?.user?.id,version=routeVersion;if(!userId||!isAdmin)return;

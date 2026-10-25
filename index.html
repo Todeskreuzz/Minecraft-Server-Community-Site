@@ -7,9 +7,9 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://challenges.cloudflare.com; style-src 'self'; font-src 'self'; img-src 'self' data: blob: https://iewltgawdodbmwcdgzxy.supabase.co; connect-src 'self' https://iewltgawdodbmwcdgzxy.supabase.co https://api.mcstatus.io https://api.mcsrvstat.us https://challenges.cloudflare.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-src https://challenges.cloudflare.com https://www.youtube-nocookie.com https://streamable.com https://medal.tv">
 <title>Friends & Foes — Community Forum</title>
 <link rel="icon" href="assets/img/favicon.svg">
-<link rel="stylesheet" href="assets/css/forum.css?v=20261025roles">
+<link rel="stylesheet" href="assets/css/forum.css?v=20261025space-final2">
 <link rel="stylesheet" href="assets/css/role-artifacts.css?v=20261025roles">
-<script type="module" src="assets/js/forum.mjs?v=20261025roles"></script>
+<script type="module" src="assets/js/forum.mjs?v=20261025space-final2"></script>
 </head>
 <body>
 <a class="skip" href="#main">Zum Inhalt / Skip to content</a>
@@ -49,6 +49,8 @@
 <span id="identityStatus" class="identity-status" hidden></span>
 <button id="registerButton" class="quiet" type="button" data-i18n="register">Registrieren</button>
 <button id="friendsButton" class="icon-button" type="button" hidden aria-label="Freunde"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg><span id="friendsBadge" class="uid-badge" hidden>0</span></button>
+<a id="profileShortcut" class="profile-shortcut" hidden></a>
+<button id="accountMenuButton" class="icon-button account-menu-button" type="button" hidden aria-label="Kontomenü" aria-expanded="false" aria-controls="accountMenu"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg></button>
 <button id="accountButton" class="quiet" type="button" data-i18n="login">Anmelden</button>
 <div id="friendsPanel" class="account-menu friends-panel" hidden>
 <form id="friendSearch" class="form">

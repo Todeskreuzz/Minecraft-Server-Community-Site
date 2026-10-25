@@ -52,6 +52,11 @@ where description_de is null or description_en is null or icon is null or icon='
 alter table public.forum_categories alter column description_de set default '';
 alter table public.forum_categories alter column description_en set default '';
 alter table public.forum_categories alter column icon set default 'message';
+-- The original category seed inserts only id and position. PostgreSQL checks
+-- NOT NULL before ON CONFLICT, so omitted columns need defaults that pass.
+alter table public.forum_categories alter column group_id set default 'community';
+alter table public.forum_categories alter column name_de set default 'Board';
+alter table public.forum_categories alter column name_en set default 'Board';
 
 do $$ begin
  if not exists(select 1 from public.forum_categories where group_id is null or name_de is null or name_en is null or description_de is null or description_en is null or icon is null) then

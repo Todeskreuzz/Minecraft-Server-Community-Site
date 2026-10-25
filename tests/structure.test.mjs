@@ -55,6 +55,8 @@ test('structure migration is additive and preserves edited names',()=>{
  assert.match(sql,/where c\.id=s\.id and c\.name_de is null/);
  assert.match(sql,/on delete restrict/);
  assert.match(sql,/forum_categories_group_fkey/);
+ assert.match(sql,/alter column group_id set default 'community'/);
+ assert.match(sql,/alter column name_de set default 'Board'/);
  assert.doesNotMatch(sql,/drop table/i);
  assert.doesNotMatch(sql,/truncate/i);
 });

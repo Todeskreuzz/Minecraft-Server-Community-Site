@@ -39,6 +39,7 @@ jobs:
           node --check assets/js/forum-spam.mjs
           node --check assets/js/qr.mjs
           node --check assets/js/support.mjs
+          node --check assets/js/forum-servers.mjs
           node scripts/check.mjs
           node --test tests/*.test.mjs
       - uses: supabase/setup-cli@v1
@@ -65,6 +66,7 @@ jobs:
           psql "$PGURL" -X -v ON_ERROR_STOP=1 -f supabase/009-media-tests.sql
           psql "$PGURL" -X -v ON_ERROR_STOP=1 -f supabase/010-update-tests.sql
           psql "$PGURL" -X -v ON_ERROR_STOP=1 -f supabase/011-spam-tests.sql
+          psql "$PGURL" -X -v ON_ERROR_STOP=1 -f supabase/012-server-tests.sql
           sed 's/\r$//; /^begin;$/d; /^commit;$/d' supabase/migrations/20261024000100_forum.sql > supabase/.adoption-forum.sql
           sed 's/\r$//; /^begin;$/d; /^commit;$/d' supabase/migrations/20261024000200_identity.sql > supabase/.adoption-identity.sql
           sed 's/\r$//; /^begin;$/d; /^commit;$/d' supabase/migrations/20261025000300_forum_structure.sql > supabase/.adoption-structure.sql
@@ -76,6 +78,7 @@ jobs:
           sed 's/\r$//; /^begin;$/d; /^commit;$/d' supabase/migrations/20261025000900_media.sql > supabase/.adoption-media.sql
           sed 's/\r$//; /^begin;$/d; /^commit;$/d' supabase/migrations/20261025001000_updates.sql > supabase/.adoption-updates.sql
           sed 's/\r$//; /^begin;$/d; /^commit;$/d' supabase/migrations/20261025001100_spam.sql > supabase/.adoption-spam.sql
+          sed 's/\r$//; /^begin;$/d; /^commit;$/d' supabase/migrations/20261025001200_servers.sql > supabase/.adoption-servers.sql
           psql "$PGURL" -X -v ON_ERROR_STOP=1 -f supabase/adoption-test.sql
       - name: Check both historical manual installation paths
         env:

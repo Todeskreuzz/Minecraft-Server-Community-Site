@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#09090b">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://challenges.cloudflare.com; style-src 'self'; font-src 'self'; img-src 'self' data: blob: https://iewltgawdodbmwcdgzxy.supabase.co; connect-src 'self' https://iewltgawdodbmwcdgzxy.supabase.co https://api.mcstatus.io https://challenges.cloudflare.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-src https://challenges.cloudflare.com https://www.youtube-nocookie.com https://streamable.com https://medal.tv">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://challenges.cloudflare.com; style-src 'self'; font-src 'self'; img-src 'self' data: blob: https://iewltgawdodbmwcdgzxy.supabase.co; connect-src 'self' https://iewltgawdodbmwcdgzxy.supabase.co https://api.mcstatus.io https://api.mcsrvstat.us https://challenges.cloudflare.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-src https://challenges.cloudflare.com https://www.youtube-nocookie.com https://streamable.com https://medal.tv">
 <title>Friends & Foes — Community Forum</title>
 <link rel="icon" href="assets/img/favicon.svg">
 <link rel="stylesheet" href="assets/css/forum.css">
@@ -22,6 +22,7 @@
 <a href="#groups" data-i18n="playerGroups">Gruppen</a>
 <a href="#news" data-i18n="news">Neuigkeiten</a>
 <a href="#server" data-i18n="server">Server</a>
+<a href="#servers" data-i18n="serverList">Serverliste</a>
 <a href="#support" data-i18n="support">Unterstützen</a>
 <a href="#admin" id="adminNav" hidden>Admin</a>
 </nav>
@@ -216,6 +217,26 @@
 </ol>
 </section>
 </section>
+<section id="serversView" class="view" hidden>
+<div class="page-head"><h1 data-i18n="serverList">Serverliste</h1><p data-i18n="serverListHint">Öffentliche Minecraft-Server der Community. Der Status kommt von api.mcsrvstat.us und bleibt zwei Minuten im Browser.</p></div>
+<div id="serverList" class="server-grid"></div>
+<form id="serverForm" class="form card" hidden>
+<h2 data-i18n="serverRegister">Server eintragen</h2>
+<input type="hidden" name="id">
+<label><span data-i18n="serverName">Name</span><input name="name" required minlength="2" maxlength="40"></label>
+<label><span data-i18n="serverHost">Adresse</span><input name="address" required maxlength="80" autocomplete="off" spellcheck="false"></label>
+<label><span data-i18n="serverPort">Port</span><input name="port" inputmode="numeric" maxlength="5" placeholder="25565"></label>
+<label><span data-i18n="serverVersion">Version</span><input name="game_version" maxlength="32"></label>
+<label><span data-i18n="serverAbout">Modpack / Beschreibung</span><textarea name="description" maxlength="240" rows="3"></textarea></label>
+<label><span data-i18n="serverTags">Schlagwörter</span><input name="tags" maxlength="80" placeholder="forge, survival"></label>
+<label class="check"><input name="is_public" type="checkbox" checked><span data-i18n="serverPublic">Öffentlich in der Liste</span></label>
+<label><span data-i18n="serverBanner">Banner</span><input name="banner" type="file" accept="image/png,image/jpeg,image/webp"></label>
+<p id="serverBannerPreview" class="muted"></p>
+<button id="serverBannerClear" class="outline" type="button" data-i18n="clearImage">Bild entfernen</button>
+<p id="serverMessage" role="status"></p>
+<div class="form-actions"><button class="primary" data-i18n="serverSave">Speichern</button><button id="serverReset" class="outline" type="button" data-i18n="newEntry">Neu</button></div>
+</form>
+</section>
 <section id="groupsView" class="view" hidden>
 <div class="page-head"><h1 data-i18n="playerGroups">Gruppen</h1><p data-i18n="playerGroupsHint">Ein kurzes Präfix, eine Farbe und Einladungen. Der Server setzt daraus ein Team.</p></div>
 <div id="groupList" class="forum-index"></div>
@@ -344,6 +365,7 @@
 <a href="#groups" data-i18n="playerGroups">Gruppen</a>
 <a href="#news" data-i18n="news">Neuigkeiten</a>
 <a href="#server" data-i18n="server">Server</a>
+<a href="#servers" data-i18n="serverList">Serverliste</a>
 <a href="#support" data-i18n="support">Unterstützen</a>
 <a href="#privacy" id="privacyLink" data-i18n="privacy">Datenschutz</a>
 </nav>
@@ -390,7 +412,7 @@
 <dialog id="privacyDialog" aria-labelledby="privacyHeading">
 <div class="form">
 <div class="dialog-top"><h2 id="privacyHeading" data-i18n="privacy">Datenschutz</h2><button type="button" class="close" data-close="privacyDialog" aria-label="Schließen / Close"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button></div>
-<p data-i18n="privacyBody">Anmeldung und Beiträge werden bei Supabase verarbeitet. Deine E-Mail wird nicht öffentlich angezeigt. Anzeigename und Beiträge sind öffentlich. Die Sitzung bleibt für diesen Browser-Tab gespeichert, die Spracheinstellung lokal im Browser. Bei eingetragener Serveradresse wird mcstatus.io abgefragt. Kontolöschung über den Betreiber.</p>
+<p data-i18n="privacyBody">Anmeldung und Beiträge werden bei Supabase verarbeitet. Deine E-Mail bleibt privat. Anzeigename und Beiträge sind öffentlich. Die Sitzung bleibt für diesen Browser-Tab gespeichert, die Spracheinstellung lokal im Browser. Bei eingetragener Serveradresse wird mcstatus.io abgefragt. Die Serverliste fragt api.mcsrvstat.us nach dem Status und speichert das Ergebnis zwei Minuten im Browser. Kontolöschung über den Betreiber.</p>
 </div>
 </dialog>
 </body>

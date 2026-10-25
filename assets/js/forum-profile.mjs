@@ -1,4 +1,5 @@
 export const SHRINK_ERROR='Das Bild lässt sich nicht ausreichend verkleinern. Bitte ein kleineres Bild wählen.';
+export const ANIM_LIMIT=2*1024*1024;
 export const mediaSlots={avatar:256,banner:1500,background:1600};
 export const presets=[
  {id:'',de:'Kein Motiv',en:'No motif'},
@@ -6,7 +7,11 @@ export const presets=[
  {id:'deepslate',de:'Tiefenschiefer',en:'Deepslate'},
  {id:'campfire',de:'Lagerfeuer',en:'Campfire'},
  {id:'nether',de:'Nether',en:'Nether'},
- {id:'end',de:'Ende',en:'The End'}
+ {id:'end',de:'Ende',en:'The End'},
+ {id:'aurora',de:'Aurora',en:'Aurora',dayone:true},
+ {id:'voxels',de:'Voxel',en:'Voxels',dayone:true},
+ {id:'netherloop',de:'Nether-Schleife',en:'Nether loop',dayone:true},
+ {id:'endloop',de:'End-Schleife',en:'End loop',dayone:true}
 ];
 const presetIds=new Set(presets.map(preset=>preset.id));
 export function padUid(uid){
@@ -40,9 +45,25 @@ export function imageKind(bytes){
 export function webpHeaderHex(bytes){
  const u=bytes instanceof Uint8Array?bytes:new Uint8Array(bytes||[]);
  if(imageKind(u)!=='webp')throw Error('Invalid image');
+ return headerHex(u,12);
+}
+export function headerHex(bytes,length){
+ const u=bytes instanceof Uint8Array?bytes:new Uint8Array(bytes||[]);
+ if(u.length<length)throw Error('Invalid image');
  let hex='\\x';
- for(let i=0;i<12;i++)hex+=u[i].toString(16).padStart(2,'0');
+ for(let i=0;i<length;i++)hex+=u[i].toString(16).padStart(2,'0');
  return hex;
+}
+export function animatedKind(bytes){
+ const u=bytes instanceof Uint8Array?bytes:new Uint8Array(bytes||[]);
+ if(u.length>=6&&u[0]===0x47&&u[1]===0x49&&u[2]===0x46&&u[3]===0x38&&u[4]===0x39&&u[5]===0x61)return 'gif';
+ if(imageKind(u)==='webp'&&u.length>=21&&u[12]===0x56&&u[13]===0x50&&u[14]===0x38&&u[15]===0x58&&(u[20]&2)===2)return 'anim';
+ return '';
+}
+export function slotObject(slot,kind){
+ if(kind==='gif')return slot+'.gif';
+ if(kind==='anim')return slot+'.anim.webp';
+ return slot+'.webp';
 }
 export function fitSteps(){
  const steps=[];

@@ -156,11 +156,12 @@
 <p id="ownerNameNote" class="muted" hidden data-i18n="ownerNameLocked">Dein öffentlicher Name bleibt Inhaber. Den privaten Namen änderst du in der Verwaltung.</p>
 <label><span data-i18n="displayName">Anzeigename</span><input name="display_name" required minlength="2" maxlength="32" autocomplete="nickname"></label>
 <label><span data-i18n="bio">Kurztext</span><textarea name="bio" maxlength="400" rows="3"></textarea></label>
-<label><span data-i18n="avatar">Avatar</span><select name="avatar_preset" id="profileAvatarPreset"></select><input name="avatar" type="file" accept="image/png,image/jpeg,image/webp"></label>
+<p class="muted" data-i18n="dayOneHint">Bewegte Bilder und die Motive Aurora, Voxel, Nether-Schleife und End-Schleife gehören zu Day One.</p>
+<label><span data-i18n="avatar">Avatar</span><select name="avatar_preset" id="profileAvatarPreset"></select><input name="avatar" type="file" accept="image/png,image/jpeg,image/webp,image/gif"></label>
 <p id="profileAvatarPreview" class="muted"></p><button type="button" class="outline" data-clear-media="avatar" data-i18n="clearImage">Bild entfernen</button>
-<label><span data-i18n="banner">Banner</span><select name="banner_preset" id="profileBannerPreset"></select><input name="banner" type="file" accept="image/png,image/jpeg,image/webp"></label>
+<label><span data-i18n="banner">Banner</span><select name="banner_preset" id="profileBannerPreset"></select><input name="banner" type="file" accept="image/png,image/jpeg,image/webp,image/gif"></label>
 <p id="profileBannerPreview" class="muted"></p><button type="button" class="outline" data-clear-media="banner" data-i18n="clearImage">Bild entfernen</button>
-<label><span data-i18n="background">Hintergrund</span><select name="background_preset" id="profileBackgroundPreset"></select><input name="background" type="file" accept="image/png,image/jpeg,image/webp"></label>
+<label><span data-i18n="background">Hintergrund</span><select name="background_preset" id="profileBackgroundPreset"></select><input name="background" type="file" accept="image/png,image/jpeg,image/webp,image/gif"></label>
 <p id="profileBackgroundPreview" class="muted"></p><button type="button" class="outline" data-clear-media="background" data-i18n="clearImage">Bild entfernen</button>
 <p id="profileMessage" role="status"></p>
 <button id="profileSubmit" class="primary" data-i18n="save">Speichern</button>

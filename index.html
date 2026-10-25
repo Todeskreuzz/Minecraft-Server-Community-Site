@@ -19,6 +19,7 @@
 <div id="navSheet" class="nav-sheet">
 <nav aria-label="Navigation">
 <a href="#forum" data-i18n="forum">Forum</a>
+<a href="#groups" data-i18n="playerGroups">Gruppen</a>
 <a href="#server" data-i18n="server">Server</a>
 <a href="#admin" id="adminNav" hidden>Admin</a>
 </nav>
@@ -163,6 +164,10 @@
 <p id="profileBannerPreview" class="muted"></p><button type="button" class="outline" data-clear-media="banner" data-i18n="clearImage">Bild entfernen</button>
 <label><span data-i18n="background">Hintergrund</span><select name="background_preset" id="profileBackgroundPreset"></select><input name="background" type="file" accept="image/png,image/jpeg,image/webp,image/gif"></label>
 <p id="profileBackgroundPreview" class="muted"></p><button type="button" class="outline" data-clear-media="background" data-i18n="clearImage">Bild entfernen</button>
+<label><span data-i18n="minecraftName">Minecraft-Name</span><input name="minecraft_name" maxlength="16" autocomplete="off"></label>
+<p><button id="linkCodeButton" class="outline" type="button" data-i18n="linkCode">Verknüpfungscode</button></p>
+<p id="linkCode" class="muted"></p>
+<p class="muted" data-i18n="linkHint">Im Spiel innerhalb von 15 Minuten /ff link und den Code eingeben.</p>
 <p id="profileMessage" role="status"></p>
 <button id="profileSubmit" class="primary" data-i18n="save">Speichern</button>
 </form>
@@ -203,6 +208,18 @@
 <li><span data-i18n="connectNote">Starte das Profil und trage die Serveradresse ein.</span></li>
 </ol>
 </section>
+</section>
+<section id="groupsView" class="view" hidden>
+<div class="page-head"><h1 data-i18n="playerGroups">Gruppen</h1><p data-i18n="playerGroupsHint">Ein kurzes Präfix, eine Farbe und Einladungen. Der Server setzt daraus ein Team.</p></div>
+<div id="groupList" class="forum-index"></div>
+<form id="groupCreate" class="form card" hidden>
+<h2 data-i18n="createGroup">Gruppe erstellen</h2>
+<label><span data-i18n="groupName">Name</span><input name="name" required minlength="2" maxlength="32"></label>
+<label><span data-i18n="groupTagLabel">Präfix</span><input name="tag" required minlength="2" maxlength="6" autocapitalize="characters"></label>
+<label><span data-i18n="groupColor">Farbe</span><select name="color" id="groupColor"></select></label>
+<label><span data-i18n="groupDescription">Beschreibung</span><input name="description" maxlength="200"></label>
+<button class="primary" data-i18n="createGroup">Gruppe erstellen</button>
+</form>
 </section>
 <section id="adminView" class="view" hidden>
 <div class="page-head"><h1>Admin</h1></div>
@@ -272,6 +289,7 @@
 </div>
 <nav aria-label="Footer">
 <a href="#forum" data-i18n="forum">Forum</a>
+<a href="#groups" data-i18n="playerGroups">Gruppen</a>
 <a href="#server" data-i18n="server">Server</a>
 <a href="#privacy" id="privacyLink" data-i18n="privacy">Datenschutz</a>
 </nav>

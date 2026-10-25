@@ -89,7 +89,12 @@ test('profile markup uses the fallback banner, rank avatar, and stat cards',()=>
  const html=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
  const css=fs.readFileSync(new URL('../assets/css/forum.css',import.meta.url),'utf8');
  const js=fs.readFileSync(new URL('../assets/js/forum.mjs',import.meta.url),'utf8');
- assert.match(html,/id="profileScene" class="profile-scene preset-fallback"/);
+ assert.doesNotMatch(html,/id="profileScene"/);
+ assert.match(html,/id="profileBanner" class="profile-banner preset-fallback"/);
+ assert.match(html,/id="moreButton"/);
+ assert.match(html,/class="nav-extra"/);
+ assert.match(css,/\.profile-id \.avatar\{margin-top:-56px/);
+ assert.doesNotMatch(js,/profileScene/);
  assert.match(html,/id="profileRanks"/);
  assert.match(html,/class="stat-card"/);
  assert.match(css,/\.preset-fallback\{/);

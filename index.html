@@ -20,11 +20,19 @@
 <nav aria-label="Navigation">
 <a href="#forum" data-i18n="forum">Forum</a>
 <a href="#groups" data-i18n="playerGroups">Gruppen</a>
-<a href="#news" data-i18n="news">Neuigkeiten</a>
+<a class="nav-extra" href="#news" data-i18n="news">Neuigkeiten</a>
 <a href="#server" data-i18n="server">Server</a>
+<a class="nav-extra" href="#servers" data-i18n="serverList">Serverliste</a>
+<a class="nav-extra" href="#support" data-i18n="support">Unterstützen</a>
+<a href="#admin" id="adminNav" hidden>Admin</a>
+<div class="nav-more">
+<button type="button" id="moreButton" aria-expanded="false" aria-controls="moreMenu"><span data-i18n="moreNav">Mehr</span></button>
+<div id="moreMenu" class="more-menu" hidden>
+<a href="#news" data-i18n="news">Neuigkeiten</a>
 <a href="#servers" data-i18n="serverList">Serverliste</a>
 <a href="#support" data-i18n="support">Unterstützen</a>
-<a href="#admin" id="adminNav" hidden>Admin</a>
+</div>
+</div>
 </nav>
 <div class="tools">
 <button type="button" id="themeToggle" class="icon-button" aria-pressed="false" aria-label="Helles Design verwenden"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg></button>
@@ -144,7 +152,6 @@
 </section>
 <section id="profileView" class="view" hidden>
 <nav id="profileCrumbs" class="crumbs" aria-label="Breadcrumb"></nav>
-<div id="profileScene" class="profile-scene preset-fallback" aria-hidden="true"></div>
 <article class="profile-card">
 <div id="profileBanner" class="profile-banner preset-fallback"></div>
 <div class="profile-id">

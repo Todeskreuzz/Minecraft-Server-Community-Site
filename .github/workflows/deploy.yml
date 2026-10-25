@@ -37,6 +37,8 @@ jobs:
           node --check assets/js/forum-media.mjs
           node --check assets/js/forum-updates.mjs
           node --check assets/js/forum-spam.mjs
+          node --check assets/js/qr.mjs
+          node --check assets/js/support.mjs
           node scripts/check.mjs
           node --test tests/*.test.mjs
       - uses: supabase/setup-cli@v1

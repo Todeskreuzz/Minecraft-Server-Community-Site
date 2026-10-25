@@ -95,7 +95,7 @@ function postElement(post,topic=false){const card=node('article',undefined,'pane
 }
 async function loadReplies(reset=false,next=false){const topic=currentTopic,version=routeVersion;if(reset){repliesPage=0;$('replies').replaceChildren()}const raw=await api.db('forum_replies?select=id,body,created_at,author_id&topic_id=eq.'+topic.id+'&order=created_at.asc,id.asc&limit=51&offset='+(repliesPage+(next?1:0))*50);const data=await attachNames(raw);if(version!==routeVersion)return;if(next)repliesPage++;$('moreReplies').hidden=data.length<=50;if(!data.length&&reset)$('replies').append(node('p',t('noReplies'),'muted'));data.slice(0,50).forEach(reply=>$('replies').append(postElement(reply)))}
 async function route(keepNotice=false){
- const version=++routeVersion;if(keepNotice&&authNoticeKey)notice(t(authNoticeKey));else notice();const hash=location.hash.slice(1)||'forum',parts=hash.split('/');const section=parts[0]||'forum';let view=section==='topic'?'topic':section==='admin'?'admin':(section==='server'||section==='play'||section==='mods')?'server':'forum';document.querySelectorAll('.view').forEach(el=>el.hidden=el.id!==view+'View');document.querySelectorAll('nav a').forEach(el=>{const on=(el.hash==='#server'&&view==='server')||(el.hash==='#forum'&&(view==='forum'||view==='topic'))||(el.id==='adminNav'&&view==='admin');el.classList.toggle('active',on);if(on)el.setAttribute('aria-current','page');else el.removeAttribute('aria-current')});$('adminContent').hidden=true;$('adminGate').hidden=false;
+ setMenu(false);const version=++routeVersion;if(keepNotice&&authNoticeKey)notice(t(authNoticeKey));else notice();const hash=location.hash.slice(1)||'forum',parts=hash.split('/');const section=parts[0]||'forum';let view=section==='topic'?'topic':section==='admin'?'admin':(section==='server'||section==='play'||section==='mods')?'server':'forum';document.querySelectorAll('.view').forEach(el=>el.hidden=el.id!==view+'View');document.querySelectorAll('nav a').forEach(el=>{const on=(el.hash==='#server'&&view==='server')||(el.hash==='#forum'&&(view==='forum'||view==='topic'))||(el.id==='adminNav'&&view==='admin');el.classList.toggle('active',on);if(on)el.setAttribute('aria-current','page');else el.removeAttribute('aria-current')});$('adminContent').hidden=true;$('adminGate').hidden=false;
  filter=parts[0]==='category'&&categories.includes(parts[1])?parts[1]:'all';$('categoryFilter').value=filter;document.querySelectorAll('#categoryNav a').forEach(a=>{const on=a.hash==='#category/'+filter;a.classList.toggle('active',on);if(on)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')});const home=document.querySelector('.side-home');if(home){const on=view==='forum'&&filter==='all';home.classList.toggle('active',on);if(on)home.setAttribute('aria-current','page');else home.removeAttribute('aria-current')}
  try{
  if(view==='forum')await loadTopics(true);
@@ -127,13 +127,23 @@ function renderConfig(){
 }
 async function checkServer(){try{const response=await fetch('https://api.mcstatus.io/v2/status/java/'+encodeURIComponent(config.server.address),{signal:AbortSignal.timeout(10000)});if(!response.ok)throw Error();const status=await response.json();$('serverState').textContent=status.online?'Online':t('offline');$('statusDot').classList.toggle('online',status.online===true);$('onlineCount').textContent=status.online?`${status.players.online} / ${status.players.max}`:'—'}catch{$('serverState').textContent=t('unknown');$('onlineCount').textContent='—';$('statusDot').classList.remove('online')}}
 document.querySelectorAll('[data-close]').forEach(button=>button.onclick=()=>$(button.dataset.close).close());
+function setMenu(open){
+ const sheet=$('navSheet'),button=$('menuButton');if(!sheet||!button)return;
+ sheet.classList.toggle('is-open',open);document.body.classList.toggle('nav-open',open);
+ button.setAttribute('aria-expanded',String(open));
+ button.setAttribute('aria-label',open?(lang==='de'?'Menü schließen':'Close menu'):(lang==='de'?'Menü':'Menu'));
+}
 function chooseLanguage(choice){languageChoice=choice;localStorage.setItem('faf-language-choice',choice);lang=choice;applyLanguage();route(true)}
 document.querySelectorAll('[data-lang]').forEach(button=>button.onclick=()=>chooseLanguage(button.dataset.lang));
 $('themeToggle').onclick=()=>{theme=theme==='light'?'dark':'light';applyTheme()};
+$('menuButton').onclick=()=>setMenu(!$('navSheet').classList.contains('is-open'));
+$('navScrim').onclick=()=>setMenu(false);
+$('navSheet').querySelectorAll('a').forEach(link=>link.addEventListener('click',()=>setMenu(false)));
+document.addEventListener('keydown',event=>{if(event.key==='Escape')setMenu(false)});
 $('heroJoin').onclick=()=>{if(session)$('newTopic').click();else openAuth(true)};
 $('browseForum').onclick=event=>{event.preventDefault();$('topics').scrollIntoView({behavior:'smooth',block:'start'})};
 $('privacyLink').onclick=event=>{event.preventDefault();$('privacyDialog').showModal()};
-$('accountButton').onclick=async()=>{if(!session)return openAuth(false);let message='';try{await api.logout()}catch(error){message=error.message}finally{await route();if(message)notice(message)}};
+$('accountButton').onclick=async()=>{setMenu(false);if(!session)return openAuth(false);let message='';try{await api.logout()}catch(error){message=error.message}finally{await route();if(message)notice(message)}};
 $('registerButton').onclick=()=>openAuth(true);
 function authMode(value){signup=value;$('nameField').hidden=!value;$('authForm').elements.name.required=value;$('authForm').elements.password.autocomplete=value?'new-password':'current-password';$('loginMode').classList.toggle('active',!value);$('signupMode').classList.toggle('active',value);$('authSubmit').textContent=t(value?'register':'login');showAuthMessage('')}
 $('signupMode').onclick=()=>authMode(true);$('loginMode').onclick=()=>authMode(false);

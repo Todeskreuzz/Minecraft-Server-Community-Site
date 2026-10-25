@@ -24,6 +24,7 @@ end $$;
 \ir .adoption-updates.sql
 \ir .adoption-spam.sql
 \ir .adoption-servers.sql
+\ir .adoption-followers.sql
 do $$ begin
  if not exists(select 1 from public.forum_topics where id='00000000-0000-4000-8000-00000000d002' and body='Preserved body') then raise exception 'Existing topic lost';end if;
  if not exists(select 1 from public.forum_owner_settings where notes='Preserved owner notes') then raise exception 'Owner notes lost';end if;

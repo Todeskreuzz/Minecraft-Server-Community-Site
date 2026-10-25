@@ -169,12 +169,17 @@
 <div class="profile-stats">
 <div class="stat-card"><strong id="profileThreads">0</strong><span id="profileThreadsLabel"></span></div>
 <div class="stat-card"><strong id="profileReplies">0</strong><span id="profileRepliesLabel"></span></div>
+<button type="button" id="showFollowers" class="stat-card"><strong id="profileFollowers">0</strong><span data-i18n="followers">Follower</span></button>
 <div class="stat-card"><strong id="profileFriends">0</strong><span id="profileFriendsLabel"></span></div>
 </div>
+<div class="profile-actions"><a id="editProfileButton" class="secondary" href="#profile/edit" hidden data-i18n="editProfile">Profil bearbeiten</a><button type="button" id="followButton" class="primary" hidden></button></div>
 <div id="profileFriendActions" class="row-actions" hidden></div>
 <h2 data-i18n="recentThreads">Letzte Themen</h2>
 <div id="profileThreadList" class="profile-threads"></div>
-<form id="profileForm" class="form" hidden>
+
+</article>
+</section>
+<section id="profileEditView" class="view" hidden><nav id="editCrumbs" class="crumbs" aria-label="Breadcrumb"></nav><p id="profileEditGate" class="note" hidden></p><form id="profileForm" class="form card" hidden>
 <h2 data-i18n="editProfile">Profil bearbeiten</h2>
 <p id="ownerNameNote" class="muted" hidden data-i18n="ownerNameLocked">Dein öffentlicher Name bleibt Inhaber. Den privaten Namen änderst du in der Verwaltung.</p>
 <label><span data-i18n="displayName">Anzeigename</span><input name="display_name" required minlength="2" maxlength="32" autocomplete="nickname"></label>
@@ -191,10 +196,10 @@
 <p id="linkCode" class="muted"></p>
 <p class="muted" data-i18n="linkHint">Im Spiel innerhalb von 15 Minuten /ff link und den Code eingeben.</p>
 <p id="profileMessage" role="status"></p>
+<a id="cancelProfile" class="secondary" href="#forum" data-i18n="cancel">Abbrechen</a>
 <button id="profileSubmit" class="primary" data-i18n="save">Speichern</button>
-</form>
-</article>
-</section>
+</form></section>
+<section id="modView" class="view" hidden><nav class="crumbs"><a href="#server" data-i18n="backServer">Zurück zum Server</a></nav><article id="modDetail" class="card"></article></section>
 <section id="serverView" class="view" hidden>
 <div class="page-head">
 <div>
@@ -219,17 +224,16 @@
 <li class="fact-card"><span>Mods</span><strong id="modCount">39</strong></li>
 <li class="fact-card"><span data-i18n="hostLabel">Host</span><strong>Falix</strong></li>
 </ul>
+<p class="row-actions"><a id="wakeServer" class="secondary" href="https://falixnodes.net/startserver" target="_blank" rel="noopener noreferrer" hidden data-i18n="wakeServer">Server aufwecken</a><a id="directJoin" class="primary" hidden data-i18n="directJoin">Minecraft starten & beitreten</a></p><p id="directJoinNote" class="muted" hidden data-i18n="directJoinNote">Prism unter Windows: erst die einmalige Einrichtung abschließen. Sonst folge der Anleitung unten.</p><p id="launcherNotice" class="note" role="status" hidden></p>
 <p id="serverLive" class="status-line" hidden><span id="statusDot" hidden></span><span id="serverState"></span> · <span id="onlineCount"></span></p>
 <p><a id="discordLink" class="secondary" hidden data-i18n="discord">Discord</a></p>
-<section class="steps-card">
-<h2 data-i18n="join">So spielst du mit</h2>
-<ol class="steps">
-<li><span><a href="https://www.curseforge.com/download/app" target="_blank" rel="noopener noreferrer">CurseForge</a> <span data-i18n="install">installieren.</span></span></li>
-<li><span data-i18n="downloadStep">Sobald verfügbar: Profil-ZIP herunterladen.</span></li>
-<li><span data-i18n="importStep">In CurseForge „Import Profile“ wählen, ZIP importieren und Profil starten.</span></li>
-<li><span data-i18n="connectNote">Starte das Profil und trage die Serveradresse ein.</span></li>
-</ol>
+<section class="steps-card join-guide" aria-labelledby="joinTitle">
+<div class="section-heading"><div><p class="eyebrow" data-i18n="joinEyebrow">DEIN ERSTES ABENTEUER</p><h2 id="joinTitle" data-i18n="join">So spielst du mit</h2></div><span id="joinProgress" class="uid-badge"></span></div>
+<ol id="joinSteps" class="join-progress"></ol>
+<div id="joinStep" class="join-step" aria-live="polite"></div>
+<div class="row-actions"><button type="button" id="joinBack" class="secondary" data-i18n="previous">Zurück</button><button type="button" id="joinNext" class="primary" data-i18n="next">Weiter</button></div>
 </section>
+<section class="card mods-section" aria-labelledby="modsTitle"><div class="section-heading"><div><p class="eyebrow" data-i18n="packContents">DEIN MODPACK</p><h2 id="modsTitle" data-i18n="modsTitle">Mods & Extras entdecken</h2></div><span id="packCount" class="uid-badge"></span></div><p id="packAudit" class="muted"></p><label class="search-field"><span data-i18n="modSearch">Inhalte suchen</span><input id="modSearch" type="search" maxlength="100"></label><div id="modList" class="mod-grid"></div></section>
 </section>
 <section id="serversView" class="view" hidden>
 <div class="page-head"><h1 data-i18n="serverList">Serverliste</h1><p data-i18n="serverListHint">Öffentliche Minecraft-Server der Community. Der Status kommt von api.mcsrvstat.us und bleibt zwei Minuten im Browser.</p></div>
@@ -403,10 +407,12 @@
 <p id="authMessage" role="status"></p>
 <button class="primary wide" id="authSubmit" data-i18n="login">Anmelden</button>
 <button type="button" id="forgotPassword" class="outline" data-i18n="forgot">Passwort vergessen?</button>
-<button type="button" id="anonymousButton" class="secondary" data-i18n="continueAnonymous">Anonym fortfahren</button>
-<p id="anonymousNote" class="muted" data-i18n="anonymousNote">Nur lesen, ohne Konto. Die Auswahl gilt nur für diesen Browser-Tab.</p>
 </form>
+<section id="anonymousSection" class="anonymous-section" aria-labelledby="readOnlyTitle"><div class="anonymous-icon" aria-hidden="true">◉</div><div><h3 id="readOnlyTitle" data-i18n="readOnlyTitle">Nur mitlesen</h3><button type="button" id="anonymousButton" class="secondary" data-i18n="continueAnonymous">Anonym fortfahren</button>
+<p id="anonymousNote" class="muted" data-i18n="anonymousNote">Nur lesen, ohne Konto. Die Auswahl gilt nur für diesen Browser-Tab.</p>
+</div></section>
 </dialog>
+<dialog id="followersDialog" aria-labelledby="followersTitle"><div class="dialog-top"><h2 id="followersTitle" data-i18n="followers">Follower</h2><button type="button" class="close" data-close="followersDialog" aria-label="Schließen / Close">×</button></div><div id="followersList" aria-live="polite"></div><button type="button" id="moreFollowers" class="secondary" hidden data-i18n="more">Weitere Beiträge laden</button></dialog>
 <dialog id="topicDialog" aria-labelledby="topicHeading">
 <form id="topicForm" class="form">
 <div class="dialog-top"><h2 id="topicHeading" data-i18n="newTopic">Neues Thema</h2><button type="button" class="close" data-close="topicDialog" aria-label="Schließen / Close"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button></div>

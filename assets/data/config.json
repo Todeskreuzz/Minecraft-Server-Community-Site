@@ -11,9 +11,9 @@
     "refreshSeconds": 120
   },
   "modpack": {
-    "downloadUrl": "",
-    "version": "",
-    "fileSize": ""
+    "downloadUrl": "assets/downloads/friends-and-foes.zip",
+    "version": "2026.10.25",
+    "fileSize": "97524"
   },
   "community": {
     "discordUrl": ""

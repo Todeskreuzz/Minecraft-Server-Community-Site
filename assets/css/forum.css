@@ -195,7 +195,8 @@ footer nav a:hover{color:var(--text)}
  .brand{position:relative;flex:none}
  .brand-name{position:absolute;left:0;top:0;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
  .account{display:flex;align-items:center;gap:0;margin-left:auto;flex:none}
- .identity-status,#registerButton{display:none!important}
+ #registerButton{display:none!important}
+ .identity-status{font-size:11px;line-height:1.3;max-width:100px}
  #accountButton{flex:none;white-space:nowrap;background:var(--accent);color:var(--accent-ink);border-radius:999px;padding:8px 12px;font-size:14px;font-weight:600;line-height:1.2}
  .menu-button{display:grid;flex:none}
  .nav-scrim{position:fixed;inset:0;z-index:19;border:0;padding:0;background:rgba(9,9,11,.55)}
@@ -338,6 +339,51 @@ footer nav a:hover{color:var(--text)}
 @keyframes owner-border{50%{box-shadow:0 0 0 2px #a7f3d0,0 0 16px rgba(52,211,153,.55)}}
 @keyframes glow-pulse{50%{box-shadow:0 0 14px rgba(251,191,36,.75)}}
 @keyframes rank-sweep{to{transform:translateX(120%)}}
+.rank{position:relative;isolation:isolate;overflow:hidden;line-height:1.8;border:1px solid var(--rank-edge,transparent);box-shadow:inset 0 1px 0 #ffffff38}
+.rank-owner{--rank-edge:#6ee7b7;background:linear-gradient(110deg,#a7f3d0,#6ee7b7,#d1fae5);background-size:220% 100%;animation:rank-colour 8s ease-in-out infinite}
+.rank-admin{--rank-edge:#fcd34d;background:linear-gradient(110deg,#fde68a,#fbbf24,#fef3c7);background-size:220% 100%;animation:rank-colour 9s ease-in-out infinite}
+.rank-moderator{--rank-edge:#7dd3fc;background:linear-gradient(110deg,#bae6fd,#7dd3fc,#e0f2fe);background-size:220% 100%;animation:rank-colour 10s ease-in-out infinite}
+.rank-dayone{--rank-edge:#c4b5fd;color:#2e1065;background:linear-gradient(110deg,#ddd6fe,#c4b5fd,#ede9fe);background-size:220% 100%;animation:rank-colour 11s ease-in-out infinite}
+.rank-moderator::after{display:none}
+@keyframes rank-colour{0%,100%{background-position:0 50%}50%{background-position:100% 50%}}
+.anonymous-section{margin:8px 0 0;padding:22px 0 0;border-top:1px solid var(--line);display:grid;grid-template-columns:38px minmax(0,1fr);gap:14px}
+.anonymous-section h3{font-size:15px;margin-bottom:8px}
+.anonymous-section p{font-size:13px;margin-top:8px;color:var(--muted);line-height:1.6}
+.anonymous-icon{display:grid;place-items:center;width:38px;height:38px;border:1px solid var(--line);border-radius:12px;color:var(--accent);background:var(--surface-2)}
+#anonymousButton{width:100%;text-align:center}
+#forgotPassword{justify-self:start;padding:0;border:0;color:var(--muted);font-size:13px;background:none}
+#authForm{gap:16px}
+.profile-actions{padding:16px 22px;display:flex;flex-wrap:wrap;gap:10px}
+button.stat-card{color:var(--text);background:var(--surface-2);text-align:left;border:1px solid var(--line)}
+button.stat-card:hover{border-color:var(--accent)}
+.profile-stats{grid-template-columns:repeat(auto-fit,minmax(120px,1fr))}
+#profileEditView{max-width:800px;margin-inline:auto}
+#profileEditView .form{padding:28px}
+.section-heading{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:20px}
+.join-guide,.mods-section{margin-top:28px}
+.join-progress{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;padding:0;list-style:none;margin:24px 0}
+.join-progress button{display:flex;gap:10px;align-items:center;width:100%;text-align:left;border:1px solid var(--line);border-radius:10px;padding:12px;background:var(--surface-2);color:var(--muted);font-size:13px}
+.join-progress button>span:first-child{font-variant-numeric:tabular-nums;font-weight:600;color:var(--accent)}
+.join-progress button.active{border-color:var(--accent);color:var(--text);background:var(--glow)}
+.join-step{min-height:240px;display:flex;flex-direction:column;align-items:flex-start;gap:18px;padding:8px 0 26px}
+.join-step>h3{font-size:24px;letter-spacing:-.03em}
+.launcher-choices{display:flex;flex-wrap:wrap;gap:10px}
+.launcher-choice{border:1px solid var(--line);border-radius:10px;padding:14px 18px;background:var(--surface-2)}
+.launcher-choice[aria-pressed=true]{border-color:var(--accent);background:var(--glow);color:var(--accent)}
+.import-instructions{display:grid;gap:14px;padding-left:24px;max-width:720px}
+.launch-setup{display:grid;gap:12px;border:1px solid var(--line);padding:20px;border-radius:12px;max-width:720px}
+.launch-setup a{justify-self:start}
+.mod-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;margin-top:20px}
+.mod-card{display:flex;flex-direction:column;align-items:flex-start;gap:7px;border:1px solid var(--line);border-radius:12px;padding:20px;background:var(--surface);color:var(--text);transition:border-color .2s,transform .2s}
+.mod-card:hover{border-color:var(--accent);transform:translateY(-2px);text-decoration:none}
+.mod-card h3{font-size:17px}.mod-card .small{font-size:12px;color:var(--muted);margin-top:auto}
+.mod-kind{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--accent)}
+.mod-facts{display:grid;grid-template-columns:minmax(120px,200px) minmax(0,1fr);gap:12px 24px;margin:28px 0}
+.mod-facts dt{color:var(--muted)}.mod-facts dd{margin:0;overflow-wrap:anywhere}
+#modDetail{display:grid;gap:18px}#modDetail h1{font-size:clamp(28px,4vw,44px);letter-spacing:-.04em}
+.mods-section .search-field{gap:16px;flex-wrap:wrap}.mods-section .search-field input{min-width:140px;flex:1}
+#followersDialog{width:min(520px,calc(100vw - 24px))}#followersList{margin:18px 0;max-height:55vh;overflow:auto}
+@media(max-width:600px){.join-progress{grid-template-columns:repeat(2,minmax(0,1fr))}.join-progress button{padding:10px}.join-step{min-height:270px}.section-heading{align-items:flex-start}.mod-facts{grid-template-columns:1fr;gap:4px}.mod-facts dd{margin-bottom:12px}.anonymous-section{grid-template-columns:30px minmax(0,1fr);gap:10px}.anonymous-icon{width:30px;height:30px}#profileEditView .form{padding:18px}}
 .post-media{display:grid;gap:12px;margin-top:12px}
 .post-media img,.post-media video{max-width:100%;border-radius:12px;background:#09090b}
 .post-media iframe{width:100%;aspect-ratio:16/9;border:0;border-radius:12px;background:#09090b}

@@ -225,20 +225,20 @@ begin
 end; $$;
 
 create or replace function public.bridge_link(p_secret text, p_code text, p_player text) returns void language plpgsql security definer set search_path='' as $$
-declare uid uuid;
+declare linked uuid;
 begin
  perform private.assert_bridge(p_secret);
  if p_player !~ '^[A-Za-z0-9_]{3,16}$' then raise exception 'Invalid Minecraft name'; end if;
- select user_id into uid from private.mc_link_codes
+ select user_id into linked from private.mc_link_codes
  where code_hash = encode(extensions.digest(upper(trim(p_code)), 'sha256'), 'hex') and expires_at > now();
- if uid is null then raise exception 'Code expired'; end if;
- if exists(select 1 from public.forum_profiles where lower(minecraft_name) = lower(p_player) and id <> uid) then raise exception 'Name already linked'; end if;
- update public.forum_profiles set minecraft_name = p_player, minecraft_verified = true where id = uid;
- delete from private.mc_link_codes where user_id = uid;
+ if linked is null then raise exception 'Code expired'; end if;
+ if exists(select 1 from public.forum_profiles p where lower(p.minecraft_name) = lower(p_player) and p.id <> linked) then raise exception 'Name already linked'; end if;
+ update public.forum_profiles set minecraft_name = p_player, minecraft_verified = true where id = linked;
+ delete from private.mc_link_codes where user_id = linked;
  insert into public.mc_sync_queue(kind, payload)
  select 'add_member', jsonb_build_object('tag', g.tag, 'player', p_player)
  from public.player_groups g
- join public.player_group_members m on m.group_id = g.id and m.user_id = uid and m.status = 'member';
+ join public.player_group_members m on m.group_id = g.id and m.user_id = linked and m.status = 'member';
 end; $$;
 
 revoke all on function public.forum_create_group(text, text, text, text), public.forum_group_request(uuid), public.forum_group_invite(uuid, bigint), public.forum_group_act(uuid, uuid, text), public.forum_delete_group(uuid), public.forum_set_minecraft(text), public.forum_link_code(), public.bridge_claim(text), public.bridge_done(text, uuid[]), public.bridge_link(text, text, text) from public, anon, authenticated;

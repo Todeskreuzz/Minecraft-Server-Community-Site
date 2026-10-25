@@ -25,7 +25,7 @@ insert into storage.buckets (id, name, "public", file_size_limit, allowed_mime_t
  on conflict (id) do update set "public" = true, file_size_limit = excluded.file_size_limit, allowed_mime_types = excluded.allowed_mime_types;
 
 create or replace function private.thread_media_guard() returns trigger language plpgsql security definer set search_path='' as $$
-declare incoming bigint; kind text; used bigint;
+declare incoming bigint; object_kind text; used bigint;
 begin
  if new.bucket_id is distinct from 'thread-media' then return new; end if;
  if coalesce(auth.jwt()->>'is_anonymous', 'false') = 'true' then raise exception 'Not authorized'; end if;
@@ -33,10 +33,10 @@ begin
  if auth.uid() is not null and auth.uid()::text is distinct from split_part(new.name, '/', 1) then raise exception 'Invalid folder'; end if;
  if auth.uid() is null and current_user not in ('postgres', 'supabase_admin') then raise exception 'Invalid folder'; end if;
  incoming := coalesce((new.metadata->>'size')::bigint, (new.metadata->>'contentLength')::bigint, 0);
- kind := case when new.name ~ '\.webp$' then 'image' else 'video' end;
- if kind = 'image' and (incoming <= 0 or incoming > 262144) then raise exception 'Image is too large'; end if;
- if kind = 'video' and (incoming <= 0 or incoming > 8388608) then raise exception 'Video is too large'; end if;
- if kind = 'video' then
+ object_kind := case when new.name ~ '\.webp$' then 'image' else 'video' end;
+ if object_kind = 'image' and (incoming <= 0 or incoming > 262144) then raise exception 'Image is too large'; end if;
+ if object_kind = 'video' and (incoming <= 0 or incoming > 8388608) then raise exception 'Video is too large'; end if;
+ if object_kind = 'video' then
   select coalesce(sum(coalesce((metadata->>'size')::bigint, 0)), 0) into used
   from storage.objects where bucket_id = 'thread-media' and name ~ '\.(webm|mp4)$' and name is distinct from new.name;
   if used + incoming > 838860800 then raise exception 'Video uploads are paused'; end if;
@@ -66,7 +66,7 @@ create policy thread_media_delete on storage.objects for delete to authenticated
 create or replace function public.forum_attach_media(p_topic uuid, p_reply uuid, p_path text, p_header bytea) returns uuid language plpgsql security definer set search_path='' as $$
 declare
  linked uuid;
- kind text;
+ media_kind text;
  stored bigint;
  post_author uuid;
 begin
@@ -76,16 +76,16 @@ begin
  if p_topic is not null then select author_id into post_author from public.forum_topics where id = p_topic;
  else select author_id into post_author from public.forum_replies where id = p_reply; end if;
  if post_author is distinct from auth.uid() then raise exception 'Not authorized'; end if;
- if octet_length(p_header) >= 12 and substring(p_header from 1 for 4) = '\x52494646'::bytea and substring(p_header from 9 for 4) = '\x57454250'::bytea and p_path ~ '\.webp$' then kind := 'image';
- elsif octet_length(p_header) >= 4 and substring(p_header from 1 for 4) = '\x1a45dfa3'::bytea and p_path ~ '\.webm$' then kind := 'video';
- elsif octet_length(p_header) >= 8 and substring(p_header from 5 for 4) = '\x66747970'::bytea and p_path ~ '\.mp4$' then kind := 'video';
+ if octet_length(p_header) >= 12 and substring(p_header from 1 for 4) = '\x52494646'::bytea and substring(p_header from 9 for 4) = '\x57454250'::bytea and p_path ~ '\.webp$' then media_kind := 'image';
+ elsif octet_length(p_header) >= 4 and substring(p_header from 1 for 4) = '\x1a45dfa3'::bytea and p_path ~ '\.webm$' then media_kind := 'video';
+ elsif octet_length(p_header) >= 8 and substring(p_header from 5 for 4) = '\x66747970'::bytea and p_path ~ '\.mp4$' then media_kind := 'video';
  else raise exception 'Invalid image'; end if;
  select coalesce((metadata->>'size')::bigint, 0) into stored from storage.objects where bucket_id = 'thread-media' and name = p_path;
- if kind = 'image' and (stored <= 0 or stored > 262144) then raise exception 'Image is too large'; end if;
- if kind = 'video' and (stored <= 0 or stored > 8388608) then raise exception 'Video is too large'; end if;
- if kind = 'video' and (select count(*) from public.forum_media where author_id = auth.uid() and kind = 'video') >= 3 then raise exception 'Video quota exceeded'; end if;
+ if media_kind = 'image' and (stored <= 0 or stored > 262144) then raise exception 'Image is too large'; end if;
+ if media_kind = 'video' and (stored <= 0 or stored > 8388608) then raise exception 'Video is too large'; end if;
+ if media_kind = 'video' and (select count(*) from public.forum_media where author_id = auth.uid() and forum_media.kind = 'video') >= 3 then raise exception 'Video quota exceeded'; end if;
  insert into public.forum_media(author_id, topic_id, reply_id, path, kind, bytes)
- values(auth.uid(), p_topic, p_reply, p_path, kind, stored) returning id into linked;
+ values(auth.uid(), p_topic, p_reply, p_path, media_kind, stored) returning id into linked;
  return linked;
 end; $$;
 revoke all on function public.forum_attach_media(uuid, uuid, text, bytea) from public, anon, authenticated;

@@ -40,6 +40,8 @@ do $$ begin
 end $$;
 reset role;
 
+select set_config('request.jwt.claim.sub', '', true);
+reset role;
 do $$ begin
  begin
   insert into storage.objects(bucket_id,name,metadata) values ('profile-media','00000000-0000-4000-8000-00000000c011/avatar.gif','{"size":100,"mimetype":"image/gif"}');

@@ -29,6 +29,7 @@ jobs:
           node --check assets/js/forum.mjs
           node --check assets/js/forum-api.mjs
           node --check assets/js/forum-identity.mjs
+          node --check assets/js/forum-structure.mjs
           node scripts/check.mjs
           node --test tests/*.test.mjs
       - uses: supabase/setup-cli@v1
@@ -46,8 +47,10 @@ jobs:
         run: |
           psql "$PGURL" -X -v ON_ERROR_STOP=1 -f supabase/permission-tests.sql
           psql "$PGURL" -X -v ON_ERROR_STOP=1 -f supabase/002-identity-tests.sql
+          psql "$PGURL" -X -v ON_ERROR_STOP=1 -f supabase/003-structure-tests.sql
           sed 's/\r$//; /^begin;$/d; /^commit;$/d' supabase/migrations/20261024000100_forum.sql > supabase/.adoption-forum.sql
           sed 's/\r$//; /^begin;$/d; /^commit;$/d' supabase/migrations/20261024000200_identity.sql > supabase/.adoption-identity.sql
+          sed 's/\r$//; /^begin;$/d; /^commit;$/d' supabase/migrations/20261025000300_forum_structure.sql > supabase/.adoption-structure.sql
           psql "$PGURL" -X -v ON_ERROR_STOP=1 -f supabase/adoption-test.sql
       - name: Check both historical manual installation paths
         env:

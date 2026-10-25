@@ -20,5 +20,12 @@
   },
   "security": {
     "turnstileSiteKey": "0x4AAAAAAFktyAS3q220b4E7"
+  },
+  "support": {
+    "crypto": {
+      "bitcoin": "bc1qvd4qdrtp6vp34y2tp5nntaxh8s7gdtcl6cleg0",
+      "ethereum": "0x65Bc22A06395f366433FA9B79CD9E356d161f09B",
+      "solana": "EE34aTZx8UtMoEaLY5vJtkH1nLPkKyGVtZ3QMwBrfNPW"
+    }
   }
 }

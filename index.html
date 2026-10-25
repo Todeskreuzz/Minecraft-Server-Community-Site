@@ -20,10 +20,13 @@
 <a href="#server" data-i18n="server">Server</a>
 <a href="#admin" id="adminNav" hidden>Admin</a>
 </nav>
+<div class="tools">
+<button type="button" id="themeToggle" class="icon-button" aria-pressed="false" aria-label="Helles Design verwenden"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg></button>
 <div class="lang" role="group" aria-label="Sprache / Language">
-<button type="button" id="langDe" aria-pressed="true">DE</button>
+<button type="button" id="langDe" data-lang="de" aria-pressed="true">DE</button>
 <span aria-hidden="true">·</span>
-<button type="button" id="langEn" aria-pressed="false">EN</button>
+<button type="button" id="langEn" data-lang="en" aria-pressed="false">EN</button>
+</div>
 </div>
 <div class="account">
 <span id="identityStatus" class="identity-status" hidden></span>
@@ -32,31 +35,73 @@
 </div>
 </div>
 </header>
-<main id="main" class="page" tabindex="-1">
+<main id="main" tabindex="-1">
+<div class="shell">
 <div id="notice" class="notice" role="status" hidden></div>
 <section id="forumView" class="view">
-<div class="page-head">
-<div>
-<h1 data-i18n="forum">Forum</h1>
+<div class="hero">
+<svg class="hero-noise" aria-hidden="true"><filter id="grain"><feTurbulence type="fractalNoise" baseFrequency=".8" numOctaves="2" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(#grain)"/></svg>
+<div class="hero-copy">
+<p class="eyebrow"><span class="pixel" aria-hidden="true"></span><span data-i18n="eyebrow">Minecraft Java</span></p>
+<h1 data-i18n="welcome">Hier beginnt eure nächste Geschichte.</h1>
 <p class="lede" data-i18n="intro">Tauscht Ideen aus, zeigt eure Bauwerke und findet euer nächstes Abenteuer.</p>
+<div class="hero-actions">
+<button id="heroJoin" class="primary" type="button"><span id="heroJoinLabel" data-i18n="register">Registrieren</span></button>
+<a id="browseForum" class="secondary" href="#topics"><span data-i18n="browseForum">Forum ansehen</span></a>
+</div>
+</div>
+<div class="hero-art" aria-hidden="true">
+<svg class="voxel" viewBox="60 8 300 240">
+<ellipse cx="190" cy="232" rx="120" ry="12" fill="#000" opacity=".35"/>
+<polygon points="150,36 208,65 150,94 92,65" fill="#8ed45a"/>
+<polygon points="92,65 150,94 150,144 92,115" fill="#3f7a28"/>
+<polygon points="208,65 150,94 150,144 208,115" fill="#57a336"/>
+<polygon points="92,99 150,128 150,144 92,115" fill="#6d4524"/>
+<polygon points="208,99 150,128 150,144 208,115" fill="#8b5a34"/>
+<polygon points="150,86 208,115 150,144 92,115" fill="#6fbf45"/>
+<polygon points="92,115 150,144 150,194 92,165" fill="#356820"/>
+<polygon points="208,115 150,144 150,194 208,165" fill="#4a922f"/>
+<polygon points="92,149 150,178 150,194 92,165" fill="#5c3a1e"/>
+<polygon points="208,149 150,178 150,194 208,165" fill="#7a4e28"/>
+<polygon points="208,115 266,144 208,173 150,144" fill="#d5dbe1"/>
+<polygon points="150,144 208,173 208,223 150,194" fill="#6a727a"/>
+<polygon points="266,144 208,173 208,223 266,194" fill="#8e979f"/>
+<polygon points="300,42 334,59 300,76 266,59" fill="#8fffe0"/>
+<polygon points="266,59 300,76 300,108 266,91" fill="#0c7d5b"/>
+<polygon points="334,59 300,76 300,108 334,91" fill="#14b888"/>
+</svg>
+<ul class="chips">
+<li class="chip"><span>Minecraft</span><strong id="heroMc">1.20.1</strong></li>
+<li class="chip"><span>Forge</span><strong id="heroForge">47.4.10</strong></li>
+<li class="chip"><span>Mods</span><strong id="heroMods">39</strong></li>
+<li class="chip"><span data-i18n="hostLabel">Host</span><strong data-i18n="hostFalix">Falix</strong></li>
+</ul>
+</div>
+</div>
+<div id="topics" class="board">
+<div class="board-head">
+<div>
+<h2 data-i18n="topicsHeading">Themen</h2>
+<p class="muted" data-i18n="latest">Neueste zuerst</p>
 </div>
 <button id="newTopic" class="primary" type="button"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="M12 5v14"/></svg><span data-i18n="newTopic">Neues Thema</span></button>
 </div>
-<div class="filters"><a class="side-home" href="#forum" data-i18n="allTopics">Alle Themen</a><div id="categoryNav"></div></div>
+<div class="filters"><a class="side-home pill" href="#forum" data-i18n="allTopics">Alle Themen</a><div id="categoryNav"></div></div>
 <label class="search-field">
 <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg>
 <input id="search" type="search" maxlength="120" placeholder="Themen durchsuchen …" aria-label="Themen durchsuchen">
 </label>
 <select id="categoryFilter" hidden></select>
 <div id="topicList" class="topic-list" aria-live="polite"></div>
-<button id="loadMore" class="outline" type="button" hidden data-i18n="more">Weitere Beiträge laden</button>
+<div class="board-more"><button id="loadMore" class="secondary" type="button" hidden data-i18n="more">Weitere Beiträge laden</button></div>
+</div>
 </section>
 <section id="topicView" class="view" hidden>
 <a href="#forum" class="back"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg><span data-i18n="back">Zur Themenübersicht</span></a>
 <div id="topicDetail"></div>
 <div id="replies"></div>
-<button id="moreReplies" class="outline" type="button" hidden data-i18n="more">Weitere Beiträge laden</button>
-<form id="replyForm" class="form" hidden>
+<button id="moreReplies" class="secondary" type="button" hidden data-i18n="more">Weitere Beiträge laden</button>
+<form id="replyForm" class="form card" hidden>
 <h3 data-i18n="replyTitle">Deine Antwort</h3>
 <label><span data-i18n="message">Nachricht</span><textarea name="body" required maxlength="10000" rows="5"></textarea></label>
 <button class="primary" data-i18n="reply">Antwort veröffentlichen</button>
@@ -65,67 +110,86 @@
 <section id="serverView" class="view" hidden>
 <div class="page-head">
 <div>
+<p id="comingSoon" class="badge"><span class="pulse" aria-hidden="true"></span><span data-i18n="comingSoon">Startet bald</span></p>
 <h1 data-i18n="server">Server</h1>
-<p class="lede" data-i18n="serverIntro">Minecraft Java, ein gemeinsames Modpack, eine Adresse.</p>
+<p id="comingSoonNote" class="lede" data-i18n="comingSoonNote">Der Server und das Modpack folgen.</p>
+<p class="lede server-intro" data-i18n="serverIntro">Minecraft Java, ein gemeinsames Modpack, eine Adresse.</p>
 </div>
 </div>
-<p id="comingSoon" class="note" data-i18n="comingSoon">Der Server und das Modpack folgen.</p>
-<div id="serverAddress" hidden>
-<p data-i18n="address">Serveradresse</p>
+<div id="serverAddress" class="address-card" hidden>
+<p class="kicker" data-i18n="address">Serveradresse</p>
 <p id="playAddress" class="address"></p>
 <button id="copyAddress" class="primary" type="button" data-i18n="copy">Adresse kopieren</button>
 </div>
 <p id="addressLater" class="note" hidden data-i18n="addressLater">Die Serveradresse folgt.</p>
 <p id="packLater" class="note" hidden data-i18n="packLater">Das Modpack folgt.</p>
-<p><a id="download" hidden data-i18n="download">Modpack herunterladen</a></p>
+<p class="pack-row"><a id="download" class="secondary" hidden data-i18n="download">Modpack herunterladen</a></p>
 <p id="packVersion" class="muted" hidden></p>
-<ul class="facts">
-<li>Minecraft <strong id="mcVersion">1.20.1</strong></li>
-<li>Forge <strong id="forgeVersion">47.4.10</strong></li>
-<li><strong id="modCount">39</strong> Mods</li>
-<li data-i18n="hostFalix">Host: Falix</li>
+<ul class="fact-grid">
+<li class="fact-card"><span>Minecraft</span><strong id="mcVersion">1.20.1</strong></li>
+<li class="fact-card"><span>Forge</span><strong id="forgeVersion">47.4.10</strong></li>
+<li class="fact-card"><span>Mods</span><strong id="modCount">39</strong></li>
+<li class="fact-card"><span data-i18n="hostLabel">Host</span><strong>Falix</strong></li>
 </ul>
-<p id="serverLive" hidden><span id="statusDot" hidden></span><span id="serverState"></span> · <span id="onlineCount"></span></p>
-<p><a id="discordLink" hidden data-i18n="discord">Discord</a></p>
+<p id="serverLive" class="status-line" hidden><span id="statusDot" hidden></span><span id="serverState"></span> · <span id="onlineCount"></span></p>
+<p><a id="discordLink" class="secondary" hidden data-i18n="discord">Discord</a></p>
+<section class="steps-card">
+<h2 data-i18n="join">So spielst du mit</h2>
 <ol class="steps">
-<li><a href="https://www.curseforge.com/download/app" target="_blank" rel="noopener noreferrer">CurseForge</a> <span data-i18n="install">installieren.</span></li>
-<li data-i18n="downloadStep">Sobald verfügbar: Profil-ZIP herunterladen.</li>
-<li data-i18n="importStep">In CurseForge „Import Profile“ wählen, ZIP importieren und Profil starten.</li>
-<li data-i18n="connectNote">Starte das Profil und trage die Serveradresse ein.</li>
+<li><span><a href="https://www.curseforge.com/download/app" target="_blank" rel="noopener noreferrer">CurseForge</a> <span data-i18n="install">installieren.</span></span></li>
+<li><span data-i18n="downloadStep">Sobald verfügbar: Profil-ZIP herunterladen.</span></li>
+<li><span data-i18n="importStep">In CurseForge „Import Profile“ wählen, ZIP importieren und Profil starten.</span></li>
+<li><span data-i18n="connectNote">Starte das Profil und trage die Serveradresse ein.</span></li>
 </ol>
+</section>
 </section>
 <section id="adminView" class="view" hidden>
 <div class="page-head"><h1>Admin</h1></div>
-<p id="adminGate" data-i18n="adminOnly">Nur für das freigeschaltete Administratorkonto zugänglich.</p>
+<p id="adminGate" class="card gate" data-i18n="adminOnly">Nur für das freigeschaltete Administratorkonto zugänglich.</p>
 <div id="adminContent" hidden>
 <p id="ownerIdentity" class="muted"></p>
 <p class="muted" data-i18n="modTools">Themen schließen und Beiträge entfernen: direkt im jeweiligen Thema.</p>
-<p><a href="https://client.falixnodes.net/" target="_blank" rel="noopener noreferrer" data-i18n="openPanel">Falix-Verwaltung öffnen</a></p>
-<form id="privateNameForm" class="form">
+<p><a class="secondary" href="https://client.falixnodes.net/" target="_blank" rel="noopener noreferrer" data-i18n="openPanel">Falix-Verwaltung öffnen</a></p>
+<form id="privateNameForm" class="form card">
 <h2 data-i18n="privateName">Dein privater Anzeigename</h2>
 <p class="muted" data-i18n="friendNote">Nur von dir hinzugefügte Freunde sehen deinen privaten Namen. Alle anderen sehen deine Inhaber-Bezeichnung.</p>
 <label><span data-i18n="displayName">Anzeigename</span><input name="name" required minlength="2" maxlength="32" autocomplete="nickname"></label>
-<button class="outline" data-i18n="save">Speichern</button>
+<button class="secondary" data-i18n="save">Speichern</button>
 </form>
-<form id="friendForm" class="form">
+<form id="friendForm" class="form card">
 <h2 data-i18n="friendTitle">Freunde verwalten</h2>
 <label><span data-i18n="selectMember">Mitglied auswählen</span><select id="friendSelect" required></select></label>
-<button class="outline" data-i18n="addFriend">Als Freund hinzufügen</button>
+<button class="secondary" data-i18n="addFriend">Als Freund hinzufügen</button>
 <div id="friendList"></div>
 </form>
-<form id="ownerForm" class="form">
+<form id="ownerForm" class="form card">
 <h2 data-i18n="privateNotes">Private Servernotizen</h2>
 <p class="muted" data-i18n="notesHint">Nur für Administratoren lesbar. Keine Passwörter oder Schlüssel eintragen.</p>
 <label><span data-i18n="notes">Notizen</span><textarea name="notes" maxlength="10000" rows="8"></textarea></label>
-<button class="outline" data-i18n="save">Speichern</button>
+<button class="secondary" data-i18n="save">Speichern</button>
 </form>
 </div>
 </section>
-<footer>
-<p class="slogan">Love your Friends like you hate your Enemies</p>
-<p><a href="#privacy" id="privacyLink" data-i18n="privacy">Datenschutz</a></p>
-</footer>
+</div>
 </main>
+<footer>
+<div class="footer-bar">
+<div class="footer-brand">
+<a class="brand" href="#forum"><img src="assets/img/mark.svg" width="28" height="28" alt="">Friends & Foes</a>
+<p class="slogan">Love your Friends like you hate your Enemies</p>
+</div>
+<nav aria-label="Footer">
+<a href="#forum" data-i18n="forum">Forum</a>
+<a href="#server" data-i18n="server">Server</a>
+<a href="#privacy" id="privacyLink" data-i18n="privacy">Datenschutz</a>
+</nav>
+<div class="lang" role="group" aria-label="Sprache / Language">
+<button type="button" id="footerLangDe" data-lang="de" aria-pressed="true">DE</button>
+<span aria-hidden="true">·</span>
+<button type="button" id="footerLangEn" data-lang="en" aria-pressed="false">EN</button>
+</div>
+</div>
+</footer>
 <dialog id="authDialog" aria-labelledby="authTitle">
 <form id="authForm" class="form">
 <div class="dialog-top"><h2 id="authTitle" data-i18n="authTitle">Dein Platz in der Community.</h2><button type="button" class="close" data-close="authDialog" aria-label="Schließen / Close"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button></div>
@@ -136,7 +200,7 @@
 <p class="muted" data-i18n="authNote">Deine E-Mail bleibt privat. Anzeigename und Beiträge sind öffentlich.</p>
 <p id="authMessage" role="status"></p>
 <button class="primary wide" id="authSubmit" data-i18n="login">Anmelden</button>
-<button type="button" id="anonymousButton" class="outline" data-i18n="continueAnonymous">Anonym fortfahren</button>
+<button type="button" id="anonymousButton" class="secondary" data-i18n="continueAnonymous">Anonym fortfahren</button>
 <p class="muted" data-i18n="anonymousNote">Nur lesen, ohne Konto. Die Auswahl gilt nur für diesen Browser-Tab.</p>
 </form>
 </dialog>

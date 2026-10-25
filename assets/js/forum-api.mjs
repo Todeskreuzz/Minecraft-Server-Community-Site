@@ -62,6 +62,7 @@ export function createApi(config,getSession,setSession,fetcher=fetch){
  return {
   session,
   async db(path,options={}){const current=await session();return request('/rest/v1/'+path,{...options,token:current?.access_token})},
+  async guardedPost(payload){const current=await session();if(!current?.access_token)throw Error('Bitte erneut anmelden / please sign in again.');const response=await fetcher(config.url+'/functions/v1/turnstile-post',{method:'POST',headers:{apikey:config.key,Authorization:'Bearer '+current.access_token,'Content-Type':'application/json'},body:JSON.stringify(payload),signal:AbortSignal.timeout(20000)});if(response.status===404)return {fallback:true};const data=await response.json().catch(()=>null);if(!response.ok)throw Error(data?.error||data?.message||`HTTP ${response.status}`);return data},
   async login(email,password,captchaToken){return save(await request('/auth/v1/token?grant_type=password',{method:'POST',body:withCaptcha({email,password},captchaToken)}))},
   async signup(email,password,name,href=globalThis.location?.href,captchaToken){return save(await request('/auth/v1/signup?redirect_to='+encodeURIComponent(authRedirect(href)),{method:'POST',body:withCaptcha({email,password,data:{display_name:name}},captchaToken)}))},
   async recover(email,href=globalThis.location?.href,captchaToken){return request('/auth/v1/recover?redirect_to='+encodeURIComponent(authRedirect(href)),{method:'POST',body:withCaptcha({email},captchaToken)})},

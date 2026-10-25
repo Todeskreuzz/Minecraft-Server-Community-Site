@@ -132,6 +132,8 @@
 <form id="replyForm" class="form card" hidden>
 <h3 data-i18n="replyTitle">Deine Antwort</h3>
 <label><span data-i18n="message">Nachricht</span><textarea name="body" required maxlength="10000" rows="5"></textarea></label>
+<div class="honeypot" aria-hidden="true"><label>Firma<input name="company" tabindex="-1" autocomplete="off"></label></div>
+<div id="replyTurnstile" class="turnstile" hidden></div>
 <p class="muted" data-i18n="mediaHint">Bilder werden auf WebP verkleinert. Große Videos nur, wenn der Browser sie verkleinern kann, sonst einen YouTube-, Streamable- oder Medal-Link.</p>
 <label><span data-i18n="mediaImage">Bild</span><input name="image" type="file" accept="image/png,image/jpeg,image/webp"></label>
 <label><span data-i18n="mediaVideo">Video</span><input name="video" type="file" accept="video/mp4,video/webm,video/quicktime"></label>
@@ -350,6 +352,7 @@
 <form id="authForm" class="form">
 <div class="dialog-top"><h2 id="authTitle" data-i18n="authTitle">Dein Platz in der Community.</h2><button type="button" class="close" data-close="authDialog" aria-label="Schließen / Close"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button></div>
 <div class="auth-tabs"><button type="button" id="loginMode" class="active" data-i18n="login">Anmelden</button><button type="button" id="signupMode" data-i18n="register">Registrieren</button></div>
+<div class="honeypot" aria-hidden="true"><label>Firma<input name="company" tabindex="-1" autocomplete="off"></label></div>
 <label id="nameField" hidden><span data-i18n="displayName">Anzeigename</span><input name="name" minlength="2" maxlength="32" autocomplete="nickname"></label>
 <label>E-Mail<input name="email" type="email" required autocomplete="email"></label>
 <label id="passwordField"><span data-i18n="password">Passwort</span><input name="password" type="password" required minlength="8" maxlength="128" autocomplete="current-password"></label>
@@ -368,6 +371,8 @@
 <label><span data-i18n="category">Kategorie</span><select name="category" id="topicCategory"></select></label>
 <label><span data-i18n="title">Titel</span><input name="title" required minlength="3" maxlength="120"></label>
 <label><span data-i18n="message">Nachricht</span><textarea name="body" required maxlength="10000" rows="6"></textarea></label>
+<div class="honeypot" aria-hidden="true"><label>Firma<input name="company" tabindex="-1" autocomplete="off"></label></div>
+<div id="topicTurnstile" class="turnstile" hidden></div>
 <p class="muted" data-i18n="mediaHint">Bilder werden auf WebP verkleinert. Große Videos nur, wenn der Browser sie verkleinern kann, sonst einen YouTube-, Streamable- oder Medal-Link.</p>
 <label><span data-i18n="mediaImage">Bild</span><input name="image" type="file" accept="image/png,image/jpeg,image/webp"></label>
 <label><span data-i18n="mediaVideo">Video</span><input name="video" type="file" accept="video/mp4,video/webm,video/quicktime"></label>

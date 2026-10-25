@@ -23,6 +23,7 @@ end $$;
 \ir .adoption-media.sql
 \ir .adoption-updates.sql
 \ir .adoption-spam.sql
+\ir .adoption-servers.sql
 do $$ begin
  if not exists(select 1 from public.forum_topics where id='00000000-0000-4000-8000-00000000d002' and body='Preserved body') then raise exception 'Existing topic lost';end if;
  if not exists(select 1 from public.forum_owner_settings where notes='Preserved owner notes') then raise exception 'Owner notes lost';end if;
@@ -42,5 +43,6 @@ do $$ begin
  if to_regclass('public.news_posts') is null then raise exception 'News lost';end if;
  if to_regclass('public.modpack_updates') is null then raise exception 'Modpack updates lost';end if;
  if to_regprocedure('private.get_turnstile_secret()') is null then raise exception 'Captcha reader lost';end if;
+ if to_regclass('public.community_servers') is null then raise exception 'Community servers lost';end if;
 end $$;
 rollback;

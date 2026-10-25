@@ -219,6 +219,38 @@ footer nav a:hover{color:var(--text)}
  .footer-bar{grid-template-columns:1fr;padding-top:24px;padding-bottom:32px}
  .fact-card strong{font-size:22px}
 }
+.forum-index{display:grid;gap:22px;margin-top:28px}
+.group-block{background:var(--surface);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.group-head{padding:22px 22px 12px}
+.group-head h2{font-size:22px;letter-spacing:-.03em;font-weight:600}
+.group-head p,.group-empty{color:var(--muted);margin-top:4px}
+.group-empty{padding:0 22px 18px}
+.board-card{display:grid;grid-template-columns:auto minmax(0,1.5fr) auto minmax(160px,.9fr);gap:16px;align-items:center;padding:16px 22px;border-top:1px solid var(--line);color:inherit;text-decoration:none}
+.board-card:hover{background:var(--hover);text-decoration:none}
+.board-mark{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;background:rgba(52,211,153,.12);color:var(--accent)}
+.board-mark .icon{width:18px;height:18px}
+.board-copy h3{font-size:16px;font-weight:600;letter-spacing:-.02em}
+.board-copy p{margin-top:4px;color:var(--muted);font-size:14px;line-height:1.45}
+.board-counts{display:flex;flex-direction:column;align-items:flex-end;gap:2px;color:var(--muted);font-size:13px;font-variant-numeric:tabular-nums}
+.board-latest{min-width:0;color:var(--muted);font-size:13px}
+.board-latest strong{display:block;color:var(--text);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crumbs{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:0 0 16px;color:var(--muted);font-size:14px}
+.crumbs a{color:var(--muted)}
+.crumbs a:hover{color:var(--text)}
+.crumbs .current{color:var(--text);font-weight:600}
+.crumb-sep{opacity:.55}
+.pin-flag{color:var(--accent)}
+.list-card{padding:8px 22px}
+.list-card:empty{display:none}
+.admin-split{display:grid;gap:0 12px}
+.form-actions,.row-actions{display:flex;gap:16px;align-items:center}
+@media(min-width:720px){.admin-split{grid-template-columns:1fr 140px}}
+@media(max-width:799px){
+ .board-card{grid-template-columns:auto minmax(0,1fr);padding:16px}
+ .board-counts,.board-latest{grid-column:2}
+ .board-counts{flex-direction:row;gap:10px;justify-content:flex-start}
+ .group-head{padding:18px 16px 10px}
+}
 @media(prefers-reduced-motion:reduce){
  html{scroll-behavior:auto}
  *,*::before,*::after{animation:none!important;transition:none!important}

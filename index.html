@@ -51,7 +51,7 @@
 <p class="lede" data-i18n="intro">Tauscht Ideen aus, zeigt eure Bauwerke und findet euer nächstes Abenteuer.</p>
 <div class="hero-actions">
 <button id="heroJoin" class="primary" type="button"><span id="heroJoinLabel" data-i18n="register">Registrieren</span></button>
-<a id="browseForum" class="secondary" href="#topics"><span data-i18n="browseForum">Forum ansehen</span></a>
+<a id="browseForum" class="secondary" href="#forum"><span data-i18n="browseForum">Forum ansehen</span></a>
 </div>
 </div>
 <div class="hero-art" aria-hidden="true">
@@ -82,15 +82,19 @@
 </ul>
 </div>
 </div>
+<div id="forumIndex" class="forum-index" aria-live="polite"></div>
+</section>
+<section id="boardView" class="view" hidden>
+<nav id="boardCrumbs" class="crumbs" aria-label="Breadcrumb"></nav>
 <div id="topics" class="board">
 <div class="board-head">
 <div>
-<h2 data-i18n="topicsHeading">Themen</h2>
-<p class="muted" data-i18n="latest">Neueste zuerst</p>
+<h2 id="boardTitle">Themen</h2>
+<p id="boardNote" class="muted">Neueste zuerst</p>
 </div>
 <button id="newTopic" class="primary" type="button"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="M12 5v14"/></svg><span data-i18n="newTopic">Neues Thema</span></button>
 </div>
-<div class="filters"><a class="side-home pill" href="#forum" data-i18n="allTopics">Alle Themen</a><div id="categoryNav"></div></div>
+<div class="filters"><a class="side-home pill" href="#forum" data-i18n="overview">Übersicht</a><div id="categoryNav"></div></div>
 <label class="search-field">
 <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg>
 <input id="search" type="search" maxlength="120" placeholder="Themen durchsuchen …" aria-label="Themen durchsuchen">
@@ -101,7 +105,7 @@
 </div>
 </section>
 <section id="topicView" class="view" hidden>
-<a href="#forum" class="back"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg><span data-i18n="back">Zur Themenübersicht</span></a>
+<nav id="topicCrumbs" class="crumbs" aria-label="Breadcrumb"></nav>
 <div id="topicDetail"></div>
 <div id="replies"></div>
 <button id="moreReplies" class="secondary" type="button" hidden data-i18n="more">Weitere Beiträge laden</button>
@@ -152,7 +156,37 @@
 <p id="adminGate" class="card gate" data-i18n="adminOnly">Nur für das freigeschaltete Administratorkonto zugänglich.</p>
 <div id="adminContent" hidden>
 <p id="ownerIdentity" class="muted"></p>
-<p class="muted" data-i18n="modTools">Themen schließen und Beiträge entfernen: direkt im jeweiligen Thema.</p>
+<p class="muted" data-i18n="modTools">Themen schließen, anpinnen und Beiträge entfernen: direkt im jeweiligen Thema.</p>
+<form id="groupForm" class="form card">
+<h2 data-i18n="groupsTitle">Oberkategorien</h2>
+<p class="muted" data-i18n="groupsHint">Gruppen fassen Boards zusammen. Eine Gruppe mit Boards bleibt bestehen.</p>
+<div class="admin-split">
+<label><span data-i18n="slug">Kennung</span><input name="id" required minlength="2" maxlength="32" pattern="[a-z0-9-]{2,32}" autocomplete="off"></label>
+<label><span data-i18n="position">Reihenfolge</span><input name="position" type="number" required min="1" max="999" value="1"></label>
+</div>
+<label><span data-i18n="nameDe">Name (Deutsch)</span><input name="name_de" required minlength="2" maxlength="80"></label>
+<label><span data-i18n="nameEn">Name (Englisch)</span><input name="name_en" required minlength="2" maxlength="80"></label>
+<label><span data-i18n="descDe">Beschreibung (Deutsch)</span><input name="description_de" maxlength="400"></label>
+<label><span data-i18n="descEn">Beschreibung (Englisch)</span><input name="description_en" maxlength="400"></label>
+<div class="form-actions"><button class="secondary" data-i18n="save">Speichern</button><button id="groupReset" class="outline" type="button" data-i18n="newEntry">Neu</button></div>
+</form>
+<div id="groupList" class="card list-card"></div>
+<form id="boardForm" class="form card">
+<h2 data-i18n="boardsTitle">Boards</h2>
+<p class="muted" data-i18n="boardsHint">Boards enthalten die Themen. Ein Board mit Themen bleibt bestehen.</p>
+<div class="admin-split">
+<label><span data-i18n="slug">Kennung</span><input name="id" required minlength="2" maxlength="32" pattern="[a-z0-9-]{2,32}" autocomplete="off"></label>
+<label><span data-i18n="position">Reihenfolge</span><input name="position" type="number" required min="1" max="999" value="1"></label>
+</div>
+<label><span data-i18n="group">Gruppe</span><select name="group_id" id="boardGroup" required></select></label>
+<label><span data-i18n="nameDe">Name (Deutsch)</span><input name="name_de" required minlength="2" maxlength="80"></label>
+<label><span data-i18n="nameEn">Name (Englisch)</span><input name="name_en" required minlength="2" maxlength="80"></label>
+<label><span data-i18n="descDe">Beschreibung (Deutsch)</span><input name="description_de" maxlength="400"></label>
+<label><span data-i18n="descEn">Beschreibung (Englisch)</span><input name="description_en" maxlength="400"></label>
+<label><span data-i18n="iconLabel">Symbol</span><select name="icon"><option value="message">message</option><option value="grid">grid</option><option value="help">help</option><option value="idea">idea</option></select></label>
+<div class="form-actions"><button class="secondary" data-i18n="save">Speichern</button><button id="boardReset" class="outline" type="button" data-i18n="newEntry">Neu</button></div>
+</form>
+<div id="boardList" class="card list-card"></div>
 <p><a class="secondary" href="https://client.falixnodes.net/" target="_blank" rel="noopener noreferrer" data-i18n="openPanel">Falix-Verwaltung öffnen</a></p>
 <form id="privateNameForm" class="form card">
 <h2 data-i18n="privateName">Dein privater Anzeigename</h2>

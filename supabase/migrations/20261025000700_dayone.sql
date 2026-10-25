@@ -31,6 +31,36 @@ drop trigger if exists assign_dayone_role on public.forum_profiles;
 create trigger assign_dayone_role after insert on public.forum_profiles for each row execute function private.assign_dayone_role();
 select private.sync_dayone_roles();
 
+create or replace function private.sync_owner_role() returns void language plpgsql security definer set search_path='' as $$
+declare owner_id uuid;
+begin
+ select user_id into owner_id from public.forum_roles where role = 'owner' limit 1;
+ if owner_id is null then
+  select n.user_id into owner_id
+  from private.forum_owner_names n join public.forum_profiles p on p.id = n.user_id
+  order by p.uid, p.created_at, p.id limit 1;
+  if owner_id is not null then
+   insert into public.forum_roles(user_id, role) values(owner_id, 'owner')
+   on conflict (user_id) do update set role = 'owner';
+  end if;
+ end if;
+ insert into public.forum_roles(user_id, role)
+ select a.user_id, 'admin' from private.forum_admins a
+ where a.user_id is distinct from owner_id
+   and not exists(select 1 from public.forum_roles r where r.user_id = a.user_id and r.role in ('owner','admin','moderator'))
+ on conflict (user_id) do update set role = 'admin' where forum_roles.role = 'dayone';
+end; $$;
+revoke all on function private.sync_owner_role() from public, anon, authenticated;
+
+create or replace function private.sync_admin_rank() returns trigger language plpgsql security definer set search_path='' as $$
+begin
+ perform private.sync_owner_role();
+ return new;
+end; $$;
+revoke all on function private.sync_admin_rank() from public, anon, authenticated;
+drop trigger if exists sync_admin_rank on private.forum_admins;
+create trigger sync_admin_rank after insert on private.forum_admins for each row execute function private.sync_admin_rank();
+
 create or replace function private.protect_owner_role() returns trigger language plpgsql security definer set search_path='' as $$
 begin
  if tg_op = 'DELETE' and old.role = 'owner' then raise exception 'Owner is fixed'; end if;

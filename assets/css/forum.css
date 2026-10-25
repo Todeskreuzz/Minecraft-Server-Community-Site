@@ -283,6 +283,18 @@ footer nav a:hover{color:var(--text)}
 .preset-nether{background:linear-gradient(160deg,#450a0a,#b91c1c 55%,#fdba74)}
 .preset-end{background:linear-gradient(160deg,#1e1b4b,#6d28d9 55%,#c4b5fd)}
 @media(max-width:799px){.account-name{max-width:7ch}.profile-id,.profile-card>#profileBio,.profile-stats,.profile-card>h2,.profile-threads,.profile-card .form{padding-left:16px;padding-right:16px}}
+.person{display:inline-flex;align-items:center;gap:6px;flex-wrap:wrap}
+.name-owner{color:#6ee7b7}.name-admin{color:#fbbf24}.name-moderator{color:#7dd3fc}.name-dayone{color:#c4b5fd}
+:root[data-theme="light"] .name-owner{color:#047857}:root[data-theme="light"] .name-admin{color:#92400e}:root[data-theme="light"] .name-moderator{color:#075985}:root[data-theme="light"] .name-dayone{color:#5b21b6}
+.rank{display:inline-flex;align-items:center;padding:0 8px;border-radius:999px;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase}
+.rank-owner{color:#042f24;background:#6ee7b7;animation:owner-border 3.2s linear infinite}
+.rank-admin{color:#422006;background:#fde68a;animation:glow-pulse 2.4s ease-in-out infinite}
+.rank-moderator{color:#082f49;background:#bae6fd;position:relative;overflow:hidden}
+.rank-moderator::after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 20%,rgba(255,255,255,.75),transparent 80%);transform:translateX(-120%);animation:rank-sweep 2.8s linear infinite}
+.rank-dayone{color:#2e1065;background:#ddd6fe}
+@keyframes owner-border{50%{box-shadow:0 0 0 2px #a7f3d0,0 0 16px rgba(52,211,153,.55)}}
+@keyframes glow-pulse{50%{box-shadow:0 0 14px rgba(251,191,36,.75)}}
+@keyframes rank-sweep{to{transform:translateX(120%)}}
 @media(prefers-reduced-motion:reduce){
  html{scroll-behavior:auto}
  *,*::before,*::after{animation:none!important;transition:none!important}

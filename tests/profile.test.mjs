@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
-import {SHRINK_ERROR,fitSteps,imageKind,padUid,parseProfileHash,presetOk,previewLabel,profilePath,publicMediaUrl,webpHeaderHex} from '../assets/js/forum-profile.mjs';
+import {SHRINK_ERROR,avatarRank,displayRole,fitSteps,formatLocal,imageKind,padUid,parseInstant,parseProfileHash,presetOk,previewLabel,profileBadges,profilePath,publicMediaUrl,webpHeaderHex} from '../assets/js/forum-profile.mjs';
 
 test('pads UIDs to at least two digits and keeps larger numbers',()=>{
  assert.equal(padUid(1),'01');
@@ -55,4 +55,49 @@ test('profile migration keeps UIDs and checks WebP before linking media',()=>{
  assert.match(sql,/20971520/);
  assert.match(sql,/profile-media/);
  assert.doesNotMatch(sql,/drop table|truncate/i);
+});
+
+test('naive timestamps are UTC and profiles keep the date in the visitor zone',()=>{
+ const instant=parseInstant('2026-10-24T17:52:00');
+ assert.equal(instant.toISOString(),'2026-10-24T17:52:00.000Z');
+ assert.equal(parseInstant('2026-10-24 17:52:29').toISOString(),'2026-10-24T17:52:29.000Z');
+ assert.equal(parseInstant('2026-10-24T19:52:00+02:00').toISOString(),'2026-10-24T17:52:00.000Z');
+ const berlin=instant.toLocaleString('de',{timeZone:'Europe/Berlin',hour:'2-digit',minute:'2-digit',hourCycle:'h23'});
+ assert.match(berlin,/19:52/);
+ const zoned=instant.toLocaleString('de',{dateStyle:'medium',timeStyle:'short'});
+ assert.equal(formatLocal('2026-10-24T17:52:00','de',true),zoned);
+ const dateOnly=formatLocal('2026-10-24T17:52:29.581655+00:00','de',false);
+ assert.equal(dateOnly,instant.toLocaleDateString('de',{dateStyle:'medium'}));
+ assert.equal(dateOnly.includes(':'),false);
+ assert.equal(formatLocal('','de',false),'');
+ assert.equal(formatLocal('not-a-date','en',true),'');
+});
+
+test('owner uid 1 keeps the owner mark and also earns Day One',()=>{
+ const owner={role:'owner',is_owner:true,uid:1};
+ assert.equal(displayRole(owner),'owner');
+ assert.deepEqual(profileBadges(owner),['owner','dayone']);
+ assert.equal(avatarRank(owner),'owner');
+ assert.deepEqual(profileBadges({role:'dayone',uid:3}),['dayone']);
+ assert.deepEqual(profileBadges({role:'member',uid:11}),[]);
+ assert.equal(avatarRank({role:'member',uid:4}),'dayone');
+ assert.equal(avatarRank({role:'member',uid:20}),'member');
+ assert.equal(avatarRank({role:'admin',uid:2}),'admin');
+});
+
+test('profile markup uses the fallback banner, rank avatar, and stat cards',()=>{
+ const html=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
+ const css=fs.readFileSync(new URL('../assets/css/forum.css',import.meta.url),'utf8');
+ const js=fs.readFileSync(new URL('../assets/js/forum.mjs',import.meta.url),'utf8');
+ assert.match(html,/id="profileScene" class="profile-scene preset-fallback"/);
+ assert.match(html,/id="profileRanks"/);
+ assert.match(html,/class="stat-card"/);
+ assert.match(css,/\.preset-fallback\{/);
+ assert.match(css,/\.avatar-default\.avatar-owner\{/);
+ assert.match(js,/formatLocal\(card\.created_at,lang,false\)/);
+ assert.match(js,/preset-'\+\(preset\|\|'fallback'\)/);
+ assert.match(js,/noThreadsNote/);
+ const reduced=css.lastIndexOf('@media(prefers-reduced-motion:reduce)');
+ assert.ok(css.indexOf('.preset-fallback{')<reduced);
+ assert.ok(css.trimEnd().endsWith('}'));
 });

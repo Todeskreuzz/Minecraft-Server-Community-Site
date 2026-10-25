@@ -65,6 +65,36 @@ export function slotObject(slot,kind){
  if(kind==='anim')return slot+'.anim.webp';
  return slot+'.webp';
 }
+export function parseInstant(value){
+ if(value instanceof Date)return value;
+ const text=String(value??'').trim();
+ if(!text)return new Date(NaN);
+ if(/^\d{4}-\d{2}-\d{2}[ T]\d{2}:\d{2}/.test(text)&&!/(?:[zZ]|[+-]\d{2}:?\d{2})$/.test(text))return new Date(text.replace(' ','T')+'Z');
+ return new Date(text);
+}
+export function formatLocal(value,lang='de',withTime=true){
+ const instant=parseInstant(value);
+ if(Number.isNaN(instant.getTime()))return '';
+ const locale=lang==='en'?'en':'de';
+ return withTime?instant.toLocaleString(locale,{dateStyle:'medium',timeStyle:'short'}):instant.toLocaleDateString(locale,{dateStyle:'medium'});
+}
+export function displayRole(author){
+ if(author?.is_owner||author?.role==='owner')return 'owner';
+ if(author?.role==='admin'||author?.role==='moderator'||author?.role==='dayone')return author.role;
+ return 'member';
+}
+export function profileBadges(author){
+ const role=displayRole(author);
+ const badges=[];
+ if(role!=='member')badges.push(role);
+ if(Number(author?.uid)<=10&&role!=='dayone')badges.push('dayone');
+ return badges;
+}
+export function avatarRank(author){
+ const role=displayRole(author);
+ if(role!=='member')return role;
+ return Number(author?.uid)<=10?'dayone':'member';
+}
 export function fitSteps(){
  const steps=[];
  let quality=0.84,scale=1;

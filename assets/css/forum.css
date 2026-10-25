@@ -20,7 +20,7 @@ img{max-width:100%;display:block}
 .icon *{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 header{position:sticky;top:0;z-index:20;background:var(--header);border-bottom:1px solid var(--line);backdrop-filter:blur(16px)}
 .nav-scrim{display:none}
-.header-bar,.shell,.footer-bar{max-width:1160px;margin:0 auto}
+.header-bar{max-width:1560px;margin:0 auto}.shell,.footer-bar{max-width:1280px;margin:0 auto}
 .header-bar{padding:0 20px;min-height:68px;display:grid;grid-template-columns:auto minmax(0,1fr) auto auto;grid-template-areas:"brand nav tools account";gap:8px 12px;align-items:center}
 .nav-sheet{display:contents}
 .brand{grid-area:brand;display:flex;align-items:center;gap:10px;min-width:0;color:var(--text);font-weight:600;letter-spacing:-.03em;text-decoration:none;white-space:nowrap}
@@ -391,7 +391,7 @@ button.stat-card:hover{border-color:var(--accent)}
 .honeypot{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0}
 .countdown{color:#6ee7b7;font-weight:650;font-variant-numeric:tabular-nums}
 meter{width:100%;height:10px;accent-color:#34d399}
-@media(max-width:1399px){
+@media(max-width:1599px){
  header nav a.nav-extra{display:none}
  .nav-more{display:inline-flex}
 }
@@ -404,3 +404,26 @@ meter{width:100%;height:10px;accent-color:#34d399}
  html{scroll-behavior:auto}
  *,*::before,*::after{animation:none!important;transition:none!important}
 }
+
+/* Spacious navigation and a one-click own-profile destination. */
+.header-bar{min-height:80px;padding-left:28px;padding-right:28px;column-gap:20px}
+.account{gap:10px}.tools{gap:8px;padding:5px;border:1px solid var(--line);border-radius:14px;background:var(--surface)}
+.profile-shortcut{display:inline-flex;align-items:center;gap:10px;min-height:44px;padding:8px 14px;border:1px solid var(--line);border-radius:12px;background:var(--surface);color:var(--text);text-decoration:none}
+.profile-shortcut:hover{border-color:var(--accent);background:var(--hover);text-decoration:none}.profile-shortcut .uid-badge{font-size:11px;padding:2px 7px}.profile-shortcut-label{padding-left:10px;border-left:1px solid var(--line);color:var(--accent);font-size:13px;font-weight:600}.profile-shortcut .account-name{font-size:14px;font-weight:600}
+.account-menu-button{width:36px;height:42px;border:1px solid var(--line);border-radius:12px}.account-menu-button[aria-expanded="true"]{background:var(--hover);color:var(--accent)}
+#friendsButton{width:42px;height:42px;border:1px solid var(--line);border-radius:12px}
+/* Each category is a distinct, generously spaced card rather than a dense table row. */
+.forum-index{gap:36px;margin-top:36px}.group-block{background:transparent;border:0;overflow:visible}.group-head{padding:0 0 20px}.group-head h2{font-size:26px}.group-head p{margin-top:6px;max-width:70ch}
+.board-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.board-grid .board-card{grid-template-columns:52px minmax(0,1fr);align-items:start;gap:20px;padding:26px;border:1px solid var(--line);border-radius:18px;background:var(--surface);transition:border-color .18s,background-color .18s}
+.board-grid .board-card:hover{border-color:var(--accent);background:var(--surface-2)}.board-grid .board-mark{width:52px;height:52px;border-radius:15px}.board-grid .board-mark .icon{width:22px;height:22px}
+.board-grid .board-copy h3{font-size:19px;line-height:1.4}.board-grid .board-copy p{font-size:14px;line-height:1.65;margin-top:8px}
+.board-footer{grid-column:1/-1;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px 20px;padding-top:18px;margin-top:2px;border-top:1px solid var(--line)}
+.board-grid .board-counts{display:flex;flex-direction:row;align-items:center;gap:16px;font-size:13px;white-space:nowrap}.board-grid .board-latest{flex:1;min-width:0;max-width:100%;text-align:right}.board-grid .board-latest strong{max-width:100%;font-size:13px;white-space:normal;overflow-wrap:anywhere}
+@media(min-width:800px) and (max-width:1199px){.header-bar{grid-template-columns:minmax(0,1fr) auto auto;grid-template-areas:"brand tools account" "nav nav nav";padding:16px 24px 10px;gap:12px 20px}header nav{justify-content:center}.board-grid .board-card{padding:24px;gap:16px}.board-footer{gap:12px}.board-grid .board-latest{text-align:left;flex-basis:100%}}
+@media(max-width:799px){.header-bar{min-height:68px;padding:8px 16px;gap:10px}.account{gap:8px}.profile-shortcut{gap:8px;padding:8px 10px}.profile-shortcut .uid-badge{display:none}.profile-shortcut .account-name{max-width:9ch}.profile-shortcut-label{padding-left:8px;font-size:12px}.account-menu-button{width:30px;height:40px}#friendsButton{width:36px;height:40px}.tools{margin-top:8px;padding:10px;border-radius:12px}.forum-index{gap:28px;margin-top:28px}.group-head{padding:0 0 16px}.group-head h2{font-size:24px}.board-grid{grid-template-columns:1fr;gap:16px}.board-grid .board-card{padding:22px;gap:16px}.board-grid .board-counts,.board-grid .board-latest{grid-column:auto}.board-footer{gap:14px}.board-grid .board-latest{text-align:left;flex-basis:100%}}
+@media(max-width:359px){.header-bar{flex-wrap:wrap}.account{gap:6px}.profile-shortcut .account-name{max-width:6ch}.profile-shortcut-label{border-left:0;padding-left:0}.board-grid .board-card{padding:18px;grid-template-columns:42px minmax(0,1fr)}.board-grid .board-mark{width:42px;height:42px}}
+
+@media(max-width:359px){.header-bar{display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"brand menu" "account account";row-gap:8px}.header-bar>.menu-button{grid-area:menu}.account{margin-left:0;justify-content:flex-end}.profile-shortcut .account-name{max-width:9ch}}
+
+html{scroll-padding-top:104px}@media(min-width:800px) and (max-width:1199px){html{scroll-padding-top:152px}}@media(max-width:799px){html{scroll-padding-top:92px}}@media(max-width:359px){html{scroll-padding-top:132px}}

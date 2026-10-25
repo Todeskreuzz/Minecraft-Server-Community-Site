@@ -20,6 +20,7 @@ end $$;
 \ir .adoption-roles.sql
 \ir .adoption-dayone.sql
 \ir .adoption-groups.sql
+\ir .adoption-media.sql
 do $$ begin
  if not exists(select 1 from public.forum_topics where id='00000000-0000-4000-8000-00000000d002' and body='Preserved body') then raise exception 'Existing topic lost';end if;
  if not exists(select 1 from public.forum_owner_settings where notes='Preserved owner notes') then raise exception 'Owner notes lost';end if;
@@ -35,5 +36,6 @@ do $$ begin
  if not exists(select 1 from public.forum_roles where user_id='00000000-0000-4000-8000-00000000d001' and role='owner') then raise exception 'Owner role lost';end if;
  if to_regprocedure('private.sync_dayone_roles()') is null then raise exception 'Day One sync lost';end if;
  if to_regclass('public.player_groups') is null then raise exception 'Player groups lost';end if;
+ if to_regclass('public.forum_media') is null then raise exception 'Thread media lost';end if;
 end $$;
 rollback;

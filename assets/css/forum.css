@@ -330,22 +330,6 @@ footer nav a:hover{color:var(--text)}
 .person{display:inline-flex;align-items:center;gap:6px;flex-wrap:wrap}
 .name-owner{color:#6ee7b7}.name-admin{color:#fbbf24}.name-moderator{color:#7dd3fc}.name-dayone{color:#c4b5fd}
 :root[data-theme="light"] .name-owner{color:#047857}:root[data-theme="light"] .name-admin{color:#92400e}:root[data-theme="light"] .name-moderator{color:#075985}:root[data-theme="light"] .name-dayone{color:#5b21b6}
-.rank{display:inline-flex;align-items:center;padding:0 8px;border-radius:999px;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase}
-.rank-owner{color:#042f24;background:#6ee7b7;animation:owner-border 3.2s linear infinite}
-.rank-admin{color:#422006;background:#fde68a;animation:glow-pulse 2.4s ease-in-out infinite}
-.rank-moderator{color:#082f49;background:#bae6fd;position:relative;overflow:hidden}
-.rank-moderator::after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 20%,rgba(255,255,255,.75),transparent 80%);transform:translateX(-120%);animation:rank-sweep 2.8s linear infinite}
-.rank-dayone{color:#2e1065;background:#ddd6fe;animation:glow-pulse 2.8s ease-in-out infinite}
-@keyframes owner-border{50%{box-shadow:0 0 0 2px #a7f3d0,0 0 16px rgba(52,211,153,.55)}}
-@keyframes glow-pulse{50%{box-shadow:0 0 14px rgba(251,191,36,.75)}}
-@keyframes rank-sweep{to{transform:translateX(120%)}}
-.rank{position:relative;isolation:isolate;overflow:hidden;line-height:1.8;border:1px solid var(--rank-edge,transparent);box-shadow:inset 0 1px 0 #ffffff38}
-.rank-owner{--rank-edge:#6ee7b7;background:linear-gradient(110deg,#a7f3d0,#6ee7b7,#d1fae5);background-size:220% 100%;animation:rank-colour 8s ease-in-out infinite}
-.rank-admin{--rank-edge:#fcd34d;background:linear-gradient(110deg,#fde68a,#fbbf24,#fef3c7);background-size:220% 100%;animation:rank-colour 9s ease-in-out infinite}
-.rank-moderator{--rank-edge:#7dd3fc;background:linear-gradient(110deg,#bae6fd,#7dd3fc,#e0f2fe);background-size:220% 100%;animation:rank-colour 10s ease-in-out infinite}
-.rank-dayone{--rank-edge:#c4b5fd;color:#2e1065;background:linear-gradient(110deg,#ddd6fe,#c4b5fd,#ede9fe);background-size:220% 100%;animation:rank-colour 11s ease-in-out infinite}
-.rank-moderator::after{display:none}
-@keyframes rank-colour{0%,100%{background-position:0 50%}50%{background-position:100% 50%}}
 .anonymous-section{margin:8px 0 0;padding:22px 0 0;border-top:1px solid var(--line);display:grid;grid-template-columns:38px minmax(0,1fr);gap:14px}
 .anonymous-section h3{font-size:15px;margin-bottom:8px}
 .anonymous-section p{font-size:13px;margin-top:8px;color:var(--muted);line-height:1.6}

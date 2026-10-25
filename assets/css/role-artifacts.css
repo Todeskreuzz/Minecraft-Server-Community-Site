@@ -1,0 +1,50 @@
+/* Shared artifact shell: three decorative layers; text never animates. */
+.rank{--ink:#a7f3d0;--edge:#429b7e;--core:#102d26;--halo:#34d39938;--phase:0s;position:relative;isolation:isolate;display:inline-flex;align-items:center;gap:5px;height:22px;padding:0 8px 0 3px;border:1px solid var(--edge);border-radius:8px;background:var(--core);color:var(--ink);box-shadow:inset 0 1px 0 #ffffff24,0 0 4px var(--halo);font-size:11px;font-weight:650;letter-spacing:.06em;text-transform:uppercase;line-height:1;vertical-align:middle;white-space:nowrap}
+.rank[data-phase="1"]{--phase:-2.3s}.rank[data-phase="2"]{--phase:-4.7s}.rank[data-phase="3"]{--phase:-6.1s}
+.rank-label{position:relative;z-index:2}.rank-art{position:relative;z-index:1;flex:none;width:20px;height:20px}.rank-art svg{display:block;width:100%;height:100%;overflow:visible;fill:none;stroke:currentColor;stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round}
+.rank-core,.rank-energy{position:absolute;inset:0;border-radius:inherit;pointer-events:none}.rank-core{overflow:hidden;z-index:-1}.rank-energy{z-index:0}
+.profile-ranks{gap:12px}.profile-ranks .rank{height:30px;padding:0 12px 0 4px;font-size:13px;gap:7px;box-shadow:inset 0 1px 0 #ffffff24,0 0 6px var(--halo)}.profile-ranks .rank-art{width:28px;height:28px}
+.rank-admin{--ink:#ffe1a0;--edge:#be883e;--core:#382415;--halo:#fbbf2420}
+.rank-moderator{--ink:#c3edff;--edge:#538da6;--core:#142c3b;--halo:transparent}
+.rank-dayone{--ink:#ede0ff;--edge:#a88ade;--core:#281a47;--halo:#b692ff35}
+.rank-member{padding-left:8px;color:var(--muted);background:var(--surface-2);border-color:var(--line);box-shadow:none}
+.rank .rune{opacity:.65;transform-origin:16px 16px}.ring-a{animation:artifact-spin 12s linear infinite}.ring-b{animation:artifact-spin 19s linear infinite reverse}
+.crown{fill:#4caa8199;stroke:#f2d99a;transform-origin:16px 24px;transition:transform .3s}.arc{stroke:#e2ffe9;stroke-dasharray:4 3;animation:royal-arc 8s ease-in-out infinite}
+.rank-owner .rank-energy::before,.rank-owner .rank-energy::after{content:"";position:absolute;width:3px;height:3px;border-radius:50%;background:#dcfff1;offset-path:inset(1px round 8px);animation:edge-orbit 8s linear infinite}.rank-owner .rank-energy::after{animation-delay:-4s}
+.rank-dayone .rank-core::before,.rank-dayone .rank-core::after{content:"";position:absolute;inset:-40%;background:radial-gradient(ellipse at 20% 40%,#a47ce438,transparent 45%),radial-gradient(ellipse at 70% 60%,#4576dc30,transparent 40%);animation:nebula-drift 16s ease-in-out infinite alternate}.rank-dayone .rank-core::after{animation-duration:23s;animation-direction:alternate-reverse}
+.star{fill:#e9ddff;stroke:#fff2ff;transform-origin:16px 16px;animation:relic-star 18s linear infinite}.orbit{fill:#fff;stroke:none;transform-origin:16px 16px}.orbit-a{animation:relic-orbit 9s linear infinite}.orbit-b{animation:relic-orbit 13s linear infinite reverse}.orbit-c{animation:relic-orbit 17s linear infinite}.constellation{stroke:#e4ccff;animation:constellation-form 11s ease-in-out infinite}.focus-orbit{opacity:0;transform-origin:16px 16px;transform:scale(.65);transition:opacity .4s,transform .4s}
+.facet{transform-origin:16px 16px;animation:crystal-facet 6s ease-in-out infinite}.facet-a{fill:#d68c2d44;stroke:#ffe3a4}.facet-b{fill:#ffc65370;animation-direction:reverse}.facet-c{fill:#fff1bb44;animation-delay:-3s}.conduit{stroke-dasharray:2 6;animation:conduit-charge 7s ease-in-out infinite}.spark{fill:#ffeab7;stroke:none;animation:crystal-spark 7s ease-out infinite}.spark-b{animation-delay:-3.5s}.rank-admin .rank-energy{border:1px solid #ffdc8d;animation:crystal-rim 7s ease-out infinite}
+.shield{fill:#4cacc530;stroke:#b9edff}.barrier{stroke:#6ee1ff;stroke-width:2;transform-origin:16px 16px;animation:barrier-turn 10s ease-in-out infinite}.barrier-b{animation-direction:reverse}.shield-wave{animation:shield-rise 5s ease-in-out infinite}.impact{transform-origin:24px 13px;animation:shield-impact 9s ease-out infinite}
+.rank:hover .crown,:focus-visible .rank .crown,.person:has(>a:focus-visible) .rank .crown,.rank:focus-within .crown{transform:translateY(-1px) rotate(-5deg)}
+.rank:hover .rune,:focus-visible .rank .rune,.person:has(>a:focus-visible) .rank .rune{opacity:1}.rank:hover .focus-orbit,:focus-visible .rank .focus-orbit,.person:has(>a:focus-visible) .rank .focus-orbit{opacity:.8;transform:scale(1)}
+.rank-admin:hover .facet,:focus-visible .rank-admin .facet,.person:has(>a:focus-visible) .rank-admin .facet{animation-duration:4s}.rank-moderator:hover .barrier,:focus-visible .rank-moderator .barrier,.person:has(>a:focus-visible) .rank-moderator .barrier{stroke-width:3;stroke-dasharray:25 2}
+@keyframes artifact-spin{to{transform:rotate(360deg)}}
+@keyframes edge-orbit{to{offset-distance:100%}}
+@keyframes royal-arc{0%,64%,100%{opacity:0;stroke-dashoffset:12}72%,83%{opacity:.85}90%{opacity:0;stroke-dashoffset:0}}
+@keyframes nebula-drift{to{transform:translate(12%,8%) rotate(25deg)}}
+@keyframes relic-star{0%{transform:rotate(0) scale(.9)}50%{transform:rotate(180deg) scale(1)}100%{transform:rotate(360deg) scale(.9)}}
+@keyframes relic-orbit{0%{transform:rotate(0) scaleY(.65)}50%{transform:rotate(180deg) scaleY(.9)}100%{transform:rotate(360deg) scaleY(.65)}}
+@keyframes constellation-form{0%,72%,100%{opacity:0}78%,89%{opacity:.8}}
+@keyframes crystal-facet{0%,100%{transform:scaleX(.9);opacity:.6}50%{transform:scaleX(1.05);opacity:1}}
+@keyframes conduit-charge{0%,50%,100%{opacity:.25;stroke-dashoffset:16}66%,80%{opacity:.9}90%{stroke-dashoffset:0}}
+@keyframes crystal-spark{0%,55%,100%{opacity:0;transform:translateY(0)}65%{opacity:.8}85%{opacity:0;transform:translateY(-10px)}}
+@keyframes crystal-rim{0%,58%,100%{opacity:0}70%{opacity:.7}90%{opacity:0}}
+@keyframes barrier-turn{0%,100%{transform:rotate(-15deg)}50%{transform:rotate(30deg)}}
+@keyframes shield-rise{0%,100%{transform:translateY(1px);opacity:.2}50%{transform:translateY(-8px);opacity:.8}}
+@keyframes shield-impact{0%,65%,100%{opacity:0;transform:scale(.4)}72%{opacity:.8;transform:scale(.7)}90%{opacity:0;transform:scale(2)}}
+/* Every animated descendant inherits a different phase; paired particles retain their spacing. */
+.rank-art *{animation-delay:var(--phase)}
+.rank:not(.rank-visible) *,.rank:not(.rank-visible)::before,.rank:not(.rank-visible)::after,.rank:not(.rank-visible) *::before,.rank:not(.rank-visible) *::after,:root[data-role-effects="off"] .rank *,:root[data-role-effects="off"] .rank *::before,:root[data-role-effects="off"] .rank *::after,:root[data-role-hidden="true"] .rank *,:root[data-role-hidden="true"] .rank *::before,:root[data-role-hidden="true"] .rank *::after{animation-play-state:paused!important}
+:root[data-role-effects="off"] .rank *{transition:none!important}
+:root[data-theme="light"] .rank{--core:#e5f5ee;--ink:#164c3d;--edge:#508975;--halo:#24684e18}
+:root[data-theme="light"] .rank-dayone{--core:#eee7fa;--ink:#56357d;--edge:#8e71ac;--halo:#68469318}
+:root[data-theme="light"] .rank-admin{--core:#fff0d6;--ink:#754818;--edge:#b88a4d;--halo:#b5832d10}
+:root[data-theme="light"] .rank-moderator{--core:#e5f2fa;--ink:#22576f;--edge:#6692a7;--halo:transparent}
+:root[data-theme="light"] .rank-member{color:var(--muted);background:var(--surface-2);border-color:var(--line)}
+:root[data-theme="light"] .crown,:root[data-theme="light"] .facet,:root[data-theme="light"] .shield{stroke:currentColor}
+@media(max-width:600px){.rank-owner .rank-energy::after{display:none}.rank .orbit-c{display:none}}
+@media(prefers-reduced-motion:reduce){.rank *,.rank *::before,.rank *::after{animation:none!important;transition:none!important}.constellation{opacity:.45}.rank-owner .rank-energy::before,.rank-owner .rank-energy::after{display:none}}
+
+.rank-art .arc-b{animation-delay:calc(var(--phase) + .2s)}.rank-art .arc-c{animation-delay:calc(var(--phase) + .4s)}
+.rank-owner .rank-energy::before{animation-delay:var(--phase)}.rank-owner .rank-energy::after{animation-delay:calc(var(--phase) - 4s)}
+:root[data-theme="light"] .star{fill:#8055ad;stroke:#633c8e}:root[data-theme="light"] .orbit{fill:currentColor}:root[data-theme="light"] .constellation{stroke:currentColor}

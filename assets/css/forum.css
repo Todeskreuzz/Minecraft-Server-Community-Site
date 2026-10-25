@@ -407,7 +407,7 @@ button.stat-card:hover{border-color:var(--accent)}
 .honeypot{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0}
 .countdown{color:#6ee7b7;font-weight:650;font-variant-numeric:tabular-nums}
 meter{width:100%;height:10px;accent-color:#34d399}
-@media(max-width:1179px){
+@media(max-width:1399px){
  header nav a.nav-extra{display:none}
  .nav-more{display:inline-flex}
 }
